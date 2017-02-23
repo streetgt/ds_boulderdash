@@ -1,0 +1,949 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="fr.enssat.BoulderDash.models.DoorModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/DoorModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="224" width="166" x="2756" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="fr.enssat.BoulderDash.helpers.LevelRemoveHelper" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/helpers/LevelRemoveHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="134" width="206" x="471" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="fr.enssat.BoulderDash.views.HelpView" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/HelpView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="116" width="141" x="290" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="4" language="java" name="fr.enssat.BoulderDash" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="177" x="717" y="111"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="5" language="java" name="fr.enssat.BoulderDash.models.BoulderModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/BoulderModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="224" width="166" x="2962" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="fr.enssat.BoulderDash.models.LevelModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/LevelModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1340" width="337" x="4561" y="1569"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="7" language="java" name="fr.enssat.BoulderDash.helpers" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/helpers" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="232" x="934" y="111"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="8" language="java" name="fr.enssat.BoulderDash.views.WinLoseView" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/WinLoseView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="134" width="141" x="1206" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="fr.enssat.BoulderDash.models.DisplayableElementModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/DisplayableElementModel.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="764" width="549" x="3995" y="3933"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="10" language="java" name="fr.enssat.BoulderDash.views" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="220" x="1552" y="111"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="11" language="java" name="fr.enssat.BoulderDash.views.LevelEditorView" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/LevelEditorView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="350" width="497" x="4519" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="12" language="java" name="fr.enssat.BoulderDash.exceptions" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/exceptions" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="257" x="1812" y="111"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="13" language="java" name="fr.enssat.BoulderDash.helpers.LevelSaveHelper" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/helpers/LevelSaveHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="440" width="335" x="3703" y="2949"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="fr.enssat.BoulderDash.views.GameGroundView" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/GameGroundView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="80" width="289" x="5047" y="357"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="15" language="java" name="fr.enssat.BoulderDash.models" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="231" x="2109" y="111"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="16" language="java" name="fr.enssat.BoulderDash.exceptions.UnknownModelException" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/exceptions/UnknownModelException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="80" width="206" x="2380" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="fr.enssat.BoulderDash.models.EmptyModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/EmptyModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="224" width="166" x="3583" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="fr.enssat.BoulderDash.models.DirtModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/DirtModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="224" width="166" x="3789" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="fr.enssat.BoulderDash.helpers.ModelConvertHelper" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/helpers/ModelConvertHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="116" width="305" x="2626" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="20" language="java" name="fr.enssat.BoulderDash.bridges" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/bridges" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="233" x="2971" y="111"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="21" language="java" name="fr.enssat.BoulderDash.controllers.GameController" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/controllers/GameController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="188" width="476" x="5357" y="477"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" name="fr.enssat.BoulderDash.views.GameView" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/GameView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="206" width="248" x="5378" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="fr.enssat.BoulderDash.controllers.LevelEditorController" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/controllers/LevelEditorController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="152" width="405" x="4561" y="1341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="fr.enssat.BoulderDash.views.AssetsLevelEditorComponent" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/AssetsLevelEditorComponent.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="116" width="285" x="4213" y="1095"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="fr.enssat.BoulderDash.exceptions.LevelConstraintNotRespectedException" 
+    project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/exceptions/LevelConstraintNotRespectedException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="80" width="299" x="3493" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="fr.enssat.BoulderDash.controllers.BoulderAndDiamondController" 
+    project="boulder-dash" file="/boulder-dash/src/fr/enssat/BoulderDash/controllers/BoulderAndDiamondController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="170" width="367" x="5403" y="1341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="fr.enssat.BoulderDash.controllers.NavigationBetweenViewController" 
+    project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/controllers/NavigationBetweenViewController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="206" width="257" x="5151" y="1095"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="fr.enssat.BoulderDash.helpers.LevelSelectorHelper" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/helpers/LevelSelectorHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="170" width="283" x="4540" y="477"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="fr.enssat.BoulderDash.views.MenuLevelSelector" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/MenuLevelSelector.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="188" width="270" x="4601" y="1095"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="fr.enssat.BoulderDash.controllers.RockfordUpdateController" 
+    project="boulder-dash" file="/boulder-dash/src/fr/enssat/BoulderDash/controllers/RockfordUpdateController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="188" width="241" x="3849" y="1341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="fr.enssat.BoulderDash.controllers.LevelEditorKeyController" 
+    project="boulder-dash" file="/boulder-dash/src/fr/enssat/BoulderDash/controllers/LevelEditorKeyController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="152" width="327" x="4173" y="477"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="fr.enssat.BoulderDash.models.GameInformationModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/GameInformationModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="314" width="240" x="4078" y="2949"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="fr.enssat.BoulderDash.views.LevelEditorGroundView" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/LevelEditorGroundView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="80" width="320" x="3832" y="1095"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="fr.enssat.BoulderDash.Game" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/Game.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="98" width="125" x="1387" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="fr.enssat.BoulderDash.views.GroundView" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/GroundView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="170" width="207" x="3832" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="fr.enssat.BoulderDash.views.MenuView" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/MenuView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="188" width="280" x="5056" y="705"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="fr.enssat.BoulderDash.views.InformationPanel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/InformationPanel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="116" width="199" x="3226" y="1341"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="fr.enssat.BoulderDash.helpers.LevelLoadHelper" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/helpers/LevelLoadHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="944" width="410" x="4379" y="2949"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="fr.enssat.BoulderDash.models.BrickWallModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/BrickWallModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="224" width="166" x="3168" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="fr.enssat.BoulderDash.models.CursorModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/CursorModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="224" width="166" x="4810" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="fr.enssat.BoulderDash.models.ExpandingWallModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/ExpandingWallModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="224" width="169" x="3374" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="fr.enssat.BoulderDash.exceptions.ModelNotReadyException" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/exceptions/ModelNotReadyException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="80" width="209" x="3244" y="111"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="fr.enssat.BoulderDash.models.DiamondModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/DiamondModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="350" width="261" x="3995" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="fr.enssat.BoulderDash.controllers.GameKeyController" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/controllers/GameKeyController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="134" width="306" x="3486" y="1095"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="fr.enssat.BoulderDash.models.SteelWallModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/SteelWallModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="224" width="166" x="4296" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="46" language="java" name="fr.enssat.BoulderDash.models.RockfordModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/RockfordModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="836" width="319" x="5016" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="47" language="java" name="fr.enssat.BoulderDash.models.MagicWallModel" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/models/MagicWallModel.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="332" width="268" x="4502" y="4737"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="48" language="java" name="fr.enssat.BoulderDash.bridges.SoundJLayerBridge" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/bridges/SoundJLayerBridge.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="188" width="175" x="5566" y="3933"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <package id="49" language="java" name="fr.enssat.BoulderDash.controllers" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/controllers" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="50" width="255" x="4581" y="111"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <class id="50" language="java" name="fr.enssat.BoulderDash.helpers.AudioLoadHelper" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/helpers/AudioLoadHelper.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="206" width="288" x="5566" y="2949"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="51" language="java" name="fr.enssat.BoulderDash.views.MenuImage" project="boulder-dash" 
+    file="/boulder-dash/src/fr/enssat/BoulderDash/views/MenuImage.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="134" width="200" x="4911" y="1095"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <generalization id="52">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="53">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="54" name="levelEditorView"/>      
+      <multiplicity id="55" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="56">    
+    <bendpoint x="3455" y="357"/>    
+    <bendpoint x="3455" y="477"/>    
+    <bendpoint x="3455" y="705"/>    
+    <bendpoint x="3455" y="1095"/>    
+    <bendpoint x="3455" y="1341"/>    
+    <end type="SOURCE" refId="35" navigable="false">      
+      <attribute id="57" name="levelModel"/>      
+      <multiplicity id="58" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="59">    
+    <bendpoint x="4549" y="1095"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="60" name="levelEditorController"/>      
+      <multiplicity id="61" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="62">    
+    <bendpoint x="5842" y="705"/>    
+    <bendpoint x="5842" y="1095"/>    
+    <bendpoint x="5842" y="1341"/>    
+    <bendpoint x="5842" y="1569"/>    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="63" name="audioLoadHelper"/>      
+      <multiplicity id="64" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="65">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="66" name="levelModel"/>      
+      <multiplicity id="67" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="68">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="69">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="70" name="assetsComponent"/>      
+      <multiplicity id="71" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="72">    
+    <bendpoint x="4120" y="1341"/>    
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="73" name="levelModel"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="75">    
+    <bendpoint x="4528" y="1095"/>    
+    <bendpoint x="4528" y="1341"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="76" name="levelModel"/>      
+      <multiplicity id="77" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="78">    
+    <bendpoint x="4861" y="2949"/>    
+    <bendpoint x="4861" y="3933"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="79" name="rockford"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="81">    
+    <bendpoint x="4855" y="1341"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="82" name="levelModelForGame"/>      
+      <multiplicity id="83" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="84">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="85" name="gameGroundView"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="87">    
+    <end type="SOURCE" refId="36" navigable="false">      
+      <attribute id="88" name="navigationBetweenViewController"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="90">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="91" name="levelModel"/>      
+      <multiplicity id="92" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="93">    
+    <end type="SOURCE" refId="44" navigable="false">      
+      <attribute id="94" name="updatePosRockford"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="96">    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="97" name="preloadedSounds"/>      
+      <multiplicity id="98" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="48" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="99">    
+    <bendpoint x="5863" y="357"/>    
+    <bendpoint x="5863" y="477"/>    
+    <bendpoint x="5863" y="705"/>    
+    <bendpoint x="5863" y="1095"/>    
+    <bendpoint x="5821" y="1341"/>    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="100" name="levelModel"/>      
+      <multiplicity id="101" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="102">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="103" name="fieldPanel"/>      
+      <multiplicity id="104" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="105">    
+    <end type="SOURCE" refId="36" navigable="false">      
+      <attribute id="106" name="menuLevelSelector"/>      
+      <multiplicity id="107" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="108">    
+    <end type="SOURCE" refId="47"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="109">    
+    <bendpoint x="4819" y="2949"/>    
+    <bendpoint x="4819" y="3933"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="110" name="cursorModel"/>      
+      <multiplicity id="111" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="112">    
+    <bendpoint x="5366" y="705"/>    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="113" name="navigationBetweenViewController"/>      
+      <multiplicity id="114" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="115">    
+    <bendpoint x="4840" y="3933"/>    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="116" name="rockfordInstance"/>      
+      <multiplicity id="117" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="118">    
+    <bendpoint x="5387" y="705"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="119" name="gameController"/>      
+      <multiplicity id="120" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="121">    
+    <bendpoint x="4182" y="705"/>    
+    <bendpoint x="4182" y="1095"/>    
+    <bendpoint x="4182" y="1341"/>    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="122" name="levelModel"/>      
+      <multiplicity id="123" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="124">    
+    <end type="SOURCE" refId="39"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <generalization id="125">    
+    <end type="SOURCE" refId="45"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="126">    
+    <bendpoint x="5366" y="357"/>    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="127" name="gameController"/>      
+      <multiplicity id="128" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="129">    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="130" name="menuView"/>      
+      <multiplicity id="131" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="132">    
+    <bendpoint x="5494" y="1569"/>    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="133" name="audioLoadHelper"/>      
+      <multiplicity id="134" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="135">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="136" name="levelLoadHelper"/>      
+      <multiplicity id="137" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="38" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="138">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <generalization id="139">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <association id="140">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="141" name="audioLoadHelper"/>      
+      <multiplicity id="142" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="143">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="144" name="nav"/>      
+      <multiplicity id="145" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="146">    
+    <end type="SOURCE" refId="28" navigable="false">      
+      <attribute id="147" name="levelEditorView"/>      
+      <multiplicity id="148" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="149">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="150">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="151" name="gameController"/>      
+      <multiplicity id="152" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="153">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="154" name="gameInformationModel"/>      
+      <multiplicity id="155" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="156">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="157" name="levelEditorView"/>      
+      <multiplicity id="158" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="159">    
+    <end type="SOURCE" refId="37" navigable="false">      
+      <attribute id="160" name="levelModel"/>      
+      <multiplicity id="161" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="162">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="163" name="levelEditorView"/>      
+      <multiplicity id="164" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="165">    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="166" name="groundGrid"/>      
+      <multiplicity id="167" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="168">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="169" name="menuLevelSelector"/>      
+      <multiplicity id="170" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="171">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <generalization id="172">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="173">    
+    <bendpoint x="5438" y="705"/>    
+    <bendpoint x="5438" y="1095"/>    
+    <bendpoint x="5372" y="1341"/>    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="174" name="levelModel"/>      
+      <multiplicity id="175" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="176">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="177">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="178" name="levelEditorController"/>      
+      <multiplicity id="179" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="180">    
+    <bendpoint x="4348" y="2949"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="181" name="groundGrid"/>      
+      <multiplicity id="182" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="183">    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="184" name="menuView"/>      
+      <multiplicity id="185" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="186">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <association id="187">    
+    <end type="SOURCE" refId="50" navigable="false">      
+      <attribute id="188" name="musicToPlay"/>      
+      <multiplicity id="189" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="48" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="190">    
+    <bendpoint x="3841" y="705"/>    
+    <bendpoint x="3841" y="477"/>    
+    <bendpoint x="3841" y="357"/>    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="35"/>  
+  </generalization>  
+  <association id="191">    
+    <bendpoint x="5387" y="357"/>    
+    <end type="SOURCE" refId="21" navigable="false">      
+      <attribute id="192" name="gameView"/>      
+      <multiplicity id="193" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="194">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="195" name="groundGrid"/>      
+      <multiplicity id="196" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="197">    
+    <bendpoint x="5800" y="1341"/>    
+    <bendpoint x="5800" y="1569"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="198" name="audioLoadHelper"/>      
+      <multiplicity id="199" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="50" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="200">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="201" name="levelModel"/>      
+      <multiplicity id="202" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="203">    
+    <end type="SOURCE" refId="36" navigable="false">      
+      <attribute id="204" name="menuImage"/>      
+      <multiplicity id="205" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="51" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="206">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="207" name="nav"/>      
+      <multiplicity id="208" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="209">    
+    <bendpoint x="4876" y="1341"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="210" name="levelModelForEditor"/>      
+      <multiplicity id="211" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="212">    
+    <bendpoint x="4570" y="1095"/>    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="213" name="levelEditorView"/>      
+      <multiplicity id="214" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

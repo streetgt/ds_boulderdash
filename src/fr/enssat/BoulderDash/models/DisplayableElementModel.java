@@ -53,6 +53,7 @@ public abstract class DisplayableElementModel {
         this.moving = moving;
         this.destructible = destructible;
         this.spriteName = spriteName;
+        //System.out.println("[DEBUG]: Constructor - DisplayableElementModel " + spriteName);
         this.priority = priority;
         this.animate = animate;
         this.impactExplosive = impactExplosive;
@@ -128,6 +129,7 @@ public abstract class DisplayableElementModel {
      * @return Path to the sprite file in storage
      */
     public String getPathToSprite() {
+ 
         return getSpriteStorageFolderPath() + getSpriteName() + ".gif";
     }
 

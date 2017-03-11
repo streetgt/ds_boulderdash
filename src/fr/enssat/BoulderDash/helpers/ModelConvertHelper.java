@@ -39,6 +39,7 @@ public class ModelConvertHelper {
     public DisplayableElementModel toModel(String spriteName, boolean isConvertible) throws UnknownModelException {
         DisplayableElementModel element;
 
+        //System.out.println("[DEBUG]: ModelConverterHelper.toModel - " + spriteName);
         // Instanciates the sprite element matching the given sprite name
         switch (spriteName) {
             case "black":
@@ -73,7 +74,10 @@ public class ModelConvertHelper {
 
             case "rockford":
             case "Rockford":
-                element = new RockfordModel();
+            case "rockford2":
+            case "Rockford2":
+                System.out.println("SpriteName: " + spriteName);
+                element = new RockfordModel(spriteName);
                 break;
 
             case "steelwall":

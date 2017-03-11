@@ -24,7 +24,7 @@ public class AssetsLevelEditorComponent extends JPanel implements ActionListener
      * Available choices
      */
     static List<String> choiceList = Arrays.asList(
-            "Boulder", "Diamond", "Dirt", "Brick Wall", "Expanding Wall", "Magic Wall", "Steel Wall", "Rockford"
+            "Boulder", "Diamond", "Dirt", "Brick Wall", "Expanding Wall", "Magic Wall", "Steel Wall", "Rockford", "Rockford2"
     );
 
     /**

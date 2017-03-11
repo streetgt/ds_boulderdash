@@ -31,7 +31,8 @@ public class InformationPanel extends JPanel implements Observer {
         this.levelModel.getGameInformationModel().addObserver(this);
 
         this.text.setText(
-                "Score : " + levelModel.getGameInformationModel().getScore()
+                "Rockford 0 - Score : " + levelModel.getGameInformationModel().getScore(0) + "\n" +
+                "Rockford 1 - Score : " + levelModel.getGameInformationModel().getScore(1)
                 + "\nRemaining diamonds : " + levelModel.getGameInformationModel().getRemainingsDiamonds()
         );
 
@@ -47,7 +48,8 @@ public class InformationPanel extends JPanel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         this.text.setText(
-                "Score : " + this.levelModel.getGameInformationModel().getScore()
+                "Rockford 0 - Score : " + levelModel.getGameInformationModel().getScore(0) + "\n" +
+                "Rockford 1 - Score : " + levelModel.getGameInformationModel().getScore(1)
                 + "\nRemaining diamonds : " + this.levelModel.getGameInformationModel().getRemainingsDiamonds()
         );
     }

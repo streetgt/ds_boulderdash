@@ -30,6 +30,7 @@ import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -63,10 +64,8 @@ public class LevelLoadHelper {
     private int limitsOffsetWidth = 1;
     private int limitsOffsetHeight = 1;
 
-    private RockfordModel rockfordInstance;
-    private int rockfordPositionX = 0;
-    private int rockfordPositionY = 0;
-
+    private ArrayList<RockfordModel> rockfordIntances = new ArrayList<>();
+    
     private int diamondsToCatch;
 
     private DisplayableElementModel[][] groundGrid;
@@ -267,9 +266,16 @@ public class LevelLoadHelper {
                 break;
 
             case "rockford":
-                this.setRockfordPositionX(rowIndex);
-                this.setRockfordPositionY(lineIndex);
-                this.setRockfordInstance((RockfordModel) element);
+                this.rockfordIntances.add((RockfordModel) element);
+                this.rockfordIntances.get(0).setPositionX(rowIndex);
+                this.rockfordIntances.get(0).setPositionY(lineIndex);
+                break;
+                
+            case "rockford2":
+                this.rockfordIntances.add((RockfordModel) element);
+                System.out.println("CAGR: " + this.rockfordIntances.get(1).getSpriteName());
+                this.rockfordIntances.get(1).setPositionX(rowIndex);
+                this.rockfordIntances.get(1).setPositionY(lineIndex);
                 break;
         }
 
@@ -385,59 +391,23 @@ public class LevelLoadHelper {
     }
 
     /**
-     * Gets the horizontal position of the Rockford element
-     *
-     * @return Horizontal position of the Rockford element
+     * Gets the rockford instances
+     * 
+     * @return rockford instances
      */
-    public int getRockfordPositionX() {
-        return this.rockfordPositionX;
+    public ArrayList<RockfordModel> getRockfordIntances() {
+        return rockfordIntances;
     }
 
     /**
-     * Sets the horizontal position of the Rockford element
-     *
-     * @param x Horizontal position of the Rockford element
+     * Sets the rockford instances
+     * 
+     * @param rockfordIntances 
      */
-    public void setRockfordPositionX(int x) {
-        this.rockfordPositionX = x;
+    public void setRockfordIntances(ArrayList<RockfordModel> rockfordIntances) {
+        this.rockfordIntances = rockfordIntances;
     }
-
-    /**
-     * Gets the vertical position of the Rockford element
-     *
-     * @return Vertical position of the Rockford element
-     */
-    public int getRockfordPositionY() {
-        return this.rockfordPositionY;
-    }
-
-    /**
-     * Sets the vertical position of the Rockford element
-     *
-     * @param y Vertical position of the Rockford element
-     */
-    public void setRockfordPositionY(int y) {
-        this.rockfordPositionY = y;
-    }
-
-    /**
-     * Gets the instance of Rockford
-     *
-     * @return Rockford instance
-     */
-    public RockfordModel getRockfordInstance() {
-        return this.rockfordInstance;
-    }
-
-    /**
-     * Sets the instance of Rockford
-     *
-     * @param rockfordInstance Rockford instance
-     */
-    public void setRockfordInstance(RockfordModel rockfordInstance) {
-        this.rockfordInstance = rockfordInstance;
-    }
-
+    
     /**
      * Gets the ground grid
      *

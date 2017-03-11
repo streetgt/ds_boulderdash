@@ -16,9 +16,10 @@ public class RockfordUpdateController implements Runnable {
 
     private LevelModel levelModel;
     private Thread elementMovingThread;
-    private int rockfordPositionX;
-    private int rockfordPositionY;
-    private boolean rockfordHasMoved;
+    private int[] rockfordInstance = new int[2];
+    private int[] rockfordPositionX  = new int[2];
+    private int[] rockfordPositionY  = new int[2];
+    private boolean[] rockfordHasMoved = new boolean[2];
 
     /**
      * Class constructor
@@ -29,7 +30,8 @@ public class RockfordUpdateController implements Runnable {
         this.levelModel = levelModel;
         this.elementMovingThread = new Thread(this);
         this.elementMovingThread.start();
-        this.rockfordHasMoved = false;
+        this.rockfordHasMoved[0] = false;
+        this.rockfordHasMoved[1] = false;
     }
 
     /**
@@ -38,9 +40,11 @@ public class RockfordUpdateController implements Runnable {
     public void run() {
         while (this.levelModel.isGameRunning()) {
             if (!this.levelModel.getGamePaused()) {
-                if (this.rockfordHasMoved) {
-                    this.levelModel.setPositionOfRockford(rockfordPositionX, rockfordPositionY);
-                    this.rockfordHasMoved = false;
+                for (int i = 0; i < 2; i++) {
+                    if (this.rockfordHasMoved[i]) {
+                        this.levelModel.setPositionOfRockford(rockfordInstance[i], rockfordPositionX[i], rockfordPositionY[i]);
+                        this.rockfordHasMoved[i] = false;
+                    }
                 }
             }
             try {
@@ -57,9 +61,10 @@ public class RockfordUpdateController implements Runnable {
      * @param rockfordPositionX Next horizontal position on the grid
      * @param rockfordPositionY Next vertical position on the grid
      */
-    public void moveRockford(int rockfordPositionX, int rockfordPositionY) {
-        this.rockfordPositionX = rockfordPositionX;
-        this.rockfordPositionY = rockfordPositionY;
-        this.rockfordHasMoved = true;
+    public void moveRockford(int index, int rockfordPositionX, int rockfordPositionY) {
+        this.rockfordInstance[index] = index;
+        this.rockfordPositionX[index] = rockfordPositionX;
+        this.rockfordPositionY[index] = rockfordPositionY;
+        this.rockfordHasMoved[index] = true;
     }
 }

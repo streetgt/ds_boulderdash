@@ -15,7 +15,7 @@ import fr.enssat.BoulderDash.models.DisplayableElementModel;
  */
 public class RockfordModel extends DisplayableElementModel {
 
-    private static String spriteName;
+    private final String spriteName;
     private static boolean isDestructible;
     private static boolean canMove;
     private static boolean impactExplosive;
@@ -27,10 +27,10 @@ public class RockfordModel extends DisplayableElementModel {
     /**
      * Maps the sub images of the sprite file
      */
-    private static ArrayList<BufferedImage> framesBlinking;
-    private static ArrayList<BufferedImage> framesRunningLeft;
-    private static ArrayList<BufferedImage> framesRunningRight;
-    private static ArrayList<BufferedImage> framesRunningUpOrDown;
+    private ArrayList<BufferedImage> framesBlinking;
+    private ArrayList<BufferedImage> framesRunningLeft;
+    private ArrayList<BufferedImage> framesRunningRight;
+    private ArrayList<BufferedImage> framesRunningUpOrDown;
 
     /**
      * Defines the size of the sprite
@@ -56,12 +56,13 @@ public class RockfordModel extends DisplayableElementModel {
     private long previousTime;
     private int currentFrame;
     private boolean hasExploded;
+    private int positionX;
+    private int positionY;
 
     /**
      * Static dataset Specifies the physical parameters of the object
      */
     static {
-        spriteName = "rockford";
         isDestructible = true;
         canMove = true;
         impactExplosive = true;
@@ -74,13 +75,17 @@ public class RockfordModel extends DisplayableElementModel {
     /**
      * Class constructor
      */
-    public RockfordModel() {
+    public RockfordModel(String spriteName) {
         super(isDestructible, canMove, spriteName, priority, impactExplosive, animate, falling, collideSound);
+        System.out.println("RockfordModel Contructor: " + spriteName);
+        this.spriteName = spriteName;
         // Speed of the animation of the sprite
         this.setSpeed(100);
         // Init the sprites in arrays
         this.initSprites();
         this.hasExploded = false;
+        
+
     }
 
     public void setSpeed(int speed) {
@@ -255,28 +260,30 @@ public class RockfordModel extends DisplayableElementModel {
      * append them into storage arrays
      */
     private void initSprites() {
-        framesBlinking = new ArrayList<BufferedImage>();
-        framesRunningLeft = new ArrayList<BufferedImage>();
-        framesRunningRight = new ArrayList<BufferedImage>();
-        framesRunningUpOrDown = new ArrayList<BufferedImage>();
-
+        System.out.println("[DEBUG]: RockfordModel.initSprites() : " + spriteName);
+        framesBlinking = new ArrayList<>();
+        framesRunningLeft = new ArrayList<>();
+        framesRunningRight = new ArrayList<>();
+        framesRunningUpOrDown = new ArrayList<>();
+        
+        BufferedImage sprite = this.loadSprite(spriteName);
         /* INIT SPRITE ARRAYS FOR ROCKFORD */
         for (int i = 0; i < 8; i++) {
             framesBlinking.add(
-                    this.grabSprite(this.loadSprite(spriteName), 7 + (24 * i), 79, SIZ_X_OF_SPRITE, SIZ_Y_OF_SPRITE)
+                    this.grabSprite(sprite, 7 + (24 * i), 79, SIZ_X_OF_SPRITE, SIZ_Y_OF_SPRITE)
             );
 
             framesRunningLeft.add(
-                    this.grabSprite(this.loadSprite(spriteName), 7 + (24 * i), 103, SIZ_X_OF_SPRITE, SIZ_Y_OF_SPRITE)
+                    this.grabSprite(sprite, 7 + (24 * i), 103, SIZ_X_OF_SPRITE, SIZ_Y_OF_SPRITE)
             );
 
             framesRunningRight.add(
-                    this.grabSprite(this.loadSprite(spriteName), 7 + (24 * i), 127, SIZ_X_OF_SPRITE, SIZ_Y_OF_SPRITE)
+                    this.grabSprite(sprite, 7 + (24 * i), 127, SIZ_X_OF_SPRITE, SIZ_Y_OF_SPRITE)
             );
         }
 
         framesRunningUpOrDown.add(
-                this.grabSprite(this.loadSprite(spriteName), 7, 7, SIZ_X_OF_SPRITE, SIZ_Y_OF_SPRITE)
+                this.grabSprite(sprite, 7, 7, SIZ_X_OF_SPRITE, SIZ_Y_OF_SPRITE)
         );
     }
 
@@ -297,4 +304,41 @@ public class RockfordModel extends DisplayableElementModel {
     public void setHasExplosed(boolean hasExploded) {
         this.hasExploded = hasExploded;
     }
+  
+    /**
+     * Get rockford position X
+     * 
+     * @return positionX
+     */
+    public int getPositionX() {
+        return positionX;
+    }
+
+    /**
+     * Set rockford position X
+     * 
+     * @param positionX 
+     */
+    public void setPositionX(int positionX) {
+        this.positionX = positionX;
+    }
+
+    /**
+     * Get rockford position Y
+     * 
+     * @return positionY
+     */
+    public int getPositionY() {
+        return positionY;
+    }
+
+    /**
+     * Set rockford position Y
+     * 
+     * @param positionX 
+     */
+    public void setPositionY(int positionY) {
+        this.positionY = positionY;
+    }
+    
 }

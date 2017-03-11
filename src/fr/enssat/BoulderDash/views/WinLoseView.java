@@ -7,12 +7,14 @@ import javax.swing.JTextArea;
 
 public class WinLoseView extends JFrame {
 
+    private int rockfordIndex;
     private String winOrLose;
 
     /**
      * Generate the HelpView
      */
-    public WinLoseView(String winOrLose) {
+    public WinLoseView(int rockfordIndex, String winOrLose) {
+        this.rockfordIndex = rockfordIndex;
         this.winOrLose = winOrLose;
         this.initializeView();
         this.createLayout();
@@ -40,9 +42,9 @@ public class WinLoseView extends JFrame {
         JTextArea help = new JTextArea();
         help.setEditable(false);
         if (winOrLose.equals("win")) {
-            help.setText("YOU WIN THE GAME :-)");
+            help.setText("Rockford " + rockfordIndex + " has won the game!".toUpperCase());
         } else {
-            help.setText("YOU LOSE THE GAME :-( TRY AGAIN!");
+            help.setText("Rockford " + rockfordIndex + " has lost the game!".toUpperCase());
         }
 
         this.add(help);

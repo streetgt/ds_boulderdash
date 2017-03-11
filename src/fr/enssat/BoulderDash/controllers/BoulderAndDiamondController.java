@@ -130,8 +130,15 @@ public class BoulderAndDiamondController implements Runnable {
             } else if (this.levelModel.getGroundLevelModel()[x + 1][y + 1].getSpriteName() == "black") {
                 this.levelModel.makeThisBoulderSlideRight(x, y);
             }
-        } else if (spriteNameBelow == "rockford" && this.levelModel.getGroundLevelModel()[x][y].isFalling()) {
-            this.levelModel.exploseGround(x, y + 1);
+        } else if (spriteNameBelow.compareTo("rockford") == 0 || spriteNameBelow.compareTo("rockford2") == 0 && this.levelModel.getGroundLevelModel()[x][y].isFalling()) {
+            if(spriteNameBelow.compareTo("rockford") == 0) {
+                System.out.println("exploseGround - rockford");
+                this.levelModel.exploseGround(0, x, y + 1);
+            } else {
+                 System.out.println("exploseGround - rockford2");
+                this.levelModel.exploseGround(1, x, y + 1);
+            }
+            
 
             this.audioLoadHelper.playSound("die");
 
@@ -154,11 +161,15 @@ public class BoulderAndDiamondController implements Runnable {
             }
         } else if (elementBelow.isDestructible() && spriteNameBelow != "dirt" && this.levelModel.getGroundLevelModel()[x][y].isFalling()) {
             this.levelModel.exploseThisBrickWall(x, y);
-        } else if (spriteNameLeft == "rockford" && this.levelModel.getRockford().isRunningRight() && this.levelModel.getGroundLevelModel()[x + 1][y].getSpriteName() == "black") {
+        } else if (spriteNameLeft.compareTo("rockford") == 0 && this.levelModel.getRockford(0).isRunningRight() && this.levelModel.getGroundLevelModel()[x + 1][y].getSpriteName() == "black") {
             this.levelModel.moveThisBoulderToRight(x, y);
-        } else if (spriteNameRight == "rockford" && this.levelModel.getRockford().isRunningLeft() && this.levelModel.getGroundLevelModel()[x - 1][y].getSpriteName() == "black") {
+        } else if (spriteNameRight.compareTo("rockford") == 0 && this.levelModel.getRockford(0).isRunningLeft() && this.levelModel.getGroundLevelModel()[x - 1][y].getSpriteName() == "black") {
             this.levelModel.moveThisBoulderToLeft(x, y);
-        } else {
+        } else if (spriteNameLeft.compareTo("rockford2") == 0 && this.levelModel.getRockford(1).isRunningRight() && this.levelModel.getGroundLevelModel()[x + 1][y].getSpriteName() == "black") {
+            this.levelModel.moveThisBoulderToRight(x, y);
+        } else if (spriteNameRight.compareTo("rockford2") == 0 && this.levelModel.getRockford(1).isRunningLeft() && this.levelModel.getGroundLevelModel()[x - 1][y].getSpriteName() == "black") {
+            this.levelModel.moveThisBoulderToLeft(x, y);
+        }else {
             this.levelModel.getGroundLevelModel()[x][y].setFalling(false);
         }
     }

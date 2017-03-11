@@ -5,19 +5,13 @@ import fr.enssat.BoulderDash.exceptions.UnknownModelException;
 import fr.enssat.BoulderDash.helpers.LevelLoadHelper;
 import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
 import fr.enssat.BoulderDash.helpers.ModelConvertHelper;
-import fr.enssat.BoulderDash.models.DisplayableElementModel;
-import fr.enssat.BoulderDash.models.RockfordModel;
-import fr.enssat.BoulderDash.models.GameInformationModel;
-import fr.enssat.BoulderDash.models.SteelWallModel;
-import fr.enssat.BoulderDash.models.EmptyModel;
-import fr.enssat.BoulderDash.models.DiamondModel;
-import fr.enssat.BoulderDash.models.DoorModel;
-import fr.enssat.BoulderDash.models.DirtModel;
-import fr.enssat.BoulderDash.models.ExpandingWallModel;
-import fr.enssat.BoulderDash.models.CursorModel;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
+import javax.imageio.ImageIO;
 
 /**
  * LevelModel
@@ -41,11 +35,11 @@ public class LevelModel extends Observable implements Runnable {
     private boolean showCursor = false;
     private CursorModel cursorModel;
     private LevelLoadHelper levelLoadHelper;
-    private RockfordModel rockford;
+    private ArrayList<RockfordModel> rockfords = new ArrayList<>();
     private GameInformationModel gameInformationModel;
-    private int rockfordPositionX, rockfordPositionY;
     private boolean gameRunning;
     private boolean gamePaused;
+    private boolean gameHasEnded;
     // Are we in editor or game mode ?
     private String mode;
 
@@ -71,6 +65,7 @@ public class LevelModel extends Observable implements Runnable {
         this.audioLoadHelper = audioLoadHelper;
         this.gamePaused = false;
         this.gameRunning = true;
+        this.gameHasEnded = false;
         this.mode = mode;
 
         this.levelLoadHelper = new LevelLoadHelper(this.levelName);
@@ -134,12 +129,10 @@ public class LevelModel extends Observable implements Runnable {
     }
 
     /**
-     * Initializes the Rockford position attributes
+     * Initializes the Rockfords position attributes
      */
     private void initRockford() {
-        this.rockfordPositionX = this.levelLoadHelper.getRockfordPositionX();
-        this.rockfordPositionY = this.levelLoadHelper.getRockfordPositionY();
-        this.rockford = this.levelLoadHelper.getRockfordInstance();
+        this.rockfords = this.levelLoadHelper.getRockfordIntances();
     }
 
     /**
@@ -166,14 +159,14 @@ public class LevelModel extends Observable implements Runnable {
     }
 
     /**
-     * Updates the horizontal & vertical positions of Rockford in the model
+     * Updates the horizontal & vertical positions of a Rockford in the model
      *
      * @param posX Horizontal position of Rockford
      * @param posY Vertical position of Rockford
      */
-    public void updateRockfordPosition(int posX, int posY) {
-        this.rockfordPositionY = posY;
-        this.rockfordPositionX = posX;
+    public void updateRockfordPosition(int index, int posX, int posY) {
+        this.rockfords.get(index).setPositionX(posX);
+        this.rockfords.get(index).setPositionY(posY); 
     }
 
     /**
@@ -193,10 +186,10 @@ public class LevelModel extends Observable implements Runnable {
     /**
      * Plays collision sound
      */
-    private void playCollisionSound(int posX, int posY) {
+    private void playCollisionSound(int index, int posX, int posY) {
         String collisionSound = null;
 
-        if (this.getRockford().isCollisionDone() == false) {
+        if (this.getRockford(index).isCollisionDone() == false) {
             // Out of bounds?
             if (this.isOutOfBounds(posX, posY) == true) {
                 collisionSound = "touch";
@@ -205,7 +198,7 @@ public class LevelModel extends Observable implements Runnable {
                 collisionSound = nextElement.getCollideSound();
             }
 
-            this.getRockford().setCollisionDone(true);
+            this.getRockford(index).setCollisionDone(true);
         }
 
         if (collisionSound != null) {
@@ -218,8 +211,8 @@ public class LevelModel extends Observable implements Runnable {
      *
      * @return Horizontal position of Rockford
      */
-    public int getRockfordPositionX() {
-        return this.rockfordPositionX;
+    public int getRockfordPositionX(int index) {
+        return this.rockfords.get(index).getPositionX();
     }
 
     /**
@@ -228,22 +221,22 @@ public class LevelModel extends Observable implements Runnable {
      * @param posX Next horizontal position on the grid
      * @param posY Next vertical position on the grid
      */
-    public void setPositionOfRockford(int posX, int posY) {
-        int oldX = this.getRockfordPositionX();
-        int oldY = this.getRockfordPositionY();
+    public void setPositionOfRockford(int index, int posX, int posY) {
+        int oldX = this.getRockfordPositionX(index);
+        int oldY = this.getRockfordPositionY(index);
 
-        if (this.groundGrid[posX][posY].getSpriteName() == "diamond") {
-            this.gameInformationModel.incrementScore();
+        if (this.groundGrid[posX][posY].getSpriteName().compareTo("diamond") == 0) {
+            this.gameInformationModel.incrementScore(index);
             this.gameInformationModel.decrementRemainingsDiamonds();
+            
             if (this.gameInformationModel.getRemainingsDiamonds() == 0) {
-                this.spawnExit();
+                System.out.println("All diamonds found!");
+                this.gameRunning = false;
+                this.localNotifyObservers();
             }
         }
-        if (this.groundGrid[posX][posY].getSpriteName() == "door") {
-            this.gameRunning = false;
-        }
-
-        this.playCollisionSound(posX, posY);
+        
+        this.playCollisionSound(index, posX, posY);
 
         // Check that we are not out of bound...
         if (this.isOutOfBounds(posX, posY) == false) {
@@ -251,22 +244,12 @@ public class LevelModel extends Observable implements Runnable {
             this.groundGrid[oldX][oldY] = new EmptyModel();
 
             // Save the x / y pos of Rockford in the levelModel only
-            this.updateRockfordPosition(posX, posY);
+            this.updateRockfordPosition(index, posX, posY);
 
-            this.groundGrid[posX][posY] = this.getRockford();
+            this.groundGrid[posX][posY] = this.getRockford(index);
         }
     }
-
-    /**
-     * When there is no more diamonds to catch, spawn a exit door randomly in
-     * the game
-     */
-    private void spawnExit() {
-        int x = (int) (Math.random() * (this.getSizeHeight() - 2));
-        int y = (int) (Math.random() * (this.getSizeWidth() - 2));
-        this.groundGrid[x + 1][y + 1] = new DoorModel();
-    }
-
+    
     /**
      * Trigger block change with provided value
      *
@@ -279,7 +262,7 @@ public class LevelModel extends Observable implements Runnable {
         }
 
         // Cancel if Rockford is already in model
-        if ((blockValue.equals("Rockford") || blockValue.equals("rockford")) && this.isRockfordInModel()) {
+        if ((blockValue.compareTo("Rockford") == 0 || blockValue.compareTo("rockford") == 0 || blockValue.compareTo("Rockford2") == 0 || blockValue.compareTo("rockford2") == 0) && this.areRockfordsInModel()) {
             return;
         }
 
@@ -307,10 +290,12 @@ public class LevelModel extends Observable implements Runnable {
     /**
      * Gets the vertical position of Rockford from the model
      *
+     * @param rockford instances index
+     * 
      * @return Vertical position of Rockford
      */
-    public int getRockfordPositionY() {
-        return this.rockfordPositionY;
+    public int getRockfordPositionY(int index) {
+        return this.rockfords.get(index).getPositionY();
     }
 
     /**
@@ -318,8 +303,16 @@ public class LevelModel extends Observable implements Runnable {
      *
      * @return Rockford object
      */
-    public RockfordModel getRockford() {
-        return this.rockford;
+    public RockfordModel getRockford(int index) {
+        return this.rockfords.get(index);
+    }
+
+    public ArrayList<RockfordModel> getRockfords() {
+        return rockfords;
+    }
+
+    public void setRockfords(ArrayList<RockfordModel> rockfords) {
+        this.rockfords = rockfords;
     }
 
     /**
@@ -342,7 +335,7 @@ public class LevelModel extends Observable implements Runnable {
      */
     public BufferedImage getImage(int x, int y) {
         DisplayableElementModel elementModel = this.getDisplayableElement(x, y);
-
+       
         if (elementModel == null) {
             return new DirtModel().getSprite();
         }
@@ -370,19 +363,19 @@ public class LevelModel extends Observable implements Runnable {
      *
      * @return Whether rockford is in model or not
      */
-    public boolean isRockfordInModel() {
-        boolean isInModel = false;
+    public boolean areRockfordsInModel() {
+        boolean areInModel = false;
 
         // Iterate and catch it!
-        for (int x = 0; x < this.getSizeWidth() && !isInModel; x++) {
-            for (int y = 0; y < this.getSizeHeight() && !isInModel; y++) {
-                if (this.groundGrid[x][y] != null && this.groundGrid[x][y].getSpriteName() == "rockford") {
-                    isInModel = true;
+        for (int x = 0; x < this.getSizeWidth() && !areInModel; x++) {
+            for (int y = 0; y < this.getSizeHeight() && !areInModel; y++) {
+                if (this.groundGrid[x][y] != null && this.groundGrid[x][y].getSpriteName().compareTo("rockford") == 0 && this.groundGrid[x][y].getSpriteName().compareTo("rockford2") == 0) {
+                    areInModel = true;
                 }
             }
         }
 
-        return isInModel;
+        return areInModel;
     }
 
     /**
@@ -396,7 +389,7 @@ public class LevelModel extends Observable implements Runnable {
         // Iterate and catch it!
         for (int x = 0; x < this.getSizeWidth(); x++) {
             for (int y = 0; y < this.getSizeHeight(); y++) {
-                if (this.groundGrid[x][y] != null && this.groundGrid[x][y].getSpriteName() == "diamond") {
+                if (this.groundGrid[x][y] != null && this.groundGrid[x][y].getSpriteName().compareTo("diamond") == 0) {
                     numberOfDiamonds += 1;
                 }
             }
@@ -414,9 +407,9 @@ public class LevelModel extends Observable implements Runnable {
             throw new LevelConstraintNotRespectedException("Add at least 3 diamonds!");
         }
 
-        // Rockford in model?
-        if (!this.isRockfordInModel()) {
-            throw new LevelConstraintNotRespectedException("Add Rockford on the map!");
+        // Rockfords in the model?
+        if (!this.areRockfordsInModel()) {
+            throw new LevelConstraintNotRespectedException("Add Rockfords on the map!");
         }
     }
 
@@ -512,8 +505,8 @@ public class LevelModel extends Observable implements Runnable {
     /**
      * Increments the user score
      */
-    public void incrementScore() {
-        this.gameInformationModel.incrementScore();
+    public void incrementScore(int index) {
+        this.gameInformationModel.incrementScore(index);
     }
 
     /**
@@ -649,7 +642,7 @@ public class LevelModel extends Observable implements Runnable {
      * @param x Object horizontal position
      * @param y Object vertical position
      */
-    public void exploseGround(int x, int y) {
+    public void exploseGround(int index, int x, int y) {
         this.groundGrid[x][y] = new EmptyModel();
         this.groundGrid[x + 1][y] = new EmptyModel();
         this.groundGrid[x - 1][y] = new EmptyModel();
@@ -659,7 +652,7 @@ public class LevelModel extends Observable implements Runnable {
         this.groundGrid[x][y - 1] = new EmptyModel();
         this.groundGrid[x + 1][y - 1] = new EmptyModel();
         this.groundGrid[x - 1][y - 1] = new EmptyModel();
-        this.rockford.setHasExplosed(true);
+        this.getRockford(index).setHasExplosed(true);
 
         // Again a sleep to notify the observers properly
         try {
@@ -826,4 +819,11 @@ public class LevelModel extends Observable implements Runnable {
         this.mode = mode;
     }
 
+    public boolean isGameHasEnded() {
+        return gameHasEnded;
+    }
+
+    public void setGameHasEnded(boolean gameHasEnded) {
+        this.gameHasEnded = gameHasEnded;
+    }
 }

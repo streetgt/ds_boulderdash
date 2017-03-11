@@ -12,34 +12,29 @@ import java.util.Observable;
  */
 public class GameInformationModel extends Observable {
 
-    private int score;
+    private int[] score = new int[2];
     private int remainingsDiamonds;
     private int timer;
 
     public GameInformationModel(int remainingsDiamonds) {
-        this.score = 0;
+        this.score[0] = 0;
+        this.score[1] = 0;
         this.remainingsDiamonds = remainingsDiamonds;
         this.timer = 0;
     }
 
-    /**
-     * Returns the actual score
-     *
-     * @return score
-     */
-    public int getScore() {
+    public int getScore(int index) {
+        return score[index];
+    }
+    
+    public int[] getScore() {
         return score;
     }
-
-    /**
-     * Sets the score
-     *
-     * @param score Score
-     */
-    public void setScore(int score) {
+    
+    public void setScore(int[] score) {
         this.score = score;
     }
-
+    
     /**
      * Returns the actual number of remaining diamonds
      *
@@ -79,8 +74,8 @@ public class GameInformationModel extends Observable {
     /**
      * Increments the score & notify observers
      */
-    public void incrementScore() {
-        this.score += 1;
+    public void incrementScore(int index) {
+        this.score[index] += 1;
         this.myNotify();
     }
 
@@ -106,9 +101,17 @@ public class GameInformationModel extends Observable {
      * Reset details about object
      */
     public void resetInformations() {
-        this.score = 0;
+        this.score[0] = 0;
+        this.score[0] = 1;
         this.remainingsDiamonds = remainingsDiamonds;
         this.timer = 0;
     }
 
+    public int getRockfordMoreDiamonds()
+    {
+        if(score[1] > score[0]) 
+            return 1;
+        
+        return 0;
+    }
 }

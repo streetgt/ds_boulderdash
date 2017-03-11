@@ -43,21 +43,35 @@ public abstract class GroundView extends JPanel implements Observer {
      * @param g Map graphical object
      */
     public void drawTerrain(int width, int height, Graphics g) {
+        //System.out.println("Working");
         // Draw items
-        if (this.levelModel.getMode() == "game") {
+        if (this.levelModel.getMode().compareTo("game") == 0) {
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
                     g.drawImage(this.levelModel.getImage(x, y), (x * 16), (y * 16), this);
                 }
             }
-
-            if (!this.levelModel.isGameRunning()) {
-                if (!this.levelModel.getRockford().getHasExplosed()) {
-                    this.displayWin();
+            
+            if (!this.levelModel.isGameRunning() && !this.levelModel.isGameHasEnded()) {
+                System.out.println("teste");
+                int diamonds = this.levelModel.getGameInformationModel().getRemainingsDiamonds();
+                if(diamonds == 0) {
+                    System.out.println("GAME HAS ENDED");
+                    int winner = this.levelModel.getGameInformationModel().getRockfordMoreDiamonds();
+                    System.out.println("Winner: " + winner);
+                    this.displayWin(winner);
                 } else {
-                    this.displayLose();
+                    for (int i = 0; i < 2; i++) {
+                        if(this.levelModel.getRockford(i).getHasExplosed()) {
+                            this.displayLose(i);
+                            System.out.println("FOUND EXPLODED STATE! " + i);
+                            break;
+                        }
+                    }
                 }
+                this.levelModel.setGameHasEnded(true);
             }
+            
         } else {
             for (int x = 0; x < width; x++) {
                 for (int y = 0; y < height; y++) {
@@ -78,15 +92,15 @@ public abstract class GroundView extends JPanel implements Observer {
     /**
      * Set the view to inform the user that he won
      */
-    private void displayWin() {
-        new WinLoseView("win");
+    private void displayWin(int index) {
+       new WinLoseView(index,"win");
     }
 
     /**
      * Set the view to inform the user that he is not good at this game
      */
-    private void displayLose() {
-        new WinLoseView("lose");
+    private void displayLose(int index) {
+        new WinLoseView(index,"loose");
     }
 
     /**

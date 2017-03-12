@@ -76,7 +76,7 @@ public class ModelConvertHelper {
             case "Rockford":
             case "rockford2":
             case "Rockford2":
-                System.out.println("SpriteName: " + spriteName);
+                System.out.println("[DEBUG]: ModelConvertHelper - SpriteName: " + spriteName);
                 element = new RockfordModel(spriteName);
                 break;
 

@@ -1,0 +1,9 @@
+grant codeBase "${edu.ufp.sd.helloworld.activation.setup.codebase}" {
+    // permissions to read system properties required by setup program
+    permission java.util.PropertyPermission "edu.ufp.sd.helloworld.activation.impl.codebase","read";
+    permission java.util.PropertyPermission "edu.ufp.sd.helloworld.activation.policy","read";
+    permission java.util.PropertyPermission "edu.ufp.sd.helloworld.activation.file","read";
+    permission java.util.PropertyPermission "edu.ufp.sd.helloworld.activation.servicename","read";
+    // permission to connect to the activation system and the registry
+    permission java.net.SocketPermission "*:1098-1099","connect";
+};

@@ -1,0 +1,8 @@
+grant codeBase "${edu.ufp.sd.helloworld.client.codebase}" {
+    
+    // permissions to read system properties required by the client
+    permission java.io.PropertyPermission "${edu.ufp.sd.helloworld.servicename}","read";
+    
+    // permission to connect to the registry, activation system, and remote host
+    permission java.net.SocketPermission "*:1024-","accept";
+};

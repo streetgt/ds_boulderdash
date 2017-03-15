@@ -12,29 +12,52 @@ import java.util.Observable;
  */
 public class GameInformationModel extends Observable {
 
-    private int[] score = new int[2];
+    private int[] score;
     private int remainingsDiamonds;
     private int timer;
 
+    /**
+     * GameInformationModel - Constructor
+     * 
+     * @param remainingsDiamonds 
+     */
     public GameInformationModel(int remainingsDiamonds) {
-        this.score[0] = 0;
-        this.score[1] = 0;
+        this.score = new int[2];
+        for (int i = 0; i < score.length; i++) {
+            this.score[i] = 0;
+        }
         this.remainingsDiamonds = remainingsDiamonds;
         this.timer = 0;
     }
 
+    /**
+     * Gets the current score gived a index
+     *
+     * @param index
+     * @return
+     */
     public int getScore(int index) {
         return score[index];
     }
-    
+
+    /**
+     * Gets the current score
+     *
+     * @return
+     */
     public int[] getScore() {
         return score;
     }
-    
+
+    /**
+     * Set score
+     *
+     * @param score
+     */
     public void setScore(int[] score) {
         this.score = score;
     }
-    
+
     /**
      * Returns the actual number of remaining diamonds
      *
@@ -101,17 +124,19 @@ public class GameInformationModel extends Observable {
      * Reset details about object
      */
     public void resetInformations() {
-        this.score[0] = 0;
-        this.score[0] = 1;
+        for (int i = 0; i < this.score.length; i++) {
+            this.score[i] = 0;
+        }
         this.remainingsDiamonds = remainingsDiamonds;
         this.timer = 0;
     }
 
-    public int getRockfordMoreDiamonds()
-    {
-        if(score[1] > score[0]) 
-            return 1;
-        
-        return 0;
+    /**
+     * Gets the Rockford with more collected diamonds
+     *
+     * @return
+     */
+    public int getRockfordMoreDiamonds() {
+        return score[1] > score[0] ? 1 : 0;
     }
 }

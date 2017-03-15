@@ -9,6 +9,7 @@ import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import edu.ufp.sd.boulderdash.server.BoulderDashServerRI;
+import fr.enssat.BoulderDash.Game;
 
 /**
  * <p>

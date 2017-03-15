@@ -13,7 +13,7 @@ export SCRIPT_ROLE=$1
 #@REM ======================== CHANGE BELOW ACCORDING YOUR PROJECT and PC SETTINGS ========================
 #@REM ==== PC STUFF ====
 export JDK=/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java
-export USERNAME=${USERNAME}
+export USERNAME=tiagocardoso
 
 #@REM ==== JAVA NAMING STUFF ====
 export JAVAPROJ_NAME=SD_BoulderDash

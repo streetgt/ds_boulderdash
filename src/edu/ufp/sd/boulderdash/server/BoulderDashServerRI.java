@@ -1,5 +1,6 @@
 package edu.ufp.sd.boulderdash.server;
 
+import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -13,4 +14,6 @@ import java.rmi.RemoteException;
  */
 public interface BoulderDashServerRI extends Remote {
     public void print(String msg) throws RemoteException;
+    public int login(BoulderDashClientRI client, String username, String password) throws RemoteException;
+    public int logout(String username) throws RemoteException;
 }

@@ -1,8 +1,13 @@
 package edu.ufp.sd.boulderdash.server;
 
 import java.net.InetAddress;
+import java.rmi.AccessException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
 
 /**
  * <p>
@@ -22,6 +27,7 @@ public class BoulderDashServer {
     public static String serviceName = "rmi://localhost:1099/BoulderDashService";
 
     public BoulderDashServer(String hostIP) {
+        System.out.println("CURRENT WORKING DIRECTORY:" + System.getProperty("user.dir"));
         try {
             // Create and install a security manager
             if (System.getSecurityManager() == null) {
@@ -43,22 +49,28 @@ public class BoulderDashServer {
             if (registry != null) {
                 String[] srvList = registry.list();
                 System.out.println("BoulderDashServer - Constructor(): list of servervices svrList.length = " + srvList.length);
+                
                 for (int i = 0; i < srvList.length; i++) {
                     System.out.println("BoulderDashServer - Constructor(): service svrLis[" + i + "] = " + srvList[i]);
                 }
+                
                 System.out.println("BoulderDashServer - Constructor(): try register service " + serviceName + "...");
                 BoulderDashServerRI bdsRI = (BoulderDashServerRI) new BoulderDashServerImpl();
 
-                //Naming.bind(serviceName, hwRI);
-                registry.rebind(BoulderDashServer.serviceName, bdsRI);
-                System.out.println("BoulderDashServer - Constructor(): service bound and running!");
+                try {
+                    registry.rebind(BoulderDashServer.serviceName, bdsRI);
+                    System.out.println("BoulderDashServer - Constructor(): service bound and running!");
+                } catch (AccessException e) {
+                    Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, e);
+                }
+                
             } else {
-                //System.out.println("BoulderDashServer - Constructor(): create registry on port 1099");
-                //registry = LocateRegistry.createRegistry(1099);
+                System.out.println("BoulderDashServer - Constructor(): create registry on port 1099");
+                registry = LocateRegistry.createRegistry(1099);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            //System.out.println(e.getMessage());
+            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

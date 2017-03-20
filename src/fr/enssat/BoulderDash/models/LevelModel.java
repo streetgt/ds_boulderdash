@@ -40,8 +40,6 @@ public class LevelModel extends Observable implements Runnable {
     private boolean gameRunning;
     private boolean gamePaused;
     private boolean gameHasEnded;
-    // Are we in editor or game mode ?
-    private String mode;
 
     /**
      * Sprite animation thread
@@ -58,15 +56,13 @@ public class LevelModel extends Observable implements Runnable {
      *
      * @param levelName Level name
      * @param audioLoadHelper Audio load helper
-     * @param mode Instance mode
      */
-    public LevelModel(String levelName, AudioLoadHelper audioLoadHelper, String mode) {
+    public LevelModel(String levelName, AudioLoadHelper audioLoadHelper) {
         this.levelName = levelName;
         this.audioLoadHelper = audioLoadHelper;
         this.gamePaused = false;
         this.gameRunning = true;
         this.gameHasEnded = false;
-        this.mode = mode;
 
         this.levelLoadHelper = new LevelLoadHelper(this.levelName);
 
@@ -79,45 +75,9 @@ public class LevelModel extends Observable implements Runnable {
 
         this.createLimits();
 
-        if (this.mode.equals("game")) {
-            this.initRockford();
-            this.initThreadAnimator();
-        }
-    }
-
-    /**
-     * Class constructor
-     *
-     * @param levelName Level name
-     * @param audioLoadHelper Audio load helper
-     */
-    public LevelModel(String levelName, AudioLoadHelper audioLoadHelper) {
-        this(levelName, audioLoadHelper, "game");
-    }
-
-    /**
-     * Class constructor (editor mode)
-     *
-     * @param audioLoadHelper Audio load helper
-     */
-    public LevelModel(AudioLoadHelper audioLoadHelper) {
-        this.audioLoadHelper = audioLoadHelper;
-        this.gameRunning = false;
-        this.mode = "editor";
-
-        this.sizeWidth = 25 + 2;
-        this.sizeHeight = 25 + 2;
-
-        // Generate dirt
-        this.groundGrid = new DisplayableElementModel[this.sizeWidth][this.sizeHeight];
-
-        for (int x = 0; x < this.sizeWidth; x++) {
-            for (int y = 0; y < this.sizeHeight; y++) {
-                this.groundGrid[x][y] = new DirtModel();
-            }
-        }
-
-        this.createLimits();
+        this.initRockford();
+        this.initThreadAnimator();
+        
     }
 
     /**
@@ -799,24 +759,6 @@ public class LevelModel extends Observable implements Runnable {
      */
     public boolean getGamePaused() {
         return this.gamePaused;
-    }
-
-    /**
-     * Get the mode where this levelModel is used
-     *
-     * @return mode
-     */
-    public String getMode() {
-        return mode;
-    }
-
-    /**
-     * Set the mode where this levelModel is used
-     *
-     * @param mode
-     */
-    public void setMode(String mode) {
-        this.mode = mode;
     }
 
     public boolean isGameHasEnded() {

@@ -45,47 +45,30 @@ public abstract class GroundView extends JPanel implements Observer {
     public void drawTerrain(int width, int height, Graphics g) {
         //System.out.println("Working");
         // Draw items
-        if (this.levelModel.getMode().compareTo("game") == 0) {
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    g.drawImage(this.levelModel.getImage(x, y), (x * 16), (y * 16), this);
-                }
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                g.drawImage(this.levelModel.getImage(x, y), (x * 16), (y * 16), this);
             }
-            
-            if (!this.levelModel.isGameRunning() && !this.levelModel.isGameHasEnded()) {
-                System.out.println("teste");
-                int diamonds = this.levelModel.getGameInformationModel().getRemainingsDiamonds();
-                if(diamonds == 0) {
-                    System.out.println("GAME HAS ENDED");
-                    int winner = this.levelModel.getGameInformationModel().getRockfordMoreDiamonds();
-                    System.out.println("Winner: " + winner);
-                    this.displayWin(winner);
-                } else {
-                    for (int i = 0; i < 2; i++) {
-                        if(this.levelModel.getRockford(i).getHasExplosed()) {
-                            this.displayLose(i);
-                            System.out.println("FOUND EXPLODED STATE! " + i);
-                            break;
-                        }
+        }
+
+        if (!this.levelModel.isGameRunning() && !this.levelModel.isGameHasEnded()) {
+            System.out.println("teste");
+            int diamonds = this.levelModel.getGameInformationModel().getRemainingsDiamonds();
+            if(diamonds == 0) {
+                System.out.println("GAME HAS ENDED");
+                int winner = this.levelModel.getGameInformationModel().getRockfordMoreDiamonds();
+                System.out.println("Winner: " + winner);
+                this.displayWin(winner);
+            } else {
+                for (int i = 0; i < 2; i++) {
+                    if(this.levelModel.getRockford(i).getHasExplosed()) {
+                        this.displayLose(i);
+                        System.out.println("FOUND EXPLODED STATE! " + i);
+                        break;
                     }
                 }
-                this.levelModel.setGameHasEnded(true);
             }
-            
-        } else {
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    g.drawImage(this.levelModel.getImage(x, y), (x * 16), (y * 16), this);
-                }
-            }
-            if (this.levelModel.getShowCursor()) {
-                g.drawImage(
-                        this.levelModel.getCursorImage(),
-                        ((this.levelModel.getCursorXPosition() + 1) * 16),
-                        ((this.levelModel.getCursorYPosition() + 1) * 16),
-                        this
-                );
-            }
+            this.levelModel.setGameHasEnded(true);
         }
     }
 

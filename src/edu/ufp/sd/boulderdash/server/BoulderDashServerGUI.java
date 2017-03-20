@@ -5,6 +5,10 @@
  */
 package edu.ufp.sd.boulderdash.server;
 
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author tiagocardoso
@@ -12,14 +16,14 @@ package edu.ufp.sd.boulderdash.server;
 public class BoulderDashServerGUI extends javax.swing.JFrame {
 
     private BoulderDashServerImpl bds;
-    
+
     /**
      * Creates new form BouderDashServerGUI
      */
     public BoulderDashServerGUI(BoulderDashServerImpl bds) {
         this.bds = bds;
         initComponents();
-        
+
         this.setVisible(true);
     }
 
@@ -36,8 +40,8 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
         jTabbedPane = new javax.swing.JTabbedPane();
         jPanelGeral = new javax.swing.JPanel();
         jpInformation = new javax.swing.JPanel();
-        lblConnectedPlayers = new javax.swing.JLabel();
-        lblConnectedPlayersValue = new javax.swing.JLabel();
+        lblConnectedClients = new javax.swing.JLabel();
+        lblConnectedClientsValue = new javax.swing.JLabel();
         lblLobbys = new javax.swing.JLabel();
         lblLobbysValue = new javax.swing.JLabel();
         jPanelLobbys = new javax.swing.JPanel();
@@ -52,9 +56,9 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
         jpInformation.setBorder(javax.swing.BorderFactory.createTitledBorder("Information"));
         jpInformation.setToolTipText("Information");
 
-        lblConnectedPlayers.setText("Connected Players:");
+        lblConnectedClients.setText("Connected Clients:");
 
-        lblConnectedPlayersValue.setText("0");
+        lblConnectedClientsValue.setText("0");
 
         lblLobbys.setText("Lobbys:");
 
@@ -68,9 +72,9 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jpInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpInformationLayout.createSequentialGroup()
-                        .addComponent(lblConnectedPlayers)
+                        .addComponent(lblConnectedClients)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblConnectedPlayersValue))
+                        .addComponent(lblConnectedClientsValue))
                     .addGroup(jpInformationLayout.createSequentialGroup()
                         .addComponent(lblLobbys)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -82,8 +86,8 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
             .addGroup(jpInformationLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jpInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblConnectedPlayers)
-                    .addComponent(lblConnectedPlayersValue))
+                    .addComponent(lblConnectedClients)
+                    .addComponent(lblConnectedClientsValue))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLobbys)
@@ -190,20 +194,26 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
         bds.shutdown();
     }//GEN-LAST:event_btnShutdownActionPerformed
 
-    protected void setConnectedPlayers(int value) {
-        this.lblConnectedPlayersValue.setText(String.valueOf(value));
-    }
-    
-    protected void addConnectedUser(String username)
-    {
+    protected void addConnectedClient(String username, int value) {
         this.listPlayers.add(username);
+        this.lblConnectedClientsValue.setText(String.valueOf(value));
+        try {
+            this.bds.setState(new State().new ConnectedClients(value));
+        } catch (RemoteException ex) {
+            Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
-    protected void removeConnectedUser(String username)
-    {
+
+    protected void removeConnectedClient(String username, int value) {
         this.listPlayers.remove(username);
+        this.lblConnectedClientsValue.setText(String.valueOf(value));
+        try {
+            this.bds.setState(new State().new ConnectedClients(value));
+        } catch (RemoteException ex) {
+            Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnShutdown;
     private javax.swing.JList<String> jListLobbys;
@@ -214,8 +224,8 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JPanel jpInformation;
-    private javax.swing.JLabel lblConnectedPlayers;
-    private javax.swing.JLabel lblConnectedPlayersValue;
+    private javax.swing.JLabel lblConnectedClients;
+    private javax.swing.JLabel lblConnectedClientsValue;
     private javax.swing.JLabel lblLobbys;
     private javax.swing.JLabel lblLobbysValue;
     private java.awt.List listPlayers;

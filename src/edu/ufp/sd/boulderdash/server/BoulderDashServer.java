@@ -49,11 +49,11 @@ public class BoulderDashServer {
             if (registry != null) {
                 String[] srvList = registry.list();
                 System.out.println("BoulderDashServer - Constructor(): list of servervices svrList.length = " + srvList.length);
-                
+
                 for (int i = 0; i < srvList.length; i++) {
                     System.out.println("BoulderDashServer - Constructor(): service svrLis[" + i + "] = " + srvList[i]);
                 }
-                
+
                 System.out.println("BoulderDashServer - Constructor(): try register service " + serviceName + "...");
                 BoulderDashServerRI bdsRI = (BoulderDashServerRI) new BoulderDashServerImpl();
 
@@ -63,7 +63,7 @@ public class BoulderDashServer {
                 } catch (AccessException e) {
                     Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, e);
                 }
-                
+
             } else {
                 System.out.println("BoulderDashServer - Constructor(): create registry on port 1099");
                 registry = LocateRegistry.createRegistry(1099);

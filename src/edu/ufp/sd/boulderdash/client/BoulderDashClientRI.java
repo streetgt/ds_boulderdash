@@ -13,6 +13,10 @@ import java.rmi.RemoteException;
  * @author tiagocardoso
  */
 public interface BoulderDashClientRI extends Remote {
-    public String getUsername() throws RemoteException;
+
+    public String getClientUsername() throws RemoteException;
+
     public void sendMessage(String message) throws RemoteException;
+
+    public void update() throws RemoteException;
 }

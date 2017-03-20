@@ -112,9 +112,9 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblConnectedPlayers" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblConnectedClients" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblConnectedPlayersValue" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblConnectedClientsValue" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblLobbys" min="-2" max="-2" attributes="0"/>
@@ -131,8 +131,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblConnectedPlayers" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblConnectedPlayersValue" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblConnectedClients" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblConnectedClientsValue" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -145,12 +145,12 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblConnectedPlayers">
+                    <Component class="javax.swing.JLabel" name="lblConnectedClients">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Connected Players:"/>
+                        <Property name="text" type="java.lang.String" value="Connected Clients:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="lblConnectedPlayersValue">
+                    <Component class="javax.swing.JLabel" name="lblConnectedClientsValue">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="0"/>
                       </Properties>

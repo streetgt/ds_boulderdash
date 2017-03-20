@@ -23,9 +23,8 @@ import java.rmi.AccessException;
  * @version 1.0
  */
 public class BoulderDashClient {
-    
-    //public static String serviceName = "rmi://localhost:1099/BoulderDashService";
 
+    //public static String serviceName = "rmi://localhost:1099/BoulderDashService";
     public BoulderDashClient(String[] args) {
         if (args == null) {
             System.out.println("BoulderDashClient - Constructor(): Args null");
@@ -93,5 +92,5 @@ public class BoulderDashClient {
         }
         BoulderDashClient bdc = new BoulderDashClient((args != null && args.length > 0 ? args : null));
     }
-    
+
 }

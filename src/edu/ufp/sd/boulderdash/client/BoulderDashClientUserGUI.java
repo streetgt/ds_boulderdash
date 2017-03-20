@@ -18,14 +18,14 @@ import javax.swing.JOptionPane;
  *
  * @author tiagocardoso
  */
-public class BoulderDashClientLoginGUI extends javax.swing.JFrame implements ActionListener, WindowListener {
+public class BoulderDashClientUserGUI extends javax.swing.JFrame implements ActionListener, WindowListener {
 
     private BoulderDashClientImpl bdc;
-    
+
     /**
      * Creates new form BoulderDashClientLoginUI
      */
-    public BoulderDashClientLoginGUI(BoulderDashClientImpl bdc) {
+    public BoulderDashClientUserGUI(BoulderDashClientImpl bdc) {
         this.bdc = bdc;
         initComponents();
         this.setVisible(true);
@@ -48,6 +48,7 @@ public class BoulderDashClientLoginGUI extends javax.swing.JFrame implements Act
         jtfPassword = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btnRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,25 +63,32 @@ public class BoulderDashClientLoginGUI extends javax.swing.JFrame implements Act
 
         jLabel2.setText("Password:");
 
+        btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jtfPassword)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtfPassword)
-                            .addComponent(jtfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(btnLogin)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfUsername))
+                .addGap(60, 60, 60))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,7 +102,9 @@ public class BoulderDashClientLoginGUI extends javax.swing.JFrame implements Act
                     .addComponent(jtfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogin)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLogin)
+                    .addComponent(btnRegister))
                 .addContainerGap())
         );
 
@@ -114,32 +124,39 @@ public class BoulderDashClientLoginGUI extends javax.swing.JFrame implements Act
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         boolean login = checkLoginFields();
-        if(login) {
+        if (login) {
             bdc.triggeredLogin(jtfUsername.getText(), String.valueOf(jtfPassword.getPassword()));
         }
-        
-        
+
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        boolean register = checkLoginFields();
+        if (register) {
+            bdc.triggeredRegister(jtfUsername.getText(), String.valueOf(jtfPassword.getPassword()));
+        }
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
     private boolean checkLoginFields() {
-        if(jtfPassword.getPassword().length == 0) {
+        if (jtfPassword.getPassword().length == 0) {
             sendErrorAlert("You need to specify your password!");
             return false;
-        }
-        else if(jtfUsername.getText().length() == 0) {
+        } else if (jtfUsername.getText().length() == 0) {
             sendErrorAlert("You need to specify your username!");
             return false;
         }
-        
+
         return true;
     }
-    
+
     public void sendErrorAlert(String message) {
         JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

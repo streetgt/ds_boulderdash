@@ -1,6 +1,6 @@
 package fr.enssat.BoulderDash;
 
-import fr.enssat.BoulderDash.controllers.NavigationBetweenViewController;
+import fr.enssat.BoulderDash.controllers.GameController;
 
 import javax.swing.*;
 
@@ -22,7 +22,7 @@ public class Game {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new NavigationBetweenViewController();
+                new GameController();
             }
         });
     }

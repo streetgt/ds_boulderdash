@@ -11,7 +11,7 @@ public class WinLoseView extends JFrame {
     private String winOrLose;
 
     /**
-     * Generate the HelpView
+     * Generate the WinLoseView
      */
     public WinLoseView(int rockfordIndex, String winOrLose) {
         this.rockfordIndex = rockfordIndex;

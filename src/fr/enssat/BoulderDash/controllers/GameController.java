@@ -2,8 +2,6 @@ package fr.enssat.BoulderDash.controllers;
 
 import fr.enssat.BoulderDash.models.LevelModel;
 import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
-import fr.enssat.BoulderDash.controllers.NavigationBetweenViewController;
-import fr.enssat.BoulderDash.views.MenuView;
 import fr.enssat.BoulderDash.views.GameView;
 
 import java.awt.event.ActionEvent;
@@ -22,28 +20,24 @@ public class GameController implements ActionListener {
     private LevelModel levelModel;
     private AudioLoadHelper audioLoadHelper;
     private boolean firstClickOnPause;
-    private MenuView menuView;
     private GameView gameView;
-    private NavigationBetweenViewController navigationBetweenViewController;
 
-    /**
-     * Class constructor
-     *
-     * @param levelModel Level model
-     * @param navigationBetweenViewController
-     */
-    public GameController(LevelModel levelModel, AudioLoadHelper audioLoadHelper, NavigationBetweenViewController navigationBetweenViewController) {
+   /**
+    * Class constructor
+    */
+    public GameController()
+    {
         this.firstClickOnPause = true;
 
-        this.navigationBetweenViewController = navigationBetweenViewController;
-
-        this.levelModel = levelModel;
-        this.audioLoadHelper = audioLoadHelper;
+        this.levelModel = new LevelModel("level01", audioLoadHelper);
+        this.audioLoadHelper = new AudioLoadHelper();
         this.gameView = new GameView(this, levelModel);
-        this.menuView = navigationBetweenViewController.getMenuView();
-
-        this.getAudioLoadHelper().stopMusic();
-        this.getAudioLoadHelper().playSound("new");
+     
+        // Play new song
+       this.getAudioLoadHelper().playSound("new");
+       
+       this.getGameView().setVisible(true);
+       this.getGameView().getGameFieldView().grabFocus();
     }
 
     /**
@@ -71,9 +65,9 @@ public class GameController implements ActionListener {
                 break;
 
             case "menu":
-                this.menuView.setVisible(true);
-                this.getAudioLoadHelper().startMusic("game");
-                this.resetGame("menu");
+                //this.menuView.setVisible(true);
+                //this.getAudioLoadHelper().startMusic("game");
+                //this.resetGame("menu");
                 break;
         }
     }
@@ -85,7 +79,7 @@ public class GameController implements ActionListener {
         this.gameView.dispose();
 
         if (source.equals("restart")) {
-            this.levelModel = new LevelModel(this.navigationBetweenViewController.getPickedLevelIdentifier(), audioLoadHelper);
+            this.levelModel = new LevelModel("level01", audioLoadHelper);
             this.gameView = new GameView(this, levelModel);
             this.gameView.setVisible(true);
         }

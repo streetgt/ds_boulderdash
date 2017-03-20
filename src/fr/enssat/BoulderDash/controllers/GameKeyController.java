@@ -2,8 +2,6 @@ package fr.enssat.BoulderDash.controllers;
 
 import fr.enssat.BoulderDash.models.DisplayableElementModel;
 import fr.enssat.BoulderDash.models.LevelModel;
-import fr.enssat.BoulderDash.controllers.RockfordUpdateController;
-import fr.enssat.BoulderDash.controllers.BoulderAndDiamondController;
 import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
 
 import java.awt.event.KeyEvent;
@@ -51,6 +49,13 @@ public class GameKeyController implements KeyListener {
                     this.updatePosRockford.moveRockford(0,levelModel.getRockford(0).getPositionX(), levelModel.getRockford(0).getPositionY() - 1);
                     this.levelModel.getRockford(0).startRunningUp();
                 }
+                
+                DisplayableElementModel wElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX()][levelModel.getRockford(1).getPositionY() - 1];
+
+                if (wElement.getPriority() < levelModel.getRockford(1).getPriority()) {
+                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX(), levelModel.getRockford(1).getPositionY() - 1);
+                    this.levelModel.getRockford(1).startRunningUp();
+                }
 
                 break;
 
@@ -63,6 +68,14 @@ public class GameKeyController implements KeyListener {
                     this.levelModel.getRockford(0).startRunningDown();
                 }
 
+                
+                DisplayableElementModel sElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX()][levelModel.getRockford(1).getPositionY() + 1];
+
+                if (sElement.getPriority() < levelModel.getRockford(1).getPriority()) {
+                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX(), levelModel.getRockford(1).getPositionY() + 1);
+                    this.levelModel.getRockford(1).startRunningDown();
+                }
+                
                 break;
 
             // Direction Rockford 1: LEFT
@@ -72,6 +85,13 @@ public class GameKeyController implements KeyListener {
                 if (leftElement.getPriority() < levelModel.getRockford(0).getPriority()) {
                     this.updatePosRockford.moveRockford(0,levelModel.getRockford(0).getPositionX() - 1, levelModel.getRockford(0).getPositionY());
                     this.levelModel.getRockford(0).startRunningLeft();
+                }
+                
+                DisplayableElementModel aElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX() - 1][levelModel.getRockford(1).getPositionY()];
+
+                if (aElement.getPriority() < levelModel.getRockford(1).getPriority()) {
+                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX() - 1, levelModel.getRockford(1).getPositionY());
+                    this.levelModel.getRockford(1).startRunningLeft();
                 }
 
                 break;
@@ -85,51 +105,15 @@ public class GameKeyController implements KeyListener {
                     this.levelModel.getRockford(0).startRunningRight();
                 }
 
+                DisplayableElementModel dElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX() + 1][levelModel.getRockford(1).getPositionY()];
+
+                if (dElement.getPriority() < levelModel.getRockford(1).getPriority()) {
+                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX() + 1, levelModel.getRockford(1).getPositionY());
+                    this.levelModel.getRockford(1).startRunningRight();
+                }
+                
                 break;
                 
-//            // Direction Rockford 2: UP
-//            case KeyEvent.VK_W:
-//                DisplayableElementModel wElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX()][levelModel.getRockford(1).getPositionY() - 1];
-//
-//                if (wElement.getPriority() < levelModel.getRockford(1).getPriority()) {
-//                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX(), levelModel.getRockford(1).getPositionY() - 1);
-//                    this.levelModel.getRockford(1).startRunningUp();
-//                }
-//
-//                break;
-//
-//            // Direction Rockford 2: DOWN
-//            case KeyEvent.VK_S:
-//                DisplayableElementModel sElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX()][levelModel.getRockford(1).getPositionY() + 1];
-//
-//                if (sElement.getPriority() < levelModel.getRockford(1).getPriority()) {
-//                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX(), levelModel.getRockford(1).getPositionY() + 1);
-//                    this.levelModel.getRockford(1).startRunningDown();
-//                }
-//
-//                break;
-//
-//            // Direction Rockford 2: LEFT
-//            case KeyEvent.VK_A:
-//                DisplayableElementModel aElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX() - 1][levelModel.getRockford(1).getPositionY()];
-//
-//                if (aElement.getPriority() < levelModel.getRockford(1).getPriority()) {
-//                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX() - 1, levelModel.getRockford(1).getPositionY());
-//                    this.levelModel.getRockford(1).startRunningLeft();
-//                }
-//
-//                break;
-//
-//            // Direction Rockford 2: RIGHT
-//            case KeyEvent.VK_D:
-//                DisplayableElementModel dElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX() + 1][levelModel.getRockford(1).getPositionY()];
-//
-//                if (dElement.getPriority() < levelModel.getRockford(1).getPriority()) {
-//                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX() + 1, levelModel.getRockford(1).getPositionY());
-//                    this.levelModel.getRockford(1).startRunningRight();
-//                }
-//
-//                break;
         }
     }
 
@@ -149,15 +133,8 @@ public class GameKeyController implements KeyListener {
             case KeyEvent.VK_RIGHT:
             case KeyEvent.VK_LEFT:
                 this.levelModel.getRockford(0).startStaying();
-                break;
-                
-//            case KeyEvent.VK_A:
-//            case KeyEvent.VK_S:
-//            case KeyEvent.VK_D:
-//            case KeyEvent.VK_W:
-//                this.levelModel.getRockford(1).startStaying();
-//                break;
-                
+                this.levelModel.getRockford(1).startStaying();
+                break;    
         }
         
     }

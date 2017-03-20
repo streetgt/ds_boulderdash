@@ -29,8 +29,8 @@ public class GameController implements ActionListener {
     {
         this.firstClickOnPause = true;
 
-        this.levelModel = new LevelModel("level01", audioLoadHelper);
         this.audioLoadHelper = new AudioLoadHelper();
+        this.levelModel = new LevelModel("level01", audioLoadHelper);
         this.gameView = new GameView(this, levelModel);
      
         // Play new song

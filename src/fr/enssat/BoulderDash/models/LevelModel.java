@@ -166,7 +166,7 @@ public class LevelModel extends Observable implements Runnable {
      */
     public void updateRockfordPosition(int index, int posX, int posY) {
         this.rockfords.get(index).setPositionX(posX);
-        this.rockfords.get(index).setPositionY(posY); 
+        this.rockfords.get(index).setPositionY(posY);
     }
 
     /**
@@ -228,14 +228,14 @@ public class LevelModel extends Observable implements Runnable {
         if (this.groundGrid[posX][posY].getSpriteName().compareTo("diamond") == 0) {
             this.gameInformationModel.incrementScore(index);
             this.gameInformationModel.decrementRemainingsDiamonds();
-            
+
             if (this.gameInformationModel.getRemainingsDiamonds() == 0) {
                 System.out.println("All diamonds found!");
                 this.gameRunning = false;
                 this.localNotifyObservers();
             }
         }
-        
+
         this.playCollisionSound(index, posX, posY);
 
         // Check that we are not out of bound...
@@ -249,7 +249,7 @@ public class LevelModel extends Observable implements Runnable {
             this.groundGrid[posX][posY] = this.getRockford(index);
         }
     }
-    
+
     /**
      * Trigger block change with provided value
      *
@@ -291,7 +291,7 @@ public class LevelModel extends Observable implements Runnable {
      * Gets the vertical position of Rockford from the model
      *
      * @param rockford instances index
-     * 
+     *
      * @return Vertical position of Rockford
      */
     public int getRockfordPositionY(int index) {
@@ -335,7 +335,7 @@ public class LevelModel extends Observable implements Runnable {
      */
     public BufferedImage getImage(int x, int y) {
         DisplayableElementModel elementModel = this.getDisplayableElement(x, y);
-       
+
         if (elementModel == null) {
             return new DirtModel().getSprite();
         }

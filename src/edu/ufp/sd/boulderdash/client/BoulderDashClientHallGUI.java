@@ -7,13 +7,17 @@ package edu.ufp.sd.boulderdash.client;
 
 import edu.ufp.sd.boulderdash.server.State;
 import edu.ufp.sd.boulderdash.server.State.Message;
+import fr.enssat.BoulderDash.Game;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +26,7 @@ import javax.swing.JFrame;
 public class BoulderDashClientHallGUI extends javax.swing.JFrame implements WindowListener {
 
     private BoulderDashClientImpl bdc;
+    private DefaultListModel lobbylist = new DefaultListModel();
 
     /**
      * Creates new form BoulderDashClientHallGUI
@@ -52,7 +57,8 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         lblOnlineUsers = new javax.swing.JLabel();
         jpLobby = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        list1 = new java.awt.List();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jlLobbys = new javax.swing.JList<>();
         lblWelcome = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -112,6 +118,20 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         );
 
         jButton1.setText("New Lobby");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jlLobbys.setModel(lobbylist);
+        jlLobbys.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlLobbys.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlLobbysMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jlLobbys);
 
         javax.swing.GroupLayout jpLobbyLayout = new javax.swing.GroupLayout(jpLobby);
         jpLobby.setLayout(jpLobbyLayout);
@@ -119,19 +139,16 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
             jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpLobbyLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpLobbyLayout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jpLobbyLayout.createSequentialGroup()
-                        .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+            .addGroup(jpLobbyLayout.createSequentialGroup()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         jpLobbyLayout.setVerticalGroup(
             jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLobbyLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(list1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap(13, Short.MAX_VALUE))
@@ -169,17 +186,20 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
     private void initCustomComponents() throws RemoteException {
         this.lblWelcome.setText("Hello, welcome " + bdc.getUsername() + "!");
         try {
-            this.lblOnlineUsers.setText("Online Clients: " +  this.bdc.bdsRI.countConnectedClients());
+            this.lblOnlineUsers.setText("Online Clients: " + this.bdc.bdsRI.countConnectedClients());
         } catch (RemoteException ex) {
             Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        }
+        for (int i = 0; i < 5; i++) {
+            lobbylist.addElement("BoulderDash Game - Instance " + i + "\t\t\t 0/2");
+        }
     }
-    
+
     public void updateClients() {
         State.ConnectedClients sc = (State.ConnectedClients) this.bdc.getLastState();
         this.lblOnlineUsers.setText("Online Clients: " + sc.getClients());
     }
-    
+
     private void tfMessageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfMessageKeyPressed
         char c = evt.getKeyChar();
         if (c == '\n' || c == '\r') {
@@ -194,7 +214,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
     }//GEN-LAST:event_tfMessageKeyPressed
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-       try {
+        try {
             State.Message ms = new State().new Message(bdc.getUsername(), this.tfMessage.getText(), Calendar.getInstance().getTime());
             this.bdc.bdsRI.setState(ms);
             this.tfMessage.setText("");
@@ -203,9 +223,30 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         }
     }//GEN-LAST:event_btnSendActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //new Game().main(null);
+        try {
+             this.bdc.bdsRI.createGameLobby(bdc);
+        } catch (RemoteException ex) {
+             Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jlLobbysMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLobbysMouseClicked
+        JList theList = (JList) evt.getSource();
+        if (evt.getClickCount() == 2) {
+            int index = theList.locationToIndex(evt.getPoint());
+            if (index >= 0) {
+                Object o = theList.getModel().getElementAt(index);
+                JOptionPane.showMessageDialog(this, "Double-clicked on: " + o.toString());
+            }
+        }
+    }//GEN-LAST:event_jlLobbysMouseClicked
+
     public void updateMesssages() {
         State.Message ms = (State.Message) this.bdc.getLastState();
-        String msg = "(" + ms.getOnlyTimeFormatted() +") " + ms.getUsername() + ": " + ms.getMessage();
+        String msg = "(" + ms.getOnlyTimeFormatted() + ") " + ms.getUsername() + ": " + ms.getMessage();
         this.jtaChatHistory.append(msg + '\n');
     }
 
@@ -213,12 +254,13 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
     private javax.swing.JButton btnSend;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> jlLobbys;
     private javax.swing.JPanel jpChat;
     private javax.swing.JPanel jpLobby;
     private javax.swing.JTextArea jtaChatHistory;
     private javax.swing.JLabel lblOnlineUsers;
     private javax.swing.JLabel lblWelcome;
-    private java.awt.List list1;
     private javax.swing.JTextField tfMessage;
     // End of variables declaration//GEN-END:variables
 

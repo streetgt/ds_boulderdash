@@ -27,6 +27,7 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     private String username;
     private String password;
     private boolean loggedin;
+    private int playerGamingState;
 
     public BoulderDashClientImpl(BoulderDashServerRI bdsRI) throws RemoteException {
         exportObjectMethod();

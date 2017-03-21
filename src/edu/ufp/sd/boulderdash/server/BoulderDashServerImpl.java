@@ -165,8 +165,17 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         return this.clients.size();
     }
 
+    @Override
+    public boolean createGameLobby(BoulderDashClientRI client) throws RemoteException {
+        this.bdsGUI.addLobbyToList("New lobby! by " + client.getClientUsername());
+        
+        return true;
+    }
+    
     public void shutdown() {
         System.out.println("SHUTDOWN SERVER");
         System.exit(0);
     }
+
+   
 }

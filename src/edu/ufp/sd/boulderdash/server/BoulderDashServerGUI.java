@@ -8,6 +8,7 @@ package edu.ufp.sd.boulderdash.server;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -16,7 +17,9 @@ import java.util.logging.Logger;
 public class BoulderDashServerGUI extends javax.swing.JFrame {
 
     private BoulderDashServerImpl bds;
-
+    private DefaultListModel playerList = new DefaultListModel();
+    private DefaultListModel lobbyList = new DefaultListModel();
+    
     /**
      * Creates new form BouderDashServerGUI
      */
@@ -45,10 +48,11 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
         lblLobbys = new javax.swing.JLabel();
         lblLobbysValue = new javax.swing.JLabel();
         jPanelLobbys = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListLobbys = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
         jPanelPlayers = new javax.swing.JPanel();
-        listPlayers = new java.awt.List();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         btnShutdown = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -107,43 +111,44 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
         jPanelGeralLayout.setVerticalGroup(
             jPanelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGeralLayout.createSequentialGroup()
-                .addContainerGap(49, Short.MAX_VALUE)
+                .addContainerGap(75, Short.MAX_VALUE)
                 .addComponent(jpInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
         );
 
         jTabbedPane.addTab("Geral", jPanelGeral);
 
-        jScrollPane1.setViewportView(jListLobbys);
+        jList2.setModel(lobbyList);
+        jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane3.setViewportView(jList2);
 
         javax.swing.GroupLayout jPanelLobbysLayout = new javax.swing.GroupLayout(jPanelLobbys);
         jPanelLobbys.setLayout(jPanelLobbysLayout);
         jPanelLobbysLayout.setHorizontalGroup(
             jPanelLobbysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLobbysLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
         );
         jPanelLobbysLayout.setVerticalGroup(
             jPanelLobbysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLobbysLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
         );
 
         jTabbedPane.addTab("Lobbys", jPanelLobbys);
+
+        jList1.setModel(playerList);
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList1.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        jScrollPane2.setViewportView(jList1);
 
         javax.swing.GroupLayout jPanelPlayersLayout = new javax.swing.GroupLayout(jPanelPlayers);
         jPanelPlayers.setLayout(jPanelPlayersLayout);
         jPanelPlayersLayout.setHorizontalGroup(
             jPanelPlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(listPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
         );
         jPanelPlayersLayout.setVerticalGroup(
             jPanelPlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(listPlayers, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
         );
 
         jTabbedPane.addTab("Players", jPanelPlayers);
@@ -195,7 +200,7 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnShutdownActionPerformed
 
     protected void addConnectedClient(String username, int value) {
-        this.listPlayers.add(username);
+        this.playerList.addElement(username);
         this.lblConnectedClientsValue.setText(String.valueOf(value));
         try {
             this.bds.setState(new State().new ConnectedClients(value));
@@ -205,7 +210,7 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
     }
 
     protected void removeConnectedClient(String username, int value) {
-        this.listPlayers.remove(username);
+        this.playerList.removeElement(username);
         this.lblConnectedClientsValue.setText(String.valueOf(value));
         try {
             this.bds.setState(new State().new ConnectedClients(value));
@@ -213,21 +218,32 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
             Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    protected void addLobbyToList(String name)
+    {
+        this.lobbyList.addElement(name);
+    }
+    
+    protected void removeLobbyFromList(String name)
+    {
+        this.lobbyList.removeElement(name);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnShutdown;
-    private javax.swing.JList<String> jListLobbys;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelGeral;
     private javax.swing.JPanel jPanelLobbys;
     private javax.swing.JPanel jPanelPlayers;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JPanel jpInformation;
     private javax.swing.JLabel lblConnectedClients;
     private javax.swing.JLabel lblConnectedClientsValue;
     private javax.swing.JLabel lblLobbys;
     private javax.swing.JLabel lblLobbysValue;
-    private java.awt.List listPlayers;
     // End of variables declaration//GEN-END:variables
 }

@@ -13,6 +13,7 @@ import fr.enssat.BoulderDash.models.DiamondModel;
 import fr.enssat.BoulderDash.models.DirtModel;
 import fr.enssat.BoulderDash.models.MagicWallModel;
 import fr.enssat.BoulderDash.models.SteelWallModel;
+import java.io.File;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -32,6 +33,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -86,6 +88,7 @@ public class LevelLoadHelper {
             // Let's go.
             this.loadLevelData();
         }
+        listAvailableLevels();
     }
 
     /**
@@ -281,7 +284,42 @@ public class LevelLoadHelper {
 
         return element;
     }
+    
+    /**
+     * Lists available levels and store them in instance context
+     *
+     * @return Available levels
+     */
+    public String[] listAvailableLevels() {
+        List<String> stockList = new ArrayList<String>();
 
+        File directory = new File(pathToDataStore);
+        File[] fileList = directory.listFiles();
+        String fileName, fileNameExtValue;
+        int fileNameExtIndex;
+
+        for (File file : fileList) {
+            fileName = file.getName();
+            fileNameExtIndex = fileName.lastIndexOf('.');
+
+            if (fileNameExtIndex > 0) {
+                fileNameExtValue = fileName.substring(fileNameExtIndex, fileName.length());
+
+                if (fileNameExtValue.equals(".xml")) {
+                    fileName = fileName.substring(0, fileNameExtIndex);
+                    System.out.println(fileName);
+                    stockList.add(fileName);
+                }
+            }
+        }
+
+        // Convert to String[] (required)
+        String[] itemsArr = new String[stockList.size()];
+        itemsArr = stockList.toArray(itemsArr);
+
+        return itemsArr;
+    }
+    
     /**
      * Gets the level identifier
      *

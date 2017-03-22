@@ -77,7 +77,7 @@ public class LevelModel extends Observable implements Runnable {
 
         this.initRockford();
         this.initThreadAnimator();
-        
+
     }
 
     /**

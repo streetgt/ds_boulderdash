@@ -46,10 +46,10 @@ public class GameKeyController implements KeyListener {
                 DisplayableElementModel upElement = levelModel.getGroundLevelModel()[levelModel.getRockford(0).getPositionX()][levelModel.getRockford(0).getPositionY() - 1];
 
                 if (upElement.getPriority() < levelModel.getRockford(0).getPriority()) {
-                    this.updatePosRockford.moveRockford(0,levelModel.getRockford(0).getPositionX(), levelModel.getRockford(0).getPositionY() - 1);
+                    this.updatePosRockford.moveRockford(0, levelModel.getRockford(0).getPositionX(), levelModel.getRockford(0).getPositionY() - 1);
                     this.levelModel.getRockford(0).startRunningUp();
                 }
-                
+
                 DisplayableElementModel wElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX()][levelModel.getRockford(1).getPositionY() - 1];
 
                 if (wElement.getPriority() < levelModel.getRockford(1).getPriority()) {
@@ -64,18 +64,17 @@ public class GameKeyController implements KeyListener {
                 DisplayableElementModel downElement = levelModel.getGroundLevelModel()[levelModel.getRockford(0).getPositionX()][levelModel.getRockford(0).getPositionY() + 1];
 
                 if (downElement.getPriority() < levelModel.getRockford(0).getPriority()) {
-                    this.updatePosRockford.moveRockford(0,levelModel.getRockford(0).getPositionX(), levelModel.getRockford(0).getPositionY() + 1);
+                    this.updatePosRockford.moveRockford(0, levelModel.getRockford(0).getPositionX(), levelModel.getRockford(0).getPositionY() + 1);
                     this.levelModel.getRockford(0).startRunningDown();
                 }
 
-                
                 DisplayableElementModel sElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX()][levelModel.getRockford(1).getPositionY() + 1];
 
                 if (sElement.getPriority() < levelModel.getRockford(1).getPriority()) {
                     this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX(), levelModel.getRockford(1).getPositionY() + 1);
                     this.levelModel.getRockford(1).startRunningDown();
                 }
-                
+
                 break;
 
             // Direction Rockford 1: LEFT
@@ -83,10 +82,10 @@ public class GameKeyController implements KeyListener {
                 DisplayableElementModel leftElement = levelModel.getGroundLevelModel()[levelModel.getRockford(0).getPositionX() - 1][levelModel.getRockford(0).getPositionY()];
 
                 if (leftElement.getPriority() < levelModel.getRockford(0).getPriority()) {
-                    this.updatePosRockford.moveRockford(0,levelModel.getRockford(0).getPositionX() - 1, levelModel.getRockford(0).getPositionY());
+                    this.updatePosRockford.moveRockford(0, levelModel.getRockford(0).getPositionX() - 1, levelModel.getRockford(0).getPositionY());
                     this.levelModel.getRockford(0).startRunningLeft();
                 }
-                
+
                 DisplayableElementModel aElement = levelModel.getGroundLevelModel()[levelModel.getRockford(1).getPositionX() - 1][levelModel.getRockford(1).getPositionY()];
 
                 if (aElement.getPriority() < levelModel.getRockford(1).getPriority()) {
@@ -101,7 +100,7 @@ public class GameKeyController implements KeyListener {
                 DisplayableElementModel rightElement = levelModel.getGroundLevelModel()[levelModel.getRockford(0).getPositionX() + 1][levelModel.getRockford(0).getPositionY()];
 
                 if (rightElement.getPriority() < levelModel.getRockford(0).getPriority()) {
-                    this.updatePosRockford.moveRockford(0,levelModel.getRockford(0).getPositionX() + 1, levelModel.getRockford(0).getPositionY());
+                    this.updatePosRockford.moveRockford(0, levelModel.getRockford(0).getPositionX() + 1, levelModel.getRockford(0).getPositionY());
                     this.levelModel.getRockford(0).startRunningRight();
                 }
 
@@ -111,9 +110,9 @@ public class GameKeyController implements KeyListener {
                     this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX() + 1, levelModel.getRockford(1).getPositionY());
                     this.levelModel.getRockford(1).startRunningRight();
                 }
-                
+
                 break;
-                
+
         }
     }
 
@@ -125,18 +124,17 @@ public class GameKeyController implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        
-        switch(keyCode)
-        {
+
+        switch (keyCode) {
             case KeyEvent.VK_UP:
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_RIGHT:
             case KeyEvent.VK_LEFT:
                 this.levelModel.getRockford(0).startStaying();
                 this.levelModel.getRockford(1).startStaying();
-                break;    
+                break;
         }
-        
+
     }
 
     /**

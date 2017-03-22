@@ -128,7 +128,6 @@ public class BoulderDashClientUserGUI extends javax.swing.JFrame implements Acti
             bdc.triggeredLogin(jtfUsername.getText(), String.valueOf(jtfPassword.getPassword()));
         }
 
-
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed

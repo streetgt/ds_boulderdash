@@ -18,10 +18,9 @@ public class AudioLoadHelper {
 
     // RMI
     private static String pathToAudioStore = "../../res/audio";
-    
+
     //ORIGINAL
     //private static String pathToAudioStore = "./res/audio";
-    
     private SoundJLayerBridge musicToPlay;
     private HashMap<String, SoundJLayerBridge> preloadedSounds;
 

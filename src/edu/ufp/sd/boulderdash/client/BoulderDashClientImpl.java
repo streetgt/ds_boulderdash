@@ -94,7 +94,7 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
                 bdcHallUI.updateMesssages();
             }
         } else if (lastState instanceof State.ConnectedClients) {
-             System.out.println("BoulderDashClientImpl - update(): State = ConnectedClients ");
+            System.out.println("BoulderDashClientImpl - update(): State = ConnectedClients ");
             if (bdcHallUI != null) {
                 bdcHallUI.updateClients();
             }

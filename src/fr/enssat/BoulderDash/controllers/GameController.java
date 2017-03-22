@@ -22,22 +22,21 @@ public class GameController implements ActionListener {
     private boolean firstClickOnPause;
     private GameView gameView;
 
-   /**
-    * Class constructor
-    */
-    public GameController()
-    {
+    /**
+     * Class constructor
+     */
+    public GameController() {
         this.firstClickOnPause = true;
 
         this.audioLoadHelper = new AudioLoadHelper();
         this.levelModel = new LevelModel("level01", audioLoadHelper);
         this.gameView = new GameView(this, levelModel);
-     
+
         // Play new song
-       this.getAudioLoadHelper().playSound("new");
-       
-       this.getGameView().setVisible(true);
-       this.getGameView().getGameFieldView().grabFocus();
+        this.getAudioLoadHelper().playSound("new");
+
+        this.getGameView().setVisible(true);
+        this.getGameView().getGameFieldView().grabFocus();
     }
 
     /**

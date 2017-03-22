@@ -17,8 +17,8 @@ public class RockfordUpdateController implements Runnable {
     private LevelModel levelModel;
     private Thread elementMovingThread;
     private int[] rockfordInstance = new int[2];
-    private int[] rockfordPositionX  = new int[2];
-    private int[] rockfordPositionY  = new int[2];
+    private int[] rockfordPositionX = new int[2];
+    private int[] rockfordPositionY = new int[2];
     private boolean[] rockfordHasMoved = new boolean[2];
 
     /**

@@ -19,7 +19,7 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
     private BoulderDashServerImpl bds;
     private DefaultListModel<String> playerList = new DefaultListModel<>();
     private DefaultListModel<String> lobbyList = new DefaultListModel<>();
-    
+
     /**
      * Creates new form BouderDashServerGUI
      */
@@ -218,14 +218,12 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
             Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    protected void addLobbyToList(String name)
-    {
+
+    protected void addLobbyToList(String name) {
         this.lobbyList.addElement(name);
     }
-    
-    protected void removeLobbyFromList(String name)
-    {
+
+    protected void removeLobbyFromList(String name) {
         this.lobbyList.removeElement(name);
     }
 

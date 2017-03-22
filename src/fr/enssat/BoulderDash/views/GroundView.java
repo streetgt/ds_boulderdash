@@ -54,14 +54,14 @@ public abstract class GroundView extends JPanel implements Observer {
         if (!this.levelModel.isGameRunning() && !this.levelModel.isGameHasEnded()) {
             System.out.println("teste");
             int diamonds = this.levelModel.getGameInformationModel().getRemainingsDiamonds();
-            if(diamonds == 0) {
+            if (diamonds == 0) {
                 System.out.println("GAME HAS ENDED");
                 int winner = this.levelModel.getGameInformationModel().getRockfordMoreDiamonds();
                 System.out.println("Winner: " + winner);
                 this.displayWin(winner);
             } else {
                 for (int i = 0; i < 2; i++) {
-                    if(this.levelModel.getRockford(i).getHasExplosed()) {
+                    if (this.levelModel.getRockford(i).getHasExplosed()) {
                         this.displayLose(i);
                         System.out.println("FOUND EXPLODED STATE! " + i);
                         break;
@@ -76,14 +76,14 @@ public abstract class GroundView extends JPanel implements Observer {
      * Set the view to inform the user that he won
      */
     private void displayWin(int index) {
-       new WinLoseView(index,"win");
+        new WinLoseView(index, "win");
     }
 
     /**
      * Set the view to inform the user that he is not good at this game
      */
     private void displayLose(int index) {
-        new WinLoseView(index,"loose");
+        new WinLoseView(index, "loose");
     }
 
     /**

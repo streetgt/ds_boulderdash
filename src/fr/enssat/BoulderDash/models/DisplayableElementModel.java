@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public abstract class DisplayableElementModel {
 
-    private static String spriteStorageFolderPath = "./res/drawable/field/";
+    private static String spriteStorageFolderPath = "../../res/drawable/field/";
 
     private static String groupName;
     private static String stateValue;
@@ -129,7 +129,7 @@ public abstract class DisplayableElementModel {
      * @return Path to the sprite file in storage
      */
     public String getPathToSprite() {
- 
+
         return getSpriteStorageFolderPath() + getSpriteName() + ".gif";
     }
 
@@ -215,7 +215,7 @@ public abstract class DisplayableElementModel {
         BufferedImage sprite = null;
 
         try {
-            sprite = ImageIO.read(new File("res/drawable/field/" + spriteName + ".gif"));
+            sprite = ImageIO.read(new File(spriteStorageFolderPath + spriteName + ".gif"));
         } catch (IOException e) {
             e.printStackTrace();
         }

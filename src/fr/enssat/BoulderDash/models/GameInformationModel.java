@@ -18,8 +18,8 @@ public class GameInformationModel extends Observable {
 
     /**
      * GameInformationModel - Constructor
-     * 
-     * @param remainingsDiamonds 
+     *
+     * @param remainingsDiamonds
      */
     public GameInformationModel(int remainingsDiamonds) {
         this.score = new int[2];

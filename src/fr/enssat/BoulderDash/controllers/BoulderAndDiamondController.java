@@ -131,14 +131,13 @@ public class BoulderAndDiamondController implements Runnable {
                 this.levelModel.makeThisBoulderSlideRight(x, y);
             }
         } else if (spriteNameBelow.compareTo("rockford") == 0 || spriteNameBelow.compareTo("rockford2") == 0 && this.levelModel.getGroundLevelModel()[x][y].isFalling()) {
-            if(spriteNameBelow.compareTo("rockford") == 0) {
+            if (spriteNameBelow.compareTo("rockford") == 0) {
                 System.out.println("exploseGround - rockford");
                 this.levelModel.exploseGround(0, x, y + 1);
             } else {
-                 System.out.println("exploseGround - rockford2");
+                System.out.println("exploseGround - rockford2");
                 this.levelModel.exploseGround(1, x, y + 1);
             }
-            
 
             this.audioLoadHelper.playSound("die");
 
@@ -169,7 +168,7 @@ public class BoulderAndDiamondController implements Runnable {
             this.levelModel.moveThisBoulderToRight(x, y);
         } else if (spriteNameRight.compareTo("rockford2") == 0 && this.levelModel.getRockford(1).isRunningLeft() && this.levelModel.getGroundLevelModel()[x - 1][y].getSpriteName() == "black") {
             this.levelModel.moveThisBoulderToLeft(x, y);
-        }else {
+        } else {
             this.levelModel.getGroundLevelModel()[x][y].setFalling(false);
         }
     }

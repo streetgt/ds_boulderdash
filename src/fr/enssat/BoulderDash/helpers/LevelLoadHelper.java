@@ -3,17 +3,8 @@ package fr.enssat.BoulderDash.helpers;
 import fr.enssat.BoulderDash.exceptions.UnknownModelException;
 
 import fr.enssat.BoulderDash.helpers.ModelConvertHelper;
-import fr.enssat.BoulderDash.models.ExpandingWallModel;
 import fr.enssat.BoulderDash.models.RockfordModel;
 import fr.enssat.BoulderDash.models.DisplayableElementModel;
-import fr.enssat.BoulderDash.models.EmptyModel;
-import fr.enssat.BoulderDash.models.BrickWallModel;
-import fr.enssat.BoulderDash.models.BoulderModel;
-import fr.enssat.BoulderDash.models.DiamondModel;
-import fr.enssat.BoulderDash.models.DirtModel;
-import fr.enssat.BoulderDash.models.MagicWallModel;
-import fr.enssat.BoulderDash.models.SteelWallModel;
-import java.io.File;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -33,7 +24,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -48,7 +38,7 @@ import java.util.Locale;
  */
 public class LevelLoadHelper {
 
-    private static String pathToDataStore = "./res/levels";
+    private static String pathToDataStore = "../../res/levels";
     private String levelId = null;
     private Document levelDOM;
     private XPath xpathBuilder;
@@ -67,7 +57,7 @@ public class LevelLoadHelper {
     private int limitsOffsetHeight = 1;
 
     private ArrayList<RockfordModel> rockfordIntances = new ArrayList<>();
-    
+
     private int diamondsToCatch;
 
     private DisplayableElementModel[][] groundGrid;
@@ -272,7 +262,7 @@ public class LevelLoadHelper {
                 this.rockfordIntances.get(0).setPositionX(rowIndex);
                 this.rockfordIntances.get(0).setPositionY(lineIndex);
                 break;
-                
+
             case "rockford2":
                 this.rockfordIntances.add((RockfordModel) element);
                 this.rockfordIntances.get(1).setPositionX(rowIndex);
@@ -282,7 +272,7 @@ public class LevelLoadHelper {
 
         return element;
     }
-    
+
     /**
      * Gets the level identifier
      *
@@ -393,7 +383,7 @@ public class LevelLoadHelper {
 
     /**
      * Gets the rockford instances
-     * 
+     *
      * @return rockford instances
      */
     public ArrayList<RockfordModel> getRockfordIntances() {
@@ -402,13 +392,13 @@ public class LevelLoadHelper {
 
     /**
      * Sets the rockford instances
-     * 
-     * @param rockfordIntances 
+     *
+     * @param rockfordIntances
      */
     public void setRockfordIntances(ArrayList<RockfordModel> rockfordIntances) {
         this.rockfordIntances = rockfordIntances;
     }
-    
+
     /**
      * Gets the ground grid
      *

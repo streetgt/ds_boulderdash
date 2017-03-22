@@ -84,7 +84,6 @@ public class RockfordModel extends DisplayableElementModel {
         // Init the sprites in arrays
         this.initSprites();
         this.hasExploded = false;
-        
 
     }
 
@@ -265,7 +264,7 @@ public class RockfordModel extends DisplayableElementModel {
         framesRunningLeft = new ArrayList<>();
         framesRunningRight = new ArrayList<>();
         framesRunningUpOrDown = new ArrayList<>();
-        
+
         BufferedImage sprite = this.loadSprite(spriteName);
         /* INIT SPRITE ARRAYS FOR ROCKFORD */
         for (int i = 0; i < 8; i++) {
@@ -304,10 +303,10 @@ public class RockfordModel extends DisplayableElementModel {
     public void setHasExplosed(boolean hasExploded) {
         this.hasExploded = hasExploded;
     }
-  
+
     /**
      * Get rockford position X
-     * 
+     *
      * @return positionX
      */
     public int getPositionX() {
@@ -316,8 +315,8 @@ public class RockfordModel extends DisplayableElementModel {
 
     /**
      * Set rockford position X
-     * 
-     * @param positionX 
+     *
+     * @param positionX
      */
     public void setPositionX(int positionX) {
         this.positionX = positionX;
@@ -325,7 +324,7 @@ public class RockfordModel extends DisplayableElementModel {
 
     /**
      * Get rockford position Y
-     * 
+     *
      * @return positionY
      */
     public int getPositionY() {
@@ -334,11 +333,11 @@ public class RockfordModel extends DisplayableElementModel {
 
     /**
      * Set rockford position Y
-     * 
-     * @param positionX 
+     *
+     * @param positionX
      */
     public void setPositionY(int positionY) {
         this.positionY = positionY;
     }
-    
+
 }

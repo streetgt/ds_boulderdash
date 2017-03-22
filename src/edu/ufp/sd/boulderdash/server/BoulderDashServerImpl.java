@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,6 +37,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     private ArrayList<BoulderDashClientRI> clients = new ArrayList<>();
 
     public static String PATH_USERS = "../../data/users/";
+    public static String PATH_LEVELS = "../../res/levels/";
 
     // Uses RMI-default sockets-based transport
     // Runs forever (do not passivates) - Do not needs rmid (activation deamon)
@@ -166,16 +168,46 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     }
 
     @Override
-    public boolean createGameLobby(BoulderDashClientRI client) throws RemoteException {
-        this.bdsGUI.addLobbyToList("New lobby! by " + client.getClientUsername());
-        
+    public boolean createGameLobby(BoulderDashClientRI client,String level) throws RemoteException {
+        this.bdsGUI.addLobbyToList("Game Instance - " + level + " - by " + client.getClientUsername());
+
         return true;
+    }
+    
+    @Override
+    public String[] fetchAvaliableLevels() throws RemoteException {
+        List<String> stockList = new ArrayList<>();
+
+        File directory = new File(PATH_LEVELS);
+        File[] fileList = directory.listFiles();
+        String fileName, fileNameExtValue;
+        int fileNameExtIndex;
+
+        for (File file : fileList) {
+            fileName = file.getName();
+            fileNameExtIndex = fileName.lastIndexOf('.');
+
+            if (fileNameExtIndex > 0) {
+                fileNameExtValue = fileName.substring(fileNameExtIndex, fileName.length());
+
+                if (fileNameExtValue.equals(".xml")) {
+                    fileName = fileName.substring(0, fileNameExtIndex);
+                    System.out.println(fileName);
+                    stockList.add(fileName);
+                }
+            }
+        }
+
+        // Convert to String[] (required)
+        String[] itemsArr = new String[stockList.size()];
+        itemsArr = stockList.toArray(itemsArr);
+
+        return itemsArr;
     }
     
     public void shutdown() {
         System.out.println("SHUTDOWN SERVER");
         System.exit(0);
     }
-
-   
+    
 }

@@ -37,5 +37,7 @@ public interface BoulderDashServerRI extends Remote {
 
     public int countConnectedClients() throws RemoteException;
     
-    public boolean createGameLobby(BoulderDashClientRI client) throws RemoteException;
+    public boolean createGameLobby(BoulderDashClientRI client, String level) throws RemoteException;
+    
+    public String[] fetchAvaliableLevels() throws RemoteException;
 }

@@ -16,8 +16,12 @@ import java.util.HashMap;
  */
 public class AudioLoadHelper {
 
-    private static String pathToAudioStore = "./res/audio";
-
+    // RMI
+    private static String pathToAudioStore = "../../res/audio";
+    
+    //ORIGINAL
+    //private static String pathToAudioStore = "./res/audio";
+    
     private SoundJLayerBridge musicToPlay;
     private HashMap<String, SoundJLayerBridge> preloadedSounds;
 
@@ -66,11 +70,17 @@ public class AudioLoadHelper {
      */
     private void preloadSounds() {
         // Initialize
+        System.out.println("CURRENT LOCATION: " + AudioLoadHelper.pathToAudioStore);
         String curSoundIdPrep;
         this.preloadedSounds = new HashMap<String, SoundJLayerBridge>();
 
         // List sound files
-        File soundsDir = new File(AudioLoadHelper.pathToAudioStore + "/sounds/");
+        File soundsDir = null;
+        try {
+            soundsDir = new File(AudioLoadHelper.pathToAudioStore + "/sounds/");
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
         File[] soundFiles = soundsDir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {

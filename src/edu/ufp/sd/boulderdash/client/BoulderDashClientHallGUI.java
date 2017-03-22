@@ -7,17 +7,19 @@ package edu.ufp.sd.boulderdash.client;
 
 import edu.ufp.sd.boulderdash.server.State;
 import edu.ufp.sd.boulderdash.server.State.Message;
-import fr.enssat.BoulderDash.Game;
+import fr.enssat.BoulderDash.controllers.GameController;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -26,7 +28,8 @@ import javax.swing.JOptionPane;
 public class BoulderDashClientHallGUI extends javax.swing.JFrame implements WindowListener {
 
     private BoulderDashClientImpl bdc;
-    private DefaultListModel lobbylist = new DefaultListModel();
+    private DefaultListModel<String> lobbylist = new DefaultListModel<>();
+    private DefaultComboBoxModel<String> levelslist = new DefaultComboBoxModel<>();
 
     /**
      * Creates new form BoulderDashClientHallGUI
@@ -59,6 +62,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlLobbys = new javax.swing.JList<>();
+        jcbLevels = new javax.swing.JComboBox<>();
         lblWelcome = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -133,16 +137,20 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         });
         jScrollPane2.setViewportView(jlLobbys);
 
+        jcbLevels.setModel(levelslist);
+
         javax.swing.GroupLayout jpLobbyLayout = new javax.swing.GroupLayout(jpLobby);
         jpLobby.setLayout(jpLobbyLayout);
         jpLobbyLayout.setHorizontalGroup(
             jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpLobbyLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
-            .addGroup(jpLobbyLayout.createSequentialGroup()
-                .addComponent(jScrollPane2)
+                .addGroup(jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                    .addGroup(jpLobbyLayout.createSequentialGroup()
+                        .addComponent(jcbLevels, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jpLobbyLayout.setVerticalGroup(
@@ -150,7 +158,9 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpLobbyLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jcbLevels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -187,11 +197,16 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         this.lblWelcome.setText("Hello, welcome " + bdc.getUsername() + "!");
         try {
             this.lblOnlineUsers.setText("Online Clients: " + this.bdc.bdsRI.countConnectedClients());
+            String[] levels = this.bdc.bdsRI.fetchAvaliableLevels();
+            for (String level : levels) {
+                this.levelslist.addElement(level);
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         for (int i = 0; i < 5; i++) {
-            lobbylist.addElement("BoulderDash Game - Instance " + i + "\t\t\t 0/2");
+            this.lobbylist.addElement("BoulderDash Game - Instance " + i + "\t\t\t 0/2");
         }
     }
 
@@ -224,13 +239,20 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //new Game().main(null);
+        //n
         try {
-             this.bdc.bdsRI.createGameLobby(bdc);
+            String level = this.jcbLevels.getSelectedItem().toString();
+            this.bdc.bdsRI.createGameLobby(bdc, level);
+            String args[] = {"", ""};
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    new GameController();
+                }
+            });
         } catch (RemoteException ex) {
-             Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jlLobbysMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLobbysMouseClicked
@@ -255,6 +277,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JComboBox<String> jcbLevels;
     private javax.swing.JList<String> jlLobbys;
     private javax.swing.JPanel jpChat;
     private javax.swing.JPanel jpLobby;

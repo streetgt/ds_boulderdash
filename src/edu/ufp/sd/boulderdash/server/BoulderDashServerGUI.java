@@ -17,8 +17,8 @@ import javax.swing.DefaultListModel;
 public class BoulderDashServerGUI extends javax.swing.JFrame {
 
     private BoulderDashServerImpl bds;
-    private DefaultListModel playerList = new DefaultListModel();
-    private DefaultListModel lobbyList = new DefaultListModel();
+    private DefaultListModel<String> playerList = new DefaultListModel<>();
+    private DefaultListModel<String> lobbyList = new DefaultListModel<>();
     
     /**
      * Creates new form BouderDashServerGUI

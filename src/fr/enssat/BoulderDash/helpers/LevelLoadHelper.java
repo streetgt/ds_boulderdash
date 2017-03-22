@@ -88,7 +88,6 @@ public class LevelLoadHelper {
             // Let's go.
             this.loadLevelData();
         }
-        listAvailableLevels();
     }
 
     /**
@@ -276,48 +275,12 @@ public class LevelLoadHelper {
                 
             case "rockford2":
                 this.rockfordIntances.add((RockfordModel) element);
-                System.out.println("CAGR: " + this.rockfordIntances.get(1).getSpriteName());
                 this.rockfordIntances.get(1).setPositionX(rowIndex);
                 this.rockfordIntances.get(1).setPositionY(lineIndex);
                 break;
         }
 
         return element;
-    }
-    
-    /**
-     * Lists available levels and store them in instance context
-     *
-     * @return Available levels
-     */
-    public String[] listAvailableLevels() {
-        List<String> stockList = new ArrayList<String>();
-
-        File directory = new File(pathToDataStore);
-        File[] fileList = directory.listFiles();
-        String fileName, fileNameExtValue;
-        int fileNameExtIndex;
-
-        for (File file : fileList) {
-            fileName = file.getName();
-            fileNameExtIndex = fileName.lastIndexOf('.');
-
-            if (fileNameExtIndex > 0) {
-                fileNameExtValue = fileName.substring(fileNameExtIndex, fileName.length());
-
-                if (fileNameExtValue.equals(".xml")) {
-                    fileName = fileName.substring(0, fileNameExtIndex);
-                    System.out.println(fileName);
-                    stockList.add(fileName);
-                }
-            }
-        }
-
-        // Convert to String[] (required)
-        String[] itemsArr = new String[stockList.size()];
-        itemsArr = stockList.toArray(itemsArr);
-
-        return itemsArr;
     }
     
     /**

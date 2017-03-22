@@ -422,7 +422,7 @@ public class RiffFile {
      */
     public static int FourCC(String ChunkName) {
         byte[] p = {0x20, 0x20, 0x20, 0x20};
-        //ChunkName.getBytes(0,4,p,0); -> deprecated, fixed by Tiago Cardoso
+        //ChunkName.getBytes(0,4,p,0);
         System.arraycopy(ChunkName.getBytes(), 0, p, 0, ChunkName.length());
         int ret = (((p[0] << 24) & 0xFF000000) | ((p[1] << 16) & 0x00FF0000) | ((p[2] << 8) & 0x0000FF00) | (p[3] & 0x000000FF));
         return ret;

@@ -1,5 +1,6 @@
 package fr.enssat.BoulderDash.views;
 
+import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
 import javax.swing.*;
 
 import java.awt.*;
@@ -10,6 +11,8 @@ import fr.enssat.BoulderDash.controllers.GameController;
 import fr.enssat.BoulderDash.models.LevelModel;
 import fr.enssat.BoulderDash.views.GameGroundView;
 import fr.enssat.BoulderDash.views.InformationPanel;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 /**
  * GameView
@@ -19,8 +22,9 @@ import fr.enssat.BoulderDash.views.InformationPanel;
  * @author Colin Leverger <me@colinleverger.fr>
  * @since 2015-06-19
  */
-public class GameView extends JFrame implements Observer {
+public class GameView extends JFrame implements Observer, WindowListener {
 
+    private BoulderDashClientImpl bdc;
     private GameGroundView gameGroundView;
     private JPanel actionPanel;
     private JPanel informationPanel;
@@ -33,7 +37,8 @@ public class GameView extends JFrame implements Observer {
      * @param gameController Game controller
      * @param levelModel Level model
      */
-    public GameView(GameController gameController, LevelModel levelModel) {
+    public GameView(BoulderDashClientImpl bdc, GameController gameController, LevelModel levelModel) {
+        this.bdc = bdc;
         this.gameController = gameController;
         this.levelModel = levelModel;
 
@@ -41,6 +46,8 @@ public class GameView extends JFrame implements Observer {
         this.createLayout();
 
         this.gameGroundView.grabFocus();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addWindowListener(this);
     }
 
     /**
@@ -65,7 +72,7 @@ public class GameView extends JFrame implements Observer {
      * Creates the view layout
      */
     private void createLayout() {
-        this.gameGroundView = new GameGroundView(this.gameController, this.levelModel);
+        this.gameGroundView = new GameGroundView(this.bdc, this.gameController, this.levelModel);
         this.actionPanel = new JPanel();
         this.informationPanel = new InformationPanel(this.levelModel);
         this.informationPanel.setBackground(Color.white);
@@ -114,5 +121,34 @@ public class GameView extends JFrame implements Observer {
     @Override
     public void update(Observable obs, Object obj) {
         // Nothing done.
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        bdc.triggeredLogout(bdc.getUsername(), bdc.getPassword());
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
     }
 }

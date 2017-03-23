@@ -1,5 +1,6 @@
 package fr.enssat.BoulderDash.models;
 
+import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
 import fr.enssat.BoulderDash.exceptions.LevelConstraintNotRespectedException;
 import fr.enssat.BoulderDash.exceptions.UnknownModelException;
 import fr.enssat.BoulderDash.helpers.LevelLoadHelper;
@@ -7,11 +8,8 @@ import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
 import fr.enssat.BoulderDash.helpers.ModelConvertHelper;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
-import javax.imageio.ImageIO;
 
 /**
  * LevelModel
@@ -25,6 +23,7 @@ import javax.imageio.ImageIO;
  */
 public class LevelModel extends Observable implements Runnable {
 
+    private ArrayList<BoulderDashClientRI> clients = new ArrayList<>();
     private DisplayableElementModel[][] groundGrid;
     private String levelName;
     private AudioLoadHelper audioLoadHelper;

@@ -242,11 +242,10 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         //n
         try {
             String level = this.jcbLevels.getSelectedItem().toString();
-            this.bdc.bdsRI.createGameLobby(bdc, level);
-            String args[] = {"", ""};
+            this.bdc.bdsRI.createGameRoom(bdc, level);
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    new GameController();
+                    new GameController(bdc);
                 }
             });
         } catch (RemoteException ex) {

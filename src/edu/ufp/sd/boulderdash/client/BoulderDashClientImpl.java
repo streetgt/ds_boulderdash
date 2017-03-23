@@ -74,6 +74,14 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
         this.lastState = lastState;
     }
 
+    public BoulderDashServerRI getBdsRI() {
+        return bdsRI;
+    }
+
+    public void setBdsRI(BoulderDashServerRI bdsRI) {
+        this.bdsRI = bdsRI;
+    }
+
     @Override
     public void sendMessage(String message) throws RemoteException {
         System.out.println("BoulderDashClientImpl - sendMessage(): " + message);

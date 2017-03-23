@@ -19,4 +19,5 @@ public interface BoulderDashClientRI extends Remote {
     public void sendMessage(String message) throws RemoteException;
 
     public void update() throws RemoteException;
+    
 }

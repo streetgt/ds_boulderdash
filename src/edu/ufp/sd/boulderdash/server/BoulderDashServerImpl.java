@@ -168,7 +168,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     }
 
     @Override
-    public boolean createGameLobby(BoulderDashClientRI client, String level) throws RemoteException {
+    public boolean createGameRoom(BoulderDashClientRI client, String level) throws RemoteException {
         this.bdsGUI.addLobbyToList("Game Instance - " + level + " - by " + client.getClientUsername());
 
         return true;
@@ -205,9 +205,15 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         return itemsArr;
     }
 
+    
     public void shutdown() {
         System.out.println("SHUTDOWN SERVER");
         System.exit(0);
+    }
+
+    @Override
+    public void sendKeys(BoulderDashClientRI client, String string) throws RemoteException {
+        System.out.println("BoulderDashServerImpl - sendKeys(): " + client.getClientUsername() + " Key: " + string);
     }
 
 }

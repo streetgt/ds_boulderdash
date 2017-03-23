@@ -1,5 +1,7 @@
 package fr.enssat.BoulderDash.controllers;
 
+import edu.ufp.sd.boulderdash.client.BoulderDashClient;
+import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
 import fr.enssat.BoulderDash.models.LevelModel;
 import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
 import fr.enssat.BoulderDash.views.GameView;
@@ -17,6 +19,7 @@ import java.awt.event.ActionListener;
  */
 public class GameController implements ActionListener {
 
+    private BoulderDashClientImpl bdc;
     private LevelModel levelModel;
     private AudioLoadHelper audioLoadHelper;
     private boolean firstClickOnPause;
@@ -25,12 +28,16 @@ public class GameController implements ActionListener {
     /**
      * Class constructor
      */
-    public GameController() {
+    public GameController(BoulderDashClientImpl bdc) {
+        this.bdc = bdc;
+        if(this.bdc == null) {
+            System.out.println("GameController bdc = null");
+        }
         this.firstClickOnPause = true;
 
         this.audioLoadHelper = new AudioLoadHelper();
         this.levelModel = new LevelModel("level01", audioLoadHelper);
-        this.gameView = new GameView(this, levelModel);
+        this.gameView = new GameView(this.bdc, this, levelModel);
 
         // Play new song
         this.getAudioLoadHelper().playSound("new");
@@ -79,7 +86,7 @@ public class GameController implements ActionListener {
 
         if (source.equals("restart")) {
             this.levelModel = new LevelModel("level01", audioLoadHelper);
-            this.gameView = new GameView(this, levelModel);
+            this.gameView = new GameView(this.bdc, this, levelModel);
             this.gameView.setVisible(true);
         }
     }

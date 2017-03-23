@@ -30,7 +30,7 @@ public class GameController implements ActionListener {
      */
     public GameController(BoulderDashClientImpl bdc) {
         this.bdc = bdc;
-        if(this.bdc == null) {
+        if (this.bdc == null) {
             System.out.println("GameController bdc = null");
         }
         this.firstClickOnPause = true;

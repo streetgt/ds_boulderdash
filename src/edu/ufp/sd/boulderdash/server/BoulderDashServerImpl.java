@@ -34,7 +34,8 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
 
     private BoulderDashServerGUI bdsGUI;
 
-    private ArrayList<BoulderDashClientRI> clients = new ArrayList<>();
+    protected ArrayList<BoulderDashClientRI> clients = new ArrayList<>();
+    protected ArrayList<String> rooms = new ArrayList<>();
 
     public static String PATH_USERS = "../../data/users/";
     public static String PATH_LEVELS = "../../res/levels/";
@@ -56,6 +57,11 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     @Override
     public synchronized int login(BoulderDashClientRI client, String username, String password) throws RemoteException {
         System.out.println("BoulderDashServerImpl - login(): " + username + " " + password);
+        if (clientAlreadyLoggedin(username)) {
+            System.out.println("BoulderDashServerImpl - login(): " + username + " is already logged in.");
+            return 0;
+        }
+
         String user_path = PATH_USERS + username + ".txt";
         System.out.println("BoulderDashServerImpl - var userpath: " + user_path);
         BufferedReader br = null;
@@ -169,8 +175,9 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
 
     @Override
     public boolean createGameRoom(BoulderDashClientRI client, String level) throws RemoteException {
-        this.bdsGUI.addLobbyToList("Game Instance - " + level + " - by " + client.getClientUsername());
-
+        this.rooms.add(level);
+        this.bdsGUI.addRoomToList("Game Instance - " + level + " - by " + client.getClientUsername());
+        this.setState(new State().new NewRoom(false, level));
         return true;
     }
 
@@ -205,10 +212,13 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         return itemsArr;
     }
 
-    
-    public void shutdown() {
-        System.out.println("SHUTDOWN SERVER");
-        System.exit(0);
+    @Override
+    public String[] fetchAvaliableRooms() throws RemoteException {
+
+        String[] itemsArr = new String[rooms.size()];
+        itemsArr = rooms.toArray(itemsArr);
+
+        return itemsArr;
     }
 
     @Override
@@ -216,4 +226,37 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         System.out.println("BoulderDashServerImpl - sendKeys(): " + client.getClientUsername() + " Key: " + string);
     }
 
+    private boolean clientAlreadyLoggedin(String username) {
+        System.out.println("clientAlreadyLoggedin: " + username);
+        try {
+            for (BoulderDashClientRI client : clients) {
+                if (client.getClientUsername().compareTo(username) == 0) {
+                    return true;
+                }
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+
+    public BoulderDashClientRI clientFromUsername(String username) {
+        try {
+            for (BoulderDashClientRI client : clients) {
+                if (client.getClientUsername().compareTo(username) == 0) {
+                    return client;
+                }
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+    public void shutdown() {
+        System.out.println("SHUTDOWN SERVER");
+        System.exit(0);
+    }
 }

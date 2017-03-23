@@ -51,6 +51,7 @@ public class BoulderDashClientUserGUI extends javax.swing.JFrame implements Acti
         btnRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {

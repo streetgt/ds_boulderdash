@@ -32,7 +32,7 @@ public class GameKeyController implements KeyListener {
      */
     public GameKeyController(BoulderDashClientImpl bdc, LevelModel levelModel, AudioLoadHelper audioLoadHelper) {
         this.bdc = bdc;
-        if(this.bdc == null) {
+        if (this.bdc == null) {
             System.out.println("FOUND FUCKING NULL!");
         }
         this.levelModel = levelModel;
@@ -71,7 +71,6 @@ public class GameKeyController implements KeyListener {
 //                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX(), levelModel.getRockford(1).getPositionY() - 1);
 //                    this.levelModel.getRockford(1).startRunningUp();
 //                }
-
                 break;
             }
 
@@ -121,7 +120,6 @@ public class GameKeyController implements KeyListener {
 //                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX() - 1, levelModel.getRockford(1).getPositionY());
 //                    this.levelModel.getRockford(1).startRunningLeft();
 //                }
-
                 break;
             }
 
@@ -146,7 +144,6 @@ public class GameKeyController implements KeyListener {
 //                    this.updatePosRockford.moveRockford(1, levelModel.getRockford(1).getPositionX() + 1, levelModel.getRockford(1).getPositionY());
 //                    this.levelModel.getRockford(1).startRunningRight();
 //                }
-
                 break;
             }
 

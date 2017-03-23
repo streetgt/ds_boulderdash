@@ -1951,7 +1951,6 @@ final class LayerIIIDecoder implements FrameDecoder {
         public int[][] s;
 
         /* [window][cb] */
-
         /**
          * Dummy Constructor
          */
@@ -2459,7 +2458,6 @@ final class LayerIIIDecoder implements FrameDecoder {
     /**
      * ************************************************************
      */
-
     class Sftable {
 
         public int[] l;

@@ -28,7 +28,7 @@ import javax.swing.SwingUtilities;
 public class BoulderDashClientHallGUI extends javax.swing.JFrame implements WindowListener {
 
     private BoulderDashClientImpl bdc;
-    private DefaultListModel<String> lobbylist = new DefaultListModel<>();
+    private DefaultListModel<String> roomslist = new DefaultListModel<>();
     private DefaultComboBoxModel<String> levelslist = new DefaultComboBoxModel<>();
 
     /**
@@ -59,9 +59,9 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         tfMessage = new javax.swing.JTextField();
         lblOnlineUsers = new javax.swing.JLabel();
         jpLobby = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnNewRoom = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jlLobbys = new javax.swing.JList<>();
+        jlRooms = new javax.swing.JList<>();
         jcbLevels = new javax.swing.JComboBox<>();
         lblWelcome = new javax.swing.JLabel();
 
@@ -121,21 +121,21 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
                 .addContainerGap())
         );
 
-        jButton1.setText("New Lobby");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnNewRoom.setText("New Room");
+        btnNewRoom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnNewRoomActionPerformed(evt);
             }
         });
 
-        jlLobbys.setModel(lobbylist);
-        jlLobbys.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jlLobbys.addMouseListener(new java.awt.event.MouseAdapter() {
+        jlRooms.setModel(roomslist);
+        jlRooms.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlRooms.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jlLobbysMouseClicked(evt);
+                jlRoomsMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jlLobbys);
+        jScrollPane2.setViewportView(jlRooms);
 
         jcbLevels.setModel(levelslist);
 
@@ -149,7 +149,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
                     .addGroup(jpLobbyLayout.createSequentialGroup()
                         .addComponent(jcbLevels, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnNewRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -159,7 +159,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpLobbyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnNewRoom)
                     .addComponent(jcbLevels, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
@@ -201,12 +201,16 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
             for (String level : levels) {
                 this.levelslist.addElement(level);
             }
+
+            String[] rooms = this.bdc.bdsRI.fetchAvaliableRooms();
+            if (rooms.length != 0) {
+                for (int i = 0; i < rooms.length; i++) {
+                    this.roomslist.addElement("BoulderDash Game - Instance: " + i + " Level: " + rooms[i] + "\t\t\t Players: 0/2");
+                }
+            }
+
         } catch (RemoteException ex) {
             Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            this.lobbylist.addElement("BoulderDash Game - Instance " + i + "\t\t\t 0/2");
         }
     }
 
@@ -238,11 +242,12 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         }
     }//GEN-LAST:event_btnSendActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnNewRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewRoomActionPerformed
         //n
         try {
             String level = this.jcbLevels.getSelectedItem().toString();
             this.bdc.bdsRI.createGameRoom(bdc, level);
+            this.btnNewRoom.setEnabled(false);
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     new GameController(bdc);
@@ -252,9 +257,9 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
             Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnNewRoomActionPerformed
 
-    private void jlLobbysMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlLobbysMouseClicked
+    private void jlRoomsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlRoomsMouseClicked
         JList theList = (JList) evt.getSource();
         if (evt.getClickCount() == 2) {
             int index = theList.locationToIndex(evt.getPoint());
@@ -263,7 +268,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
                 JOptionPane.showMessageDialog(this, "Double-clicked on: " + o.toString());
             }
         }
-    }//GEN-LAST:event_jlLobbysMouseClicked
+    }//GEN-LAST:event_jlRoomsMouseClicked
 
     public void updateMesssages() {
         State.Message ms = (State.Message) this.bdc.getLastState();
@@ -271,13 +276,21 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         this.jtaChatHistory.append(msg + '\n');
     }
 
+    public void addNewRoom(State.NewRoom nr) {
+        this.roomslist.addElement("BoulderDash Game - Instance: " + 999 + " Level: " + nr.getLevel() + "\t\t\t Players: 0/2");
+    }
+
+    public void removeAllRooms() {
+        this.roomslist.removeAllElements();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNewRoom;
     private javax.swing.JButton btnSend;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox<String> jcbLevels;
-    private javax.swing.JList<String> jlLobbys;
+    private javax.swing.JList<String> jlRooms;
     private javax.swing.JPanel jpChat;
     private javax.swing.JPanel jpLobby;
     private javax.swing.JTextArea jtaChatHistory;

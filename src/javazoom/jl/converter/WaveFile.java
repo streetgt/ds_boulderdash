@@ -124,12 +124,11 @@ public class WaveFile extends RiffFile {
      *
      * if ( retcode == DDC_SUCCESS ) { pcm_data_offset = CurrentFilePosition();
      *
-     * // Figure out number of samples from // file size, current file position,
-     * and // WAVE header. retcode = Read (pcm_data, 8 ); num_samples =
-     * filelength(fileno(file)) - CurrentFilePosition(); num_samples /=
+     * // Figure out number of samples from // file size, current file
+     * position, and // WAVE header. retcode = Read (pcm_data, 8 ); num_samples
+     * = filelength(fileno(file)) - CurrentFilePosition(); num_samples /=
      * NumChannels(); num_samples /= (BitsPerSample() / 8); } } } return
-     * retcode;
-   }
+     * retcode; }
      */
     /**
      *
@@ -225,8 +224,7 @@ public class WaveFile extends RiffFile {
      *
      * default: retcode = DDC_INVALID_CALL; }
      *
-     * return retcode;
-	}
+     * return retcode; }
      */
     /**
      *
@@ -234,8 +232,7 @@ public class WaveFile extends RiffFile {
      * public int SeekToSample ( long SampleIndex ) { if ( SampleIndex >=
      * NumSamples() ) { return DDC_INVALID_CALL; } int SampleSize =
      * (BitsPerSample() + 7) / 8; int rc = Seek ( pcm_data_offset + 8 +
-     * SampleSize * NumChannels() * SampleIndex ); return rc;
-   }
+     * SampleSize * NumChannels() * SampleIndex ); return rc; }
      */
     /**
      * Write 16-bit audio
@@ -256,8 +253,7 @@ public class WaveFile extends RiffFile {
      * Write 8-bit audio.
      *
      * public int WriteData ( byte[] data, int numData ) { pcm_data.ckSize +=
-     * numData; return super.Write ( data, numData );
-   }
+     * numData; return super.Write ( data, numData ); }
      */
     /**
      * Read 8-bit audio.
@@ -280,8 +276,7 @@ public class WaveFile extends RiffFile {
      * Write ( SampleData, 1 );
      *
      * case 16: pcm_data.ckSize += 2; return Write ( SampleData, 2 ); } return
-     * DDC_INVALID_CALL;
-   }
+     * DDC_INVALID_CALL; }
      */
     /**
      *
@@ -296,8 +291,7 @@ public class WaveFile extends RiffFile {
      * { retcode = Write ( RightSample, 2 ); if ( retcode == DDC_SUCCESS ) {
      * pcm_data.ckSize += 4; } } break;
      *
-     * default: retcode = DDC_INVALID_CALL; } return retcode;
-   }
+     * default: retcode = DDC_INVALID_CALL; } return retcode; }
      */
     /**
      *
@@ -308,8 +302,7 @@ public class WaveFile extends RiffFile {
      *
      * case 16: retcode = Read ( Sample, 2 ); break;
      *
-     * default: retcode = DDC_INVALID_CALL; } return retcode;
-   }
+     * default: retcode = DDC_INVALID_CALL; } return retcode; }
      */
     /**
      *
@@ -323,8 +316,7 @@ public class WaveFile extends RiffFile {
      * case 16: retcode = Read ( y, 4 ); L[0] = (short) ( y[0] ); R[0] = (short)
      * ( y[1] ); break;
      *
-     * default: retcode = DDC_INVALID_CALL; } return retcode;
-   }
+     * default: retcode = DDC_INVALID_CALL; } return retcode; }
      */
     /**
      *

@@ -1521,8 +1521,8 @@ final class SynthesisFilter {
 
     /**
      * d[] split into subarrays of length 16. This provides for more faster
-     * access by allowing a block of 16 to be addressed with constant offset. 
-   *
+     * access by allowing a block of 16 to be addressed with constant offset.
+     *
      */
     private static float d16[][] = null;
 

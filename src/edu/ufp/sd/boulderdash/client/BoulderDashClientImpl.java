@@ -106,7 +106,23 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
             if (bdcHallUI != null) {
                 bdcHallUI.updateClients();
             }
+        } else if (lastState instanceof State.NewRoom) {
+            System.out.println("BoulderDashClientImpl - update(): State = NewRoom ");
+            State.NewRoom nr = (State.NewRoom) lastState;
+            if (nr.isRemoveAll()) {
+                bdcHallUI.removeAllRooms();
+            } else {
+                bdcHallUI.addNewRoom(nr);
+            }
+
+        } else if (lastState instanceof State.Disconnect) {
+            System.out.println("BoulderDashClientImpl - update(): State = Disconnect ");
+            disconnect();
         }
+    }
+
+    public void disconnect() throws RemoteException {
+        System.exit(0);
     }
 
     public void triggeredLogin(String username, String password) {

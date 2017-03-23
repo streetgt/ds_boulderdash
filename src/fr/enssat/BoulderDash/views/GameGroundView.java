@@ -30,7 +30,7 @@ public class GameGroundView extends GroundView {
      */
     public GameGroundView(BoulderDashClientImpl bdc, GameController gameController, LevelModel levelModel) {
         super(levelModel);
-        
+
         this.bdc = bdc;
 
         this.gameController = gameController;

@@ -23,7 +23,7 @@ import java.util.Observable;
  */
 public class LevelModel extends Observable implements Runnable {
 
-    private ArrayList<BoulderDashClientRI> clients = new ArrayList<>();
+    private ArrayList<BoulderDashClientRI> clients = new ArrayList<>(2);
     private DisplayableElementModel[][] groundGrid;
     private String levelName;
     private AudioLoadHelper audioLoadHelper;

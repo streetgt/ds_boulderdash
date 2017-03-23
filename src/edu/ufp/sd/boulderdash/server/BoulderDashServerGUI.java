@@ -5,20 +5,24 @@
  */
 package edu.ufp.sd.boulderdash.server;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JList;
 
 /**
  *
  * @author tiagocardoso
  */
-public class BoulderDashServerGUI extends javax.swing.JFrame {
+public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowListener {
 
     private BoulderDashServerImpl bds;
     private DefaultListModel<String> playerList = new DefaultListModel<>();
-    private DefaultListModel<String> lobbyList = new DefaultListModel<>();
+    private DefaultListModel<String> roomsList = new DefaultListModel<>();
 
     /**
      * Creates new form BouderDashServerGUI
@@ -28,6 +32,8 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
         initComponents();
 
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.addWindowListener(this);
     }
 
     /**
@@ -49,10 +55,14 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
         lblLobbysValue = new javax.swing.JLabel();
         jPanelLobbys = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        jlRooms = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
+        btnKillAll = new javax.swing.JButton();
         jPanelPlayers = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jlPlayers = new javax.swing.JList<>();
+        btnKickAll = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         btnShutdown = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,7 +93,7 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
                         .addComponent(lblLobbys)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblLobbysValue)))
-                .addContainerGap(235, Short.MAX_VALUE))
+                .addContainerGap(277, Short.MAX_VALUE))
         );
         jpInformationLayout.setVerticalGroup(
             jpInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,45 +120,100 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
         );
         jPanelGeralLayout.setVerticalGroup(
             jPanelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGeralLayout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
+            .addGroup(jPanelGeralLayout.createSequentialGroup()
+                .addGap(79, 79, 79)
                 .addComponent(jpInformation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Geral", jPanelGeral);
 
-        jList2.setModel(lobbyList);
-        jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane3.setViewportView(jList2);
+        jlRooms.setModel(roomsList);
+        jlRooms.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlRooms.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlRoomsMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jlRooms);
+
+        jLabel1.setText("Options");
+
+        btnKillAll.setText("Kill All");
+        btnKillAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKillAllActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelLobbysLayout = new javax.swing.GroupLayout(jPanelLobbys);
         jPanelLobbys.setLayout(jPanelLobbysLayout);
         jPanelLobbysLayout.setHorizontalGroup(
             jPanelLobbysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+            .addGroup(jPanelLobbysLayout.createSequentialGroup()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelLobbysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLobbysLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnKillAll, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLobbysLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(30, 30, 30))))
         );
         jPanelLobbysLayout.setVerticalGroup(
             jPanelLobbysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+            .addGroup(jPanelLobbysLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnKillAll)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTabbedPane.addTab("Lobbys", jPanelLobbys);
+        jTabbedPane.addTab("Rooms", jPanelLobbys);
 
-        jList1.setModel(playerList);
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
-        jScrollPane2.setViewportView(jList1);
+        jlPlayers.setModel(playerList);
+        jlPlayers.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlPlayers.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        jlPlayers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jlPlayersMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jlPlayers);
+
+        btnKickAll.setText("Kick All");
+
+        jLabel2.setText("Options");
 
         javax.swing.GroupLayout jPanelPlayersLayout = new javax.swing.GroupLayout(jPanelPlayers);
         jPanelPlayers.setLayout(jPanelPlayersLayout);
         jPanelPlayersLayout.setHorizontalGroup(
             jPanelPlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+            .addGroup(jPanelPlayersLayout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelPlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelPlayersLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnKickAll, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPlayersLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(29, 29, 29))))
         );
         jPanelPlayersLayout.setVerticalGroup(
             jPanelPlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+            .addGroup(jPanelPlayersLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnKickAll)
+                .addGap(0, 243, Short.MAX_VALUE))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         jTabbedPane.addTab("Players", jPanelPlayers);
@@ -196,8 +261,43 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnShutdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShutdownActionPerformed
-        bds.shutdown();
+        this.bds.shutdown();
     }//GEN-LAST:event_btnShutdownActionPerformed
+
+    private void btnKillAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKillAllActionPerformed
+        try {
+            this.bds.setState(new State().new NewRoom(true, null));
+            for (String str : this.bds.rooms) {
+                this.bds.rooms.remove(str);
+            }
+            this.roomsList.removeAllElements();
+        } catch (RemoteException ex) {
+            Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnKillAllActionPerformed
+
+    private void jlRoomsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlRoomsMouseClicked
+
+    }//GEN-LAST:event_jlRoomsMouseClicked
+
+    private void jlPlayersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlPlayersMouseClicked
+        JList theList = (JList) evt.getSource();
+        if (evt.getClickCount() == 2) {
+            int index = theList.locationToIndex(evt.getPoint());
+            if (index >= 0) {
+                Object o = theList.getModel().getElementAt(index);
+                String username = o.toString();
+                try {
+                    this.bds.setState(new State().new Disconnect(1, "Your were kicked!"));
+                    this.bds.clients.remove(this.bds.clientFromUsername(username));
+                } catch (RemoteException ex) {
+                    Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+        }
+    }//GEN-LAST:event_jlPlayersMouseClicked
 
     protected void addConnectedClient(String username, int value) {
         this.playerList.addElement(username);
@@ -219,18 +319,20 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
         }
     }
 
-    protected void addLobbyToList(String name) {
-        this.lobbyList.addElement(name);
+    protected void addRoomToList(String name) {
+        this.roomsList.addElement(name);
     }
 
-    protected void removeLobbyFromList(String name) {
-        this.lobbyList.removeElement(name);
+    protected void removeRoomFromList(String name) {
+        this.roomsList.removeElement(name);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnKickAll;
+    private javax.swing.JButton btnKillAll;
     private javax.swing.JButton btnShutdown;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelGeral;
     private javax.swing.JPanel jPanelLobbys;
@@ -238,10 +340,50 @@ public class BoulderDashServerGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane;
+    private javax.swing.JList<String> jlPlayers;
+    private javax.swing.JList<String> jlRooms;
     private javax.swing.JPanel jpInformation;
     private javax.swing.JLabel lblConnectedClients;
     private javax.swing.JLabel lblConnectedClientsValue;
     private javax.swing.JLabel lblLobbys;
     private javax.swing.JLabel lblLobbysValue;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        try {
+            try {
+                this.bds.setState(new State().new Disconnect(0, "Server is closing..."));
+            } catch (RemoteException ex) {
+                Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Thread.sleep(3000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
 }

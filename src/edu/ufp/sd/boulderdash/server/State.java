@@ -80,4 +80,50 @@ public class State implements Serializable {
         }
 
     }
+
+    public class Disconnect implements Serializable {
+
+        private int type;
+        private String message;
+
+        public Disconnect(int type, String message) {
+            this.type = type;
+            this.message = message;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+    }
+
+    public class NewRoom implements Serializable {
+
+        private boolean removeAll;
+        private String level;
+
+        public NewRoom(boolean removeAll, String level) {
+            this.removeAll = removeAll;
+            this.level = level;
+        }
+
+        public String getLevel() {
+            return level;
+        }
+
+        public boolean isRemoveAll() {
+            return removeAll;
+        }
+    }
 }

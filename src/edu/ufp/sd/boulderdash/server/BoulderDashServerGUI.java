@@ -5,6 +5,7 @@
  */
 package edu.ufp.sd.boulderdash.server;
 
+import fr.enssat.BoulderDash.models.LevelModelServer;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.rmi.RemoteException;
@@ -58,6 +59,8 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
         jlRooms = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         btnKillAll = new javax.swing.JButton();
+        btnNewRoom = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanelPlayers = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jlPlayers = new javax.swing.JList<>();
@@ -93,7 +96,7 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
                         .addComponent(lblLobbys)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblLobbysValue)))
-                .addContainerGap(277, Short.MAX_VALUE))
+                .addContainerGap(393, Short.MAX_VALUE))
         );
         jpInformationLayout.setVerticalGroup(
             jpInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,21 +149,37 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
             }
         });
 
+        btnNewRoom.setText("New");
+        btnNewRoom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewRoomActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelLobbysLayout = new javax.swing.GroupLayout(jPanelLobbys);
         jPanelLobbys.setLayout(jPanelLobbysLayout);
         jPanelLobbysLayout.setHorizontalGroup(
             jPanelLobbysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelLobbysLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelLobbysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelLobbysLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnKillAll, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLobbysLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
-                        .addGap(30, 30, 30))))
+                        .addGap(30, 30, 30))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLobbysLayout.createSequentialGroup()
+                        .addGroup(jPanelLobbysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnKillAll, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                            .addComponent(btnNewRoom, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         jPanelLobbysLayout.setVerticalGroup(
             jPanelLobbysLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +188,11 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNewRoom)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnKillAll)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -194,13 +217,13 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
         jPanelPlayersLayout.setHorizontalGroup(
             jPanelPlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPlayersLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelPlayersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelPlayersLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnKickAll, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                        .addComponent(btnKickAll, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelPlayersLayout.createSequentialGroup()
+                    .addGroup(jPanelPlayersLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(29, 29, 29))))
@@ -266,11 +289,12 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
 
     private void btnKillAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKillAllActionPerformed
         try {
-            this.bds.setState(new State().new NewRoom(true, null));
-            for (String str : this.bds.rooms) {
-                this.bds.rooms.remove(str);
+            for (LevelModelServer room: this.bds.servers) {
+                room.setGameRunning(false);
             }
+            this.bds.servers.clear();
             this.roomsList.removeAllElements();
+            this.bds.setState(new State().new NewRoom(true, null));
         } catch (RemoteException ex) {
             Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -278,7 +302,19 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
     }//GEN-LAST:event_btnKillAllActionPerformed
 
     private void jlRoomsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlRoomsMouseClicked
-
+        JList theList = (JList) evt.getSource();
+        if (evt.getClickCount() == 2) {
+            int index = theList.locationToIndex(evt.getPoint());
+            if (index >= 0) {
+                Object o = theList.getModel().getElementAt(index);
+                String roomName = o.toString();
+                System.out.println(roomName);
+                int roomID = this.bds.getRoomIndexByName(roomName);
+                this.roomsList.removeElement(roomName);
+                this.bds.servers.get(roomID).setGameRunning(false);
+                this.bds.servers.remove(roomID);
+            }
+        }
     }//GEN-LAST:event_jlRoomsMouseClicked
 
     private void jlPlayersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlPlayersMouseClicked
@@ -298,6 +334,18 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
             }
         }
     }//GEN-LAST:event_jlPlayersMouseClicked
+
+    private void btnNewRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewRoomActionPerformed
+        try {
+            this.bds.createGameRoom();
+        } catch (RemoteException ex) {
+            Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnNewRoomActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     protected void addConnectedClient(String username, int value) {
         this.playerList.addElement(username);
@@ -330,7 +378,9 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKickAll;
     private javax.swing.JButton btnKillAll;
+    private javax.swing.JButton btnNewRoom;
     private javax.swing.JButton btnShutdown;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -357,7 +407,7 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
             } catch (RemoteException ex) {
                 Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Thread.sleep(3000);
+            Thread.sleep(50);
         } catch (InterruptedException ex) {
             Logger.getLogger(BoulderDashServerGUI.class.getName()).log(Level.SEVERE, null, ex);
         }

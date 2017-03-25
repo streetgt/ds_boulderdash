@@ -205,7 +205,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
             String[] rooms = this.bdc.bdsRI.fetchAvaliableRooms();
             if (rooms.length != 0) {
                 for (int i = 0; i < rooms.length; i++) {
-                    this.roomslist.addElement("BoulderDash Game - Instance: " + i + " Level: " + rooms[i] + "\t\t\t Players: 0/2");
+                    this.roomslist.addElement(rooms[i]);
                 }
             }
 
@@ -246,7 +246,11 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         //n
         try {
             String level = this.jcbLevels.getSelectedItem().toString();
-            this.bdc.bdsRI.createGameRoom(bdc, level);
+            int serverID = this.bdc.bdsRI.createGameRoom(bdc, level);
+            if(serverID >= 0)
+            {
+                
+            }
             this.btnNewRoom.setEnabled(false);
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
@@ -277,7 +281,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
     }
 
     public void addNewRoom(State.NewRoom nr) {
-        this.roomslist.addElement("BoulderDash Game - Instance: " + 999 + " Level: " + nr.getLevel() + "\t\t\t Players: 0/2");
+        this.roomslist.addElement(nr.getRoomName());
     }
 
     public void removeAllRooms() {

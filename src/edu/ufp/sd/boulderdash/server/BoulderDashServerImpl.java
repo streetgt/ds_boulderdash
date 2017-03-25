@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import fr.enssat.BoulderDash.models.LevelModelServer;
 
 /**
  * <p>
@@ -36,6 +37,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
 
     protected ArrayList<BoulderDashClientRI> clients = new ArrayList<>();
     protected ArrayList<String> rooms = new ArrayList<>();
+    protected ArrayList<LevelModelServer> servers = new ArrayList<>();
 
     public static String PATH_USERS = "../../data/users/";
     public static String PATH_LEVELS = "../../res/levels/";
@@ -158,7 +160,9 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     public void setState(Object s) throws RemoteException {
         System.out.println("BoulderDashServerImpl - setState()");
         this.state = s;
-        notifyAllObservers();
+        if(!clients.isEmpty()) {
+            notifyAllObservers();
+        }
     }
 
     public void notifyAllObservers() throws RemoteException {
@@ -174,11 +178,32 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     }
 
     @Override
-    public boolean createGameRoom(BoulderDashClientRI client, String level) throws RemoteException {
-        this.rooms.add(level);
-        this.bdsGUI.addRoomToList("Game Instance - " + level + " - by " + client.getClientUsername());
-        this.setState(new State().new NewRoom(false, level));
-        return true;
+    public int createGameRoom(BoulderDashClientRI client, String level) throws RemoteException {
+        LevelModelServer newServer = new LevelModelServer(level);
+        this.servers.add(newServer);
+        String name = servers.size()-1 +"# BoulderDash Room" +
+                      " - Level: " + level + 
+                      " - Players: " + newServer.getClients().size() + "/2";
+        newServer.setRoomName(name);
+        this.rooms.add(name);
+        //newServer.getClients().add(client);
+        this.bdsGUI.addRoomToList(name);
+        this.setState(new State().new NewRoom(false, name));
+        return servers.size()-1;
+    }
+    
+    public void createGameRoom() throws RemoteException
+    {
+        String level = "level01";
+        LevelModelServer newServer = new LevelModelServer(level);
+        this.servers.add(newServer);
+        String name = servers.size()-1 +"# BoulderDash Room" + 
+                      " - Level: " + level + 
+                      " - Players: " + newServer.getClients().size() + "/2";
+        newServer.setRoomName(name);
+        this.rooms.add(name);
+        this.bdsGUI.addRoomToList(name);
+        this.setState(new State().new NewRoom(false, name));
     }
 
     @Override
@@ -215,8 +240,12 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     @Override
     public String[] fetchAvaliableRooms() throws RemoteException {
 
-        String[] itemsArr = new String[rooms.size()];
-        itemsArr = rooms.toArray(itemsArr);
+        String[] itemsArr = new String[servers.size()];
+        if(!servers.isEmpty()) {
+            for (int i = 0; i < servers.size(); i++) {
+                itemsArr[i] = servers.get(i).getRoomName();
+            }
+        }
 
         return itemsArr;
     }
@@ -241,6 +270,15 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
 
     }
 
+    public ArrayList<LevelModelServer> getServers() {
+        return servers;
+    }
+
+    public void setServers(ArrayList<LevelModelServer> servers) {
+        this.servers = servers;
+    }
+
+    
     public BoulderDashClientRI clientFromUsername(String username) {
         try {
             for (BoulderDashClientRI client : clients) {
@@ -255,6 +293,16 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         return null;
     }
 
+    public int getRoomIndexByName(String name)
+    {
+        for (LevelModelServer room: servers) {
+            if(room.getRoomName().compareTo(name) == 0) {
+                return servers.indexOf(room);
+            }
+        }
+        
+        return -1;
+    }
     public void shutdown() {
         System.out.println("SHUTDOWN SERVER");
         System.exit(0);

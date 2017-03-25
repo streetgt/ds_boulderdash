@@ -111,15 +111,15 @@ public class State implements Serializable {
     public class NewRoom implements Serializable {
 
         private boolean removeAll;
-        private String level;
+        private String roomName;
 
-        public NewRoom(boolean removeAll, String level) {
+        public NewRoom(boolean removeAll, String roomName) {
             this.removeAll = removeAll;
-            this.level = level;
+            this.roomName = roomName;
         }
 
-        public String getLevel() {
-            return level;
+        public String getRoomName() {
+            return roomName;
         }
 
         public boolean isRemoveAll() {

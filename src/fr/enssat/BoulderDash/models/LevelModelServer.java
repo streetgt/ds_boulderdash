@@ -24,14 +24,15 @@ import java.util.Observable;
 public class LevelModelServer extends Observable implements Runnable {
 
     private ArrayList<BoulderDashClientRI> clients = new ArrayList<>(2);
+    private ArrayList<RockfordModel> rockfords = new ArrayList<>(2);
+    
     private String roomName;
     private DisplayableElementModel[][] groundGrid;
     private String levelName;
+    private int diamonds;
     private int sizeWidth = 0;
     private int sizeHeight = 0;
     private LevelLoadHelper levelLoadHelper;
-    private ArrayList<RockfordModel> rockfords = new ArrayList<>(2);
-    private GameInformationModel gameInformationModel;
     private boolean gameRunning;
     private boolean gamePaused;
     private boolean gameHasEnded;
@@ -64,7 +65,7 @@ public class LevelModelServer extends Observable implements Runnable {
         this.sizeWidth = this.levelLoadHelper.getWidthSizeValue();
         this.sizeHeight = this.levelLoadHelper.getHeightSizeValue();
         
-        this.gameInformationModel = new GameInformationModel(this.levelLoadHelper.getDiamondsToCatch());
+        this.diamonds = this.levelLoadHelper.getDiamondsToCatch();
 
         this.createLimits();
 
@@ -108,7 +109,7 @@ public class LevelModelServer extends Observable implements Runnable {
     public void resetLevelModel() {
         this.groundGrid = this.levelLoadHelper.getGroundGrid();
         this.gameRunning = true;
-        this.gameInformationModel.resetInformations();
+        //this.gameInformationModel.resetInformations();
     }
 
     /**
@@ -180,13 +181,15 @@ public class LevelModelServer extends Observable implements Runnable {
         int oldY = this.getRockfordPositionY(index);
 
         if (this.groundGrid[posX][posY].getSpriteName().compareTo("diamond") == 0) {
-            this.gameInformationModel.incrementScore(index);
-            this.gameInformationModel.decrementRemainingsDiamonds();
+            // TODO: incrementar score de quem apanhou
+            //this.gameInformationModel.incrementScore(index);
+            
+            this.diamonds--;
 
-            if (this.gameInformationModel.getRemainingsDiamonds() == 0) {
+            if (this.diamonds == 0) {
                 System.out.println("All diamonds found!");
                 this.gameRunning = false;
-                this.localNotifyObservers();
+                //this.localNotifyObservers();
             }
         }
 
@@ -408,13 +411,6 @@ public class LevelModelServer extends Observable implements Runnable {
     }
 
     /**
-     * Increments the user score
-     */
-    public void incrementScore(int index) {
-        this.gameInformationModel.incrementScore(index);
-    }
-
-    /**
      * Gets the associated level load helper
      *
      * @return Level load helper
@@ -555,16 +551,7 @@ public class LevelModelServer extends Observable implements Runnable {
     public void deleteThisBoulder(int x, int y) {
         this.groundGrid[x][y] = new EmptyModel();
     }
-
-    /**
-     * Gets gameInformationModel
-     *
-     * @return gameInfos like score, remainings Diamonds etc
-     */
-    public GameInformationModel getGameInformationModel() {
-        return this.gameInformationModel;
-    }
-
+    
     /**
      * Explose the brick wall
      *

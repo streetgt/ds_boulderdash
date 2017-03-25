@@ -29,10 +29,6 @@ public class LevelModelServer extends Observable implements Runnable {
     private String levelName;
     private int sizeWidth = 0;
     private int sizeHeight = 0;
-    private int cursorXPosition = 0;
-    private int cursorYPosition = 0;
-    private boolean showCursor = false;
-    private CursorModel cursorModel;
     private LevelLoadHelper levelLoadHelper;
     private ArrayList<RockfordModel> rockfords = new ArrayList<>(2);
     private GameInformationModel gameInformationModel;
@@ -67,8 +63,7 @@ public class LevelModelServer extends Observable implements Runnable {
         this.groundGrid = this.levelLoadHelper.getGroundGrid();
         this.sizeWidth = this.levelLoadHelper.getWidthSizeValue();
         this.sizeHeight = this.levelLoadHelper.getHeightSizeValue();
-
-        this.cursorModel = new CursorModel();
+        
         this.gameInformationModel = new GameInformationModel(this.levelLoadHelper.getDiamondsToCatch());
 
         this.createLimits();
@@ -207,44 +202,7 @@ public class LevelModelServer extends Observable implements Runnable {
 
             this.groundGrid[posX][posY] = this.getRockford(index);
         }
-    }
-
-    /**
-     * Trigger block change with provided value
-     *
-     * @param blockValue New value
-     */
-    public void triggerBlockChange(String blockValue) {
-        // No block value?
-        if (blockValue == null || blockValue.isEmpty()) {
-            return;
-        }
-
-        // Cancel if Rockford is already in model
-        if ((blockValue.compareTo("Rockford") == 0 || blockValue.compareTo("rockford") == 0 || blockValue.compareTo("Rockford2") == 0 || blockValue.compareTo("rockford2") == 0) && this.areRockfordsInModel()) {
-            return;
-        }
-
-        // Grab model value
-        ModelConvertHelper modelConverter = new ModelConvertHelper();
-        DisplayableElementModel targetModel;
-        int xPos, yPos;
-
-        xPos = this.getCursorXPosition();
-        yPos = this.getCursorYPosition();
-
-        try {
-            targetModel = modelConverter.toModel(blockValue, false);
-
-            // Apply new model in place of cursor
-            this.groundGrid[xPos + 1][yPos + 1] = targetModel;
-
-            // Disable cursor (important)
-            //this.setShowCursor(false);
-        } catch (UnknownModelException e) {
-            e.printStackTrace();
-        }
-    }
+    }    
 
     /**
      * Gets the vertical position of Rockford from the model
@@ -300,20 +258,6 @@ public class LevelModelServer extends Observable implements Runnable {
         }
 
         return elementModel.getSprite();
-    }
-
-    /**
-     * Gets the cursor image image
-     *
-     * @return Cursor image
-     */
-    public BufferedImage getCursorImage() {
-
-        if (this.cursorModel == null) {
-            this.cursorModel = new CursorModel();
-        }
-
-        return this.cursorModel.getSprite();
     }
 
     /**
@@ -480,80 +424,6 @@ public class LevelModelServer extends Observable implements Runnable {
     }
 
     /**
-     * Gets the cursor position X value
-     *
-     * @return Cursor position X value
-     */
-    public int getCursorXPosition() {
-        return this.cursorXPosition;
-    }
-
-    /**
-     * Gets the cursor position Y value
-     *
-     * @return Cursor position Y value
-     */
-    public int getCursorYPosition() {
-        return this.cursorYPosition;
-    }
-
-    /**
-     * Increaments the cursor position X value
-     *
-     * @return Cursor position new X value
-     */
-    public int incrementCursorXPosition() {
-        if (this.cursorXPosition < (this.getSizeWidth() - 1 - 2)) {
-            this.cursorXPosition = this.cursorXPosition + 1;
-        }
-
-        this.localNotifyObservers();
-        return this.getCursorXPosition();
-    }
-
-    /**
-     * Decrements the cursor position X value
-     *
-     * @return Cursor position new X value
-     */
-    public int decrementCursorXPosition() {
-        if (this.cursorXPosition > 0) {
-            this.cursorXPosition = this.cursorXPosition - 1;
-        }
-
-        this.localNotifyObservers();
-        return this.getCursorXPosition();
-    }
-
-    /**
-     * Increaments the cursor position Y value
-     *
-     * @return Cursor position new Y value
-     */
-    public int incrementCursorYPosition() {
-        if (this.cursorYPosition < (this.getSizeHeight() - 1 - 2)) {
-            this.cursorYPosition = this.cursorYPosition + 1;
-        }
-
-        this.localNotifyObservers();
-        return this.getCursorYPosition();
-    }
-
-    /**
-     * Decrements the cursor position Y value
-     *
-     * @return Cursor position new Y value
-     */
-    public int decrementCursorYPosition() {
-        if (this.cursorYPosition > 0) {
-            this.cursorYPosition = this.cursorYPosition - 1;
-        }
-
-        this.localNotifyObservers();
-        return this.getCursorYPosition();
-    }
-
-    /**
      * sets the game to a defined state
      *
      * @param gameRunning Whether game is running or not
@@ -577,24 +447,6 @@ public class LevelModelServer extends Observable implements Runnable {
      */
     public boolean isGameRunning() {
         return gameRunning;
-    }
-
-    /**
-     * Gets whether cursor is to be shown or not
-     *
-     * @return whether cursor needs to be shown or not
-     */
-    public boolean getShowCursor() {
-        return this.showCursor;
-    }
-
-    /**
-     * Sets whether cursor is to be shown or not
-     *
-     * @param showCursor whether cursor needs to be shown or not
-     */
-    public void setShowCursor(boolean showCursor) {
-        this.showCursor = showCursor;
     }
 
     /**

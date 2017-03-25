@@ -5,7 +5,7 @@
  */
 package edu.ufp.sd.boulderdash.server;
 
-import fr.enssat.BoulderDash.models.LevelModelServer;
+import edu.ufp.sd.boulderdash.server.game.LevelModelServer;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.rmi.RemoteException;

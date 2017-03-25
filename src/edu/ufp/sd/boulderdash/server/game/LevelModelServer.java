@@ -1,13 +1,8 @@
-package fr.enssat.BoulderDash.models;
+package edu.ufp.sd.boulderdash.server.game;
 
 import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
-import fr.enssat.BoulderDash.exceptions.LevelConstraintNotRespectedException;
-import fr.enssat.BoulderDash.exceptions.UnknownModelException;
-import fr.enssat.BoulderDash.helpers.LevelLoadHelper;
-import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
-import fr.enssat.BoulderDash.helpers.ModelConvertHelper;
+import edu.ufp.sd.boulderdash.server.game.helpers.LevelLoadHelperServer;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -26,13 +21,13 @@ public class LevelModelServer extends Observable implements Runnable {
     private ArrayList<BoulderDashClientRI> clients = new ArrayList<>(2);
     private ArrayList<RockfordModel> rockfords = new ArrayList<>(2);
     
-    private String roomName;
+    private LevelLoadHelperServer levelLoadHelperServer;
     private DisplayableElementModel[][] groundGrid;
+    private String roomName;
     private String levelName;
     private int diamonds;
     private int sizeWidth = 0;
     private int sizeHeight = 0;
-    private LevelLoadHelper levelLoadHelper;
     private boolean gameRunning;
     private boolean gamePaused;
     private boolean gameHasEnded;
@@ -59,13 +54,13 @@ public class LevelModelServer extends Observable implements Runnable {
         this.gameRunning = true;
         this.gameHasEnded = false;
 
-        this.levelLoadHelper = new LevelLoadHelper(this.levelName);
+        this.levelLoadHelperServer = new LevelLoadHelperServer(this.levelName);
 
-        this.groundGrid = this.levelLoadHelper.getGroundGrid();
-        this.sizeWidth = this.levelLoadHelper.getWidthSizeValue();
-        this.sizeHeight = this.levelLoadHelper.getHeightSizeValue();
+        this.groundGrid = this.levelLoadHelperServer.getGroundGrid();
+        this.sizeWidth = this.levelLoadHelperServer.getWidthSizeValue();
+        this.sizeHeight = this.levelLoadHelperServer.getHeightSizeValue();
         
-        this.diamonds = this.levelLoadHelper.getDiamondsToCatch();
+        this.diamonds = this.levelLoadHelperServer.getDiamondsToCatch();
 
         this.createLimits();
 
@@ -86,7 +81,7 @@ public class LevelModelServer extends Observable implements Runnable {
      * Initializes the Rockfords position attributes
      */
     private void initRockford() {
-        this.rockfords = this.levelLoadHelper.getRockfordIntances();
+        this.rockfords = this.levelLoadHelperServer.getRockfordIntances();
     }
 
     /**
@@ -107,7 +102,7 @@ public class LevelModelServer extends Observable implements Runnable {
     }
 
     public void resetLevelModel() {
-        this.groundGrid = this.levelLoadHelper.getGroundGrid();
+        this.groundGrid = this.levelLoadHelperServer.getGroundGrid();
         this.gameRunning = true;
         //this.gameInformationModel.resetInformations();
     }
@@ -247,44 +242,6 @@ public class LevelModelServer extends Observable implements Runnable {
     }
 
     /**
-     * Gets the image at given positions
-     *
-     * @param x Block horizontal position
-     * @param y Block vertical position
-     * @return Image at given positions
-     */
-    public BufferedImage getImage(int x, int y) {
-        DisplayableElementModel elementModel = this.getDisplayableElement(x, y);
-
-        if (elementModel == null) {
-            return new DirtModel().getSprite();
-        }
-
-        return elementModel.getSprite();
-    }
-
-    /**
-     * Return whether rockford is in model or not Notice: not optimized, be
-     * careful
-     *
-     * @return Whether rockford is in model or not
-     */
-    public boolean areRockfordsInModel() {
-        boolean areInModel = false;
-
-        // Iterate and catch it!
-        for (int x = 0; x < this.getSizeWidth() && !areInModel; x++) {
-            for (int y = 0; y < this.getSizeHeight() && !areInModel; y++) {
-                if (this.groundGrid[x][y] != null && this.groundGrid[x][y].getSpriteName().compareTo("rockford") == 0 && this.groundGrid[x][y].getSpriteName().compareTo("rockford2") == 0) {
-                    areInModel = true;
-                }
-            }
-        }
-
-        return areInModel;
-    }
-
-    /**
      * Returns number of diamonds
      *
      * @return Number of diamonds
@@ -302,21 +259,6 @@ public class LevelModelServer extends Observable implements Runnable {
         }
 
         return numberOfDiamonds;
-    }
-
-    /**
-     * Returns whether constraints on model are respected or not
-     */
-    public void checkConstraints() throws LevelConstraintNotRespectedException {
-        // Diamonds number?
-        if (this.countDiamonds() < 3) {
-            throw new LevelConstraintNotRespectedException("Add at least 3 diamonds!");
-        }
-
-        // Rockfords in the model?
-        if (!this.areRockfordsInModel()) {
-            throw new LevelConstraintNotRespectedException("Add Rockfords on the map!");
-        }
     }
 
     /**
@@ -415,8 +357,8 @@ public class LevelModelServer extends Observable implements Runnable {
      *
      * @return Level load helper
      */
-    public LevelLoadHelper getLevelLoadHelper() {
-        return this.levelLoadHelper;
+    public LevelLoadHelperServer getLevelLoadHelper() {
+        return this.levelLoadHelperServer;
     }
 
     /**

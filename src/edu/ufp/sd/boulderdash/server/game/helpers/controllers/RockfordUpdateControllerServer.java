@@ -1,6 +1,6 @@
-package fr.enssat.BoulderDash.controllers;
+package edu.ufp.sd.boulderdash.server.game.helpers.controllers;
 
-import fr.enssat.BoulderDash.models.LevelModel;
+import edu.ufp.sd.boulderdash.server.game.LevelModelServer;
 
 /**
  * ElementPositionUpdateHelper
@@ -12,9 +12,9 @@ import fr.enssat.BoulderDash.models.LevelModel;
  * @author Colin Leverger <me@colinleverger.fr>
  * @since 2015-06-19
  */
-public class RockfordUpdateController implements Runnable {
+public class RockfordUpdateControllerServer implements Runnable {
 
-    private LevelModel levelModel;
+    private LevelModelServer levelModelServer;
     private Thread elementMovingThread;
     private int[] rockfordInstance = new int[2];
     private int[] rockfordPositionX = new int[2];
@@ -24,10 +24,10 @@ public class RockfordUpdateController implements Runnable {
     /**
      * Class constructor
      *
-     * @param levelModel Level model
+     * @param levelModelServer Level model
      */
-    public RockfordUpdateController(LevelModel levelModel) {
-        this.levelModel = levelModel;
+    public RockfordUpdateControllerServer(LevelModelServer levelModelServer) {
+        this.levelModelServer = levelModelServer;
         this.elementMovingThread = new Thread(this);
         this.elementMovingThread.start();
         this.rockfordHasMoved[0] = false;
@@ -38,11 +38,11 @@ public class RockfordUpdateController implements Runnable {
      * Watches for elements to be moved
      */
     public void run() {
-        while (this.levelModel.isGameRunning()) {
-            if (!this.levelModel.getGamePaused()) {
+        while (this.levelModelServer.isGameRunning()) {
+            if (!this.levelModelServer.getGamePaused()) {
                 for (int i = 0; i < 2; i++) {
                     if (this.rockfordHasMoved[i]) {
-                        this.levelModel.setPositionOfRockford(rockfordInstance[i], rockfordPositionX[i], rockfordPositionY[i]);
+                        this.levelModelServer.setPositionOfRockford(rockfordInstance[i], rockfordPositionX[i], rockfordPositionY[i]);
                         this.rockfordHasMoved[i] = false;
                     }
                 }

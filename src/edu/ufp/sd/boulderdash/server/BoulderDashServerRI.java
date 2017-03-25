@@ -43,5 +43,5 @@ public interface BoulderDashServerRI extends Remote {
 
     public String[] fetchAvaliableRooms() throws RemoteException;
 
-    public void sendKeys(BoulderDashClientRI client, String string) throws RemoteException;
+    public void sendKeys(BoulderDashClientRI client, int serverID) throws RemoteException;
 }

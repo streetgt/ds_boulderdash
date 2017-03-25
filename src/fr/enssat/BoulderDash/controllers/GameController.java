@@ -1,6 +1,5 @@
 package fr.enssat.BoulderDash.controllers;
 
-import edu.ufp.sd.boulderdash.client.BoulderDashClient;
 import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
 import fr.enssat.BoulderDash.models.LevelModel;
 import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
@@ -24,20 +23,22 @@ public class GameController implements ActionListener {
     private AudioLoadHelper audioLoadHelper;
     private boolean firstClickOnPause;
     private GameView gameView;
+    private int serverID;
 
     /**
      * Class constructor
      */
-    public GameController(BoulderDashClientImpl bdc) {
+    public GameController(BoulderDashClientImpl bdc, int serverID) {
         this.bdc = bdc;
+        this.serverID = serverID;
         if (this.bdc == null) {
             System.out.println("GameController bdc = null");
         }
+        
         this.firstClickOnPause = true;
-
         this.audioLoadHelper = new AudioLoadHelper();
         this.levelModel = new LevelModel("level01", audioLoadHelper);
-        this.gameView = new GameView(this.bdc, this, levelModel);
+        this.gameView = new GameView(this.bdc, this, levelModel, this.serverID);
 
         // Play new song
         this.getAudioLoadHelper().playSound("new");
@@ -86,7 +87,7 @@ public class GameController implements ActionListener {
 
         if (source.equals("restart")) {
             this.levelModel = new LevelModel("level01", audioLoadHelper);
-            this.gameView = new GameView(this.bdc, this, levelModel);
+            this.gameView = new GameView(this.bdc, this, levelModel, serverID);
             this.gameView.setVisible(true);
         }
     }

@@ -30,6 +30,7 @@ public class GameView extends JFrame implements Observer, WindowListener {
     private JPanel informationPanel;
     private GameController gameController;
     private LevelModel levelModel;
+    private int serverID;
 
     /**
      * Class constructor
@@ -37,10 +38,11 @@ public class GameView extends JFrame implements Observer, WindowListener {
      * @param gameController Game controller
      * @param levelModel Level model
      */
-    public GameView(BoulderDashClientImpl bdc, GameController gameController, LevelModel levelModel) {
+    public GameView(BoulderDashClientImpl bdc, GameController gameController, LevelModel levelModel, int serverID) {
         this.bdc = bdc;
         this.gameController = gameController;
         this.levelModel = levelModel;
+        this.serverID = serverID;
 
         this.initializeView();
         this.createLayout();
@@ -72,9 +74,9 @@ public class GameView extends JFrame implements Observer, WindowListener {
      * Creates the view layout
      */
     private void createLayout() {
-        this.gameGroundView = new GameGroundView(this.bdc, this.gameController, this.levelModel);
+        this.gameGroundView = new GameGroundView(this.bdc, this.gameController, this.levelModel, serverID);
         this.actionPanel = new JPanel();
-        this.informationPanel = new InformationPanel(this.levelModel);
+        this.informationPanel = new InformationPanel(this.bdc,this.levelModel);
         this.informationPanel.setBackground(Color.white);
 
         // Add some buttons on the informationPanel

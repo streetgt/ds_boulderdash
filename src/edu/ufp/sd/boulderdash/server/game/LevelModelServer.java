@@ -2,9 +2,14 @@ package edu.ufp.sd.boulderdash.server.game;
 
 import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
 import edu.ufp.sd.boulderdash.server.game.helpers.LevelLoadHelperServer;
+import edu.ufp.sd.boulderdash.server.game.helpers.controllers.BoulderAndDiamondControllerServer;
+import edu.ufp.sd.boulderdash.server.game.helpers.controllers.RockfordUpdateControllerServer;
+import java.rmi.RemoteException;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * LevelModel
@@ -20,7 +25,7 @@ public class LevelModelServer extends Observable implements Runnable {
 
     private ArrayList<BoulderDashClientRI> clients = new ArrayList<>(2);
     private ArrayList<RockfordModel> rockfords = new ArrayList<>(2);
-    
+
     private LevelLoadHelperServer levelLoadHelperServer;
     private DisplayableElementModel[][] groundGrid;
     private String roomName;
@@ -31,6 +36,8 @@ public class LevelModelServer extends Observable implements Runnable {
     private boolean gameRunning;
     private boolean gamePaused;
     private boolean gameHasEnded;
+    
+    private RockfordUpdateControllerServer updatePosRockford;
 
     /**
      * Sprite animation thread
@@ -46,27 +53,29 @@ public class LevelModelServer extends Observable implements Runnable {
      * Class constructor
      *
      * @param levelName Level name
-     * @param audioLoadHelper Audio load helper
      */
     public LevelModelServer(String levelName) {
+        System.out.println("LevelModelServer() - constructor()");
         this.levelName = levelName;
         this.gamePaused = false;
         this.gameRunning = true;
         this.gameHasEnded = false;
 
         this.levelLoadHelperServer = new LevelLoadHelperServer(this.levelName);
+        
 
         this.groundGrid = this.levelLoadHelperServer.getGroundGrid();
         this.sizeWidth = this.levelLoadHelperServer.getWidthSizeValue();
         this.sizeHeight = this.levelLoadHelperServer.getHeightSizeValue();
-        
+
         this.diamonds = this.levelLoadHelperServer.getDiamondsToCatch();
 
         this.createLimits();
 
         this.initRockford();
         this.initThreadAnimator();
-        System.out.println("LevelModelServer() - constructor()");
+        
+        this.updatePosRockford = new RockfordUpdateControllerServer(this);
     }
 
     /**
@@ -178,7 +187,7 @@ public class LevelModelServer extends Observable implements Runnable {
         if (this.groundGrid[posX][posY].getSpriteName().compareTo("diamond") == 0) {
             // TODO: incrementar score de quem apanhou
             //this.gameInformationModel.incrementScore(index);
-            
+
             this.diamonds--;
 
             if (this.diamonds == 0) {
@@ -200,7 +209,7 @@ public class LevelModelServer extends Observable implements Runnable {
 
             this.groundGrid[posX][posY] = this.getRockford(index);
         }
-    }    
+    }
 
     /**
      * Gets the vertical position of Rockford from the model
@@ -493,7 +502,7 @@ public class LevelModelServer extends Observable implements Runnable {
     public void deleteThisBoulder(int x, int y) {
         this.groundGrid[x][y] = new EmptyModel();
     }
-    
+
     /**
      * Explose the brick wall
      *
@@ -565,5 +574,70 @@ public class LevelModelServer extends Observable implements Runnable {
 
     public void setClients(ArrayList<BoulderDashClientRI> clients) {
         this.clients = clients;
+    }
+
+    public void moveUp(BoulderDashClientRI client) {
+        try {
+            System.out.println(client.getClientUsername() + "moved up!");
+        } catch (RemoteException ex) {
+            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        int index = 0;
+        if (client.equals(this.clients.get(1))) {
+            index = 1;
+        }
+
+        DisplayableElementModel upElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX()][this.getRockford(index).getPositionY() - 1];
+
+        if (upElement.getPriority() < this.getRockford(index).getPriority()) {
+            this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() - 1);
+            this.getRockford(index).startRunningUp();
+        }
+    }
+
+    public void moveDown(BoulderDashClientRI client) {
+
+        int index = 0;
+        if (client.equals(this.clients.get(1))) {
+            index = 1;
+        }
+
+        DisplayableElementModel downElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX()][this.getRockford(index).getPositionY() + 1];
+
+        if (downElement.getPriority() < this.getRockford(index).getPriority()) {
+            this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() + 1);
+            this.getRockford(index).startRunningDown();
+        }
+
+    }
+
+    public void moveLeft(BoulderDashClientRI client) {
+        int index = 0;
+        if (client.equals(this.clients.get(1))) {
+            index = 1;
+        }
+
+        DisplayableElementModel leftElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX() - 1][this.getRockford(index).getPositionY()];
+
+        if (leftElement.getPriority() < this.getRockford(index).getPriority()) {
+            this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() - 1, this.getRockford(index).getPositionY());
+            this.getRockford(index).startRunningLeft();
+        }
+
+    }
+
+    public void moveRight(BoulderDashClientRI client) {
+        int index = 0;
+        if (client.equals(this.clients.get(1))) {
+            index = 1;
+        }
+
+        DisplayableElementModel rightElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX() + 1][this.getRockford(index).getPositionY()];
+
+        if (rightElement.getPriority() < this.getRockford(index).getPriority()) {
+            this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() + 1, this.getRockford(index).getPositionY());
+            this.getRockford(index).startRunningRight();
+        }
     }
 }

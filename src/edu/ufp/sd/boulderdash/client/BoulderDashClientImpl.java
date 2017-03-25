@@ -9,7 +9,6 @@ import edu.ufp.sd.boulderdash.server.BoulderDashServerRI;
 import edu.ufp.sd.boulderdash.server.State;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Arrays;
 
 /**
  *

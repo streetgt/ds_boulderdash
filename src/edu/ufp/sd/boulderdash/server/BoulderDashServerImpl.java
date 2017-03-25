@@ -251,8 +251,8 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     }
 
     @Override
-    public void sendKeys(BoulderDashClientRI client, String string) throws RemoteException {
-        System.out.println("BoulderDashServerImpl - sendKeys(): " + client.getClientUsername() + " Key: " + string);
+    public void sendKeys(BoulderDashClientRI client, int serverID) throws RemoteException {
+        this.servers.get(serverID).moveUp(client);
     }
 
     private boolean clientAlreadyLoggedin(String username) {

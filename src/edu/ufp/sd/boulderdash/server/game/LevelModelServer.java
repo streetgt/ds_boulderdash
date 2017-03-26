@@ -7,7 +7,6 @@ import edu.ufp.sd.boulderdash.server.game.helpers.controllers.RockfordUpdateCont
 import java.rmi.RemoteException;
 
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +31,6 @@ public class LevelModelServer implements Runnable {
     private String roomName;
     private int roomID;
     private String levelName;
-    private int diamonds;
     private int sizeWidth = 0;
     private int sizeHeight = 0;
     private boolean gameRunning;
@@ -189,6 +187,11 @@ public class LevelModelServer implements Runnable {
         int oldY = this.getRockfordPositionY(index);
 
         if (this.groundGrid[posX][posY].getSpriteName().compareTo("diamond") == 0) {
+            try {
+                System.out.println(clients.get(index).getClientUsername() + " found a diamond!");
+            } catch (RemoteException ex) {
+                Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.gameInformationModel.incrementScore(index);
             this.gameInformationModel.decrementRemainingsDiamonds();
 
@@ -396,13 +399,13 @@ public class LevelModelServer implements Runnable {
      */
     public void setGameRunning(boolean gameRunning) {
         this.gameRunning = gameRunning;
-        // Timer to refresh the view properly...
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+//        // Timer to refresh the view properly...
+//        try {
+//            Thread.sleep(200);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
         this.localNotifyObservers();
     }
 

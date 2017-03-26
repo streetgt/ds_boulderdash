@@ -66,6 +66,7 @@ public class GameKeyController implements KeyListener {
                     Logger.getLogger(GameKeyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+                break;
             }
 
             // Direction Rockford 1: LEFT
@@ -76,6 +77,8 @@ public class GameKeyController implements KeyListener {
                     Logger.getLogger(GameKeyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+                break;
+
             }
 
             // Direction Rockford 1: RIGHT
@@ -85,6 +88,8 @@ public class GameKeyController implements KeyListener {
                 } catch (RemoteException ex) {
                     Logger.getLogger(GameKeyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+
+                break;
             }
 
         }

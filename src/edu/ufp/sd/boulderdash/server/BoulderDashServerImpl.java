@@ -420,7 +420,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
 
     @Override
     public int[] getRoomMapSize(int serverID) throws RemoteException {
-        System.out.println("getRoomMapSize(" + serverID + ")");
+        //System.out.println("getRoomMapSize(" + serverID + ")");
         LevelModelServer server = null;
         int[] size = null;
         try {

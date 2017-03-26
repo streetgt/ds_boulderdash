@@ -448,5 +448,4 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
 
         return null;
     }
-
 }

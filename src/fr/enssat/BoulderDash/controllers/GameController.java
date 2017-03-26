@@ -36,7 +36,7 @@ public class GameController implements ActionListener {
         if (this.bdc == null) {
             System.out.println("GameController bdc = null");
         }
-
+        this.bdc.setPlaying(true);
         this.firstClickOnPause = true;
         this.audioLoadHelper = new AudioLoadHelper();
         this.gameView = new GameView(this.bdc, this, this.serverID);

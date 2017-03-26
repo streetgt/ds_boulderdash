@@ -1,8 +1,6 @@
 package fr.enssat.BoulderDash.views;
 
 import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
-import fr.enssat.BoulderDash.models.DisplayableElementModel;
-import fr.enssat.BoulderDash.models.LevelModel;
 
 import javax.swing.*;
 
@@ -11,8 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;

@@ -4,15 +4,13 @@ import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
 import javax.swing.*;
 
 import java.awt.*;
-import java.util.Observable;
-import java.util.Observer;
 
 import fr.enssat.BoulderDash.controllers.GameController;
-import fr.enssat.BoulderDash.models.LevelModel;
-import fr.enssat.BoulderDash.views.GameGroundView;
-import fr.enssat.BoulderDash.views.InformationPanel;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * GameView
@@ -22,7 +20,7 @@ import java.awt.event.WindowListener;
  * @author Colin Leverger <me@colinleverger.fr>
  * @since 2015-06-19
  */
-public class GameView extends JFrame implements Observer, WindowListener {
+public class GameView extends JFrame implements WindowListener {
 
     private BoulderDashClientImpl bdc;
     private GameGroundView gameGroundView;
@@ -74,7 +72,7 @@ public class GameView extends JFrame implements Observer, WindowListener {
     private void createLayout() {
         this.gameGroundView = new GameGroundView(this.bdc, this.gameController, serverID);
         this.actionPanel = new JPanel();
-        this.informationPanel = new InformationPanel(this.bdc,this.serverID);
+        this.informationPanel = new InformationPanel(this.bdc, this.serverID);
         this.informationPanel.setBackground(Color.white);
 
         // Add some buttons on the informationPanel
@@ -111,24 +109,24 @@ public class GameView extends JFrame implements Observer, WindowListener {
         return button;
     }
 
-    /**
-     * Updates the frame
-     *
-     * @param obs Observable item
-     * @param obj Object item
-     */
-    @Override
-    public void update(Observable obs, Object obj) {
-        // Nothing done.
-    }
-
     @Override
     public void windowOpened(WindowEvent e) {
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        bdc.triggeredLogout(bdc.getUsername(), bdc.getPassword());
+        try {
+            if (this.bdc.isPlaying()) {
+                this.bdc.setPlaying(false);
+                this.bdc.getBdsRI().clientLeaveRoom(bdc, serverID);
+            }
+            this.bdc.getBdcHallUI().newRoomButtonClickable(true);
+            this.dispose();
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Throwable ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

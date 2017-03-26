@@ -1,13 +1,12 @@
 package fr.enssat.BoulderDash.views;
 
 import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
-import fr.enssat.BoulderDash.views.GroundView;
 import fr.enssat.BoulderDash.controllers.GameController;
 import fr.enssat.BoulderDash.controllers.GameKeyController;
-import fr.enssat.BoulderDash.models.LevelModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 
 /**
  * GameFieldView
@@ -37,7 +36,9 @@ public class GameGroundView extends GroundView {
         this.gameController = gameController;
         this.serverID = serverID;
 
-        this.addKeyListener(new GameKeyController(this.bdc, this.gameController.getAudioLoadHelper(), serverID));
+        Runnable r = new GameKeyController(this.bdc, this.gameController.getAudioLoadHelper(), serverID);
+        new Thread(r).start();
+        this.addKeyListener((KeyListener)r);
 
         this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setFocusable(true);

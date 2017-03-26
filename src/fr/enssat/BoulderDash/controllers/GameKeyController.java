@@ -1,8 +1,6 @@
 package fr.enssat.BoulderDash.controllers;
 
 import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
-import fr.enssat.BoulderDash.models.DisplayableElementModel;
-import fr.enssat.BoulderDash.models.LevelModel;
 import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
 
 import java.awt.event.KeyEvent;
@@ -19,7 +17,7 @@ import java.util.logging.Logger;
  * @author Colin Leverger <me@colinleverger.fr>
  * @since 2015-06-19
  */
-public class GameKeyController implements KeyListener {
+public class GameKeyController implements KeyListener, Runnable {
 
     private BoulderDashClientImpl bdc;
     private int serverID;
@@ -128,5 +126,10 @@ public class GameKeyController implements KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         // Do nothing.
+    }
+
+    @Override
+    public void run() {
+       
     }
 }

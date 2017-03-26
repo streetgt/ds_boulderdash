@@ -350,7 +350,7 @@ public class LevelModelServer implements Runnable {
         }
 
         groundGrid[x][y].update(System.currentTimeMillis());
-        this.localNotifyObservers();
+        //this.localNotifyObservers();
     }
 
     /**
@@ -406,7 +406,7 @@ public class LevelModelServer implements Runnable {
 //            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
-        this.localNotifyObservers();
+//        this.localNotifyObservers();
     }
 
     /**
@@ -425,6 +425,7 @@ public class LevelModelServer implements Runnable {
      * @param y Object vertical position
      */
     public void exploseGround(int index, int x, int y) {
+        System.out.println("exploseGround");
         this.groundGrid[x][y] = new EmptyModel();
         this.groundGrid[x + 1][y] = new EmptyModel();
         this.groundGrid[x - 1][y] = new EmptyModel();
@@ -635,6 +636,7 @@ public class LevelModelServer implements Runnable {
             this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() - 1);
             this.getRockford(index).startRunningUp();
         }
+        this.localNotifyObservers();
     }
 
     public void moveDown(BoulderDashClientRI client) {
@@ -657,6 +659,7 @@ public class LevelModelServer implements Runnable {
             this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() + 1);
             this.getRockford(index).startRunningDown();
         }
+        this.localNotifyObservers();
 
     }
 
@@ -680,6 +683,7 @@ public class LevelModelServer implements Runnable {
             this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() - 1, this.getRockford(index).getPositionY());
             this.getRockford(index).startRunningLeft();
         }
+        this.localNotifyObservers();
 
     }
 
@@ -703,6 +707,7 @@ public class LevelModelServer implements Runnable {
             this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() + 1, this.getRockford(index).getPositionY());
             this.getRockford(index).startRunningRight();
         }
+        this.localNotifyObservers();
     }
 
     public void startStaying(BoulderDashClientRI client) {

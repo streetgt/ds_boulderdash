@@ -27,7 +27,7 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     private String username;
     private String password;
     private boolean loggedin;
-    private int playerGamingState;
+    private boolean playing = false;
     
     private GroundView groundView = null;
 
@@ -193,6 +193,14 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
 
     public void setGroundView(GroundView groundView) {
         this.groundView = groundView;
+    }
+
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
     }
 
     @Override

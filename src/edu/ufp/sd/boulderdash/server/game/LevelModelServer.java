@@ -21,14 +21,16 @@ import java.util.logging.Logger;
  * @author Colin Leverger <me@colinleverger.fr>
  * @since 2015-06-19
  */
-public class LevelModelServer extends Observable implements Runnable {
+public class LevelModelServer implements Runnable {
 
     private ArrayList<BoulderDashClientRI> clients = new ArrayList<>(2);
     private ArrayList<RockfordModel> rockfords = new ArrayList<>(2);
 
     private LevelLoadHelperServer levelLoadHelperServer;
     private DisplayableElementModel[][] groundGrid;
+    private GameInformationModel gameInformationModel;
     private String roomName;
+    private int roomID;
     private String levelName;
     private int diamonds;
     private int sizeWidth = 0;
@@ -36,7 +38,7 @@ public class LevelModelServer extends Observable implements Runnable {
     private boolean gameRunning;
     private boolean gamePaused;
     private boolean gameHasEnded;
-    
+
     private RockfordUpdateControllerServer updatePosRockford;
 
     /**
@@ -60,22 +62,24 @@ public class LevelModelServer extends Observable implements Runnable {
         this.gamePaused = false;
         this.gameRunning = true;
         this.gameHasEnded = false;
-
+       
         this.levelLoadHelperServer = new LevelLoadHelperServer(this.levelName);
-        
 
         this.groundGrid = this.levelLoadHelperServer.getGroundGrid();
         this.sizeWidth = this.levelLoadHelperServer.getWidthSizeValue();
         this.sizeHeight = this.levelLoadHelperServer.getHeightSizeValue();
 
-        this.diamonds = this.levelLoadHelperServer.getDiamondsToCatch();
+        this.gameInformationModel = new GameInformationModel(this.levelLoadHelperServer.getDiamondsToCatch());
 
         this.createLimits();
 
         this.initRockford();
         this.initThreadAnimator();
-        
+        clients.add(null);
+        clients.add(null);
+
         this.updatePosRockford = new RockfordUpdateControllerServer(this);
+        new BoulderAndDiamondControllerServer(this);
     }
 
     /**
@@ -113,7 +117,7 @@ public class LevelModelServer extends Observable implements Runnable {
     public void resetLevelModel() {
         this.groundGrid = this.levelLoadHelperServer.getGroundGrid();
         this.gameRunning = true;
-        //this.gameInformationModel.resetInformations();
+        this.gameInformationModel.resetInformations();
     }
 
     /**
@@ -185,15 +189,13 @@ public class LevelModelServer extends Observable implements Runnable {
         int oldY = this.getRockfordPositionY(index);
 
         if (this.groundGrid[posX][posY].getSpriteName().compareTo("diamond") == 0) {
-            // TODO: incrementar score de quem apanhou
-            //this.gameInformationModel.incrementScore(index);
+            this.gameInformationModel.incrementScore(index);
+            this.gameInformationModel.decrementRemainingsDiamonds();
 
-            this.diamonds--;
-
-            if (this.diamonds == 0) {
+            if (this.gameInformationModel.getRemainingsDiamonds() == 0) {
                 System.out.println("All diamonds found!");
                 this.gameRunning = false;
-                //this.localNotifyObservers();
+                this.localNotifyObservers();
             }
         }
 
@@ -202,6 +204,7 @@ public class LevelModelServer extends Observable implements Runnable {
         // Check that we are not out of bound...
         if (this.isOutOfBounds(posX, posY) == false) {
             // Create a new empty model in the old pos of Rockford
+            System.out.println("setPositionOfRockford(" + index + "," + posX + "," + posY + ")");
             this.groundGrid[oldX][oldY] = new EmptyModel();
 
             // Save the x / y pos of Rockford in the levelModel only
@@ -319,8 +322,17 @@ public class LevelModelServer extends Observable implements Runnable {
      * Notify observers about a model change
      */
     private void localNotifyObservers() {
-        this.notifyObservers();
-        this.setChanged();
+        if (this.clients.get(0) != null || this.clients.get(1) != null ) {
+            for (BoulderDashClientRI client : clients) {
+                if (client != null) {
+                    try {
+                        client.updateUI();
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -359,6 +371,13 @@ public class LevelModelServer extends Observable implements Runnable {
                 System.out.println("Interrupted: " + e.getMessage());
             }
         }
+    }
+
+    /**
+     * Increments the user score
+     */
+    public void incrementScore(int index) {
+        this.gameInformationModel.incrementScore(index);
     }
 
     /**
@@ -535,6 +554,15 @@ public class LevelModelServer extends Observable implements Runnable {
     }
 
     /**
+     * Gets gameInformationModel
+     *
+     * @return gameInfos like score, remainings Diamonds etc
+     */
+    public GameInformationModel getGameInformationModel() {
+        return this.gameInformationModel;
+    }
+
+    /**
      * Set the gamePaused variable
      *
      * @param gamePaused
@@ -576,15 +604,25 @@ public class LevelModelServer extends Observable implements Runnable {
         this.clients = clients;
     }
 
+    public int getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(int roomID) {
+        this.roomID = roomID;
+    }
+
     public void moveUp(BoulderDashClientRI client) {
         try {
-            System.out.println(client.getClientUsername() + "moved up!");
+            System.out.println(client.getClientUsername() + " moved up in room " + roomID);
         } catch (RemoteException ex) {
             Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         int index = 0;
-        if (client.equals(this.clients.get(1))) {
+        if (client.equals(this.clients.get(0))) {
+            index = 0;
+        } else {
             index = 1;
         }
 
@@ -597,9 +635,16 @@ public class LevelModelServer extends Observable implements Runnable {
     }
 
     public void moveDown(BoulderDashClientRI client) {
+        try {
+            System.out.println(client.getClientUsername() + " moved down in room " + roomID);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         int index = 0;
-        if (client.equals(this.clients.get(1))) {
+        if (client.equals(this.clients.get(0))) {
+            index = 0;
+        } else {
             index = 1;
         }
 
@@ -613,8 +658,16 @@ public class LevelModelServer extends Observable implements Runnable {
     }
 
     public void moveLeft(BoulderDashClientRI client) {
+        try {
+            System.out.println(client.getClientUsername() + " moved left in room " + roomID);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         int index = 0;
-        if (client.equals(this.clients.get(1))) {
+        if (client.equals(this.clients.get(0))) {
+            index = 0;
+        } else {
             index = 1;
         }
 
@@ -628,8 +681,16 @@ public class LevelModelServer extends Observable implements Runnable {
     }
 
     public void moveRight(BoulderDashClientRI client) {
+        try {
+            System.out.println(client.getClientUsername() + " moved right in room " + roomID);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         int index = 0;
-        if (client.equals(this.clients.get(1))) {
+        if (client.equals(this.clients.get(0))) {
+            index = 0;
+        } else {
             index = 1;
         }
 
@@ -639,5 +700,22 @@ public class LevelModelServer extends Observable implements Runnable {
             this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() + 1, this.getRockford(index).getPositionY());
             this.getRockford(index).startRunningRight();
         }
+    }
+
+    public void startStaying(BoulderDashClientRI client) {
+        try {
+            System.out.println(client.getClientUsername() + " startStaying in " + roomID);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        int index = 0;
+        if (client.equals(this.clients.get(0))) {
+            index = 0;
+        } else {
+            index = 1;
+        }
+
+        this.getRockford(index).isStaying();
     }
 }

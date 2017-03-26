@@ -1,12 +1,21 @@
 package fr.enssat.BoulderDash.views;
 
+import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
+import fr.enssat.BoulderDash.models.DisplayableElementModel;
 import fr.enssat.BoulderDash.models.LevelModel;
 
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  * FieldView
@@ -21,18 +30,21 @@ import java.util.Observer;
  * This view is basically drawing into the Frame the levelModel.
  *
  */
-public abstract class GroundView extends JPanel implements Observer {
+public abstract class GroundView extends JPanel {
 
-    protected LevelModel levelModel;
+    private static String spriteStorageFolderPath = "../../res/drawable/field/";
+    private BoulderDashClientImpl bdc;
+    private int serverID;
 
     /**
      * Class constructor
      *
      * @param levelModel Level model
      */
-    public GroundView(LevelModel levelModel) {
-        this.levelModel = levelModel;
-        this.levelModel.addObserver(this);
+    public GroundView(BoulderDashClientImpl bdc, int serverID) {
+        this.bdc = bdc;
+        this.serverID = serverID;
+        bdc.setGroundView(this);
     }
 
     /**
@@ -43,33 +55,39 @@ public abstract class GroundView extends JPanel implements Observer {
      * @param g Map graphical object
      */
     public void drawTerrain(int width, int height, Graphics g) {
-        //System.out.println("Working");
+        System.out.println("drawTerrain");
         // Draw items
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                g.drawImage(this.levelModel.getImage(x, y), (x * 16), (y * 16), this);
+                try {
+                    g.drawImage(this.loadSprite(this.bdc.getBdsRI().getRoomImageName(serverID, x, y)), (x * 16), (y * 16), this);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(GroundView.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+               // g.drawImage(this.levelModel.getImage(x, y), (x * 16), (y * 16), this);
             }
         }
 
-        if (!this.levelModel.isGameRunning() && !this.levelModel.isGameHasEnded()) {
-            System.out.println("teste");
-            int diamonds = this.levelModel.getGameInformationModel().getRemainingsDiamonds();
-            if (diamonds == 0) {
-                System.out.println("GAME HAS ENDED");
-                int winner = this.levelModel.getGameInformationModel().getRockfordMoreDiamonds();
-                System.out.println("Winner: " + winner);
-                this.displayWin(winner);
-            } else {
-                for (int i = 0; i < 2; i++) {
-                    if (this.levelModel.getRockford(i).getHasExplosed()) {
-                        this.displayLose(i);
-                        System.out.println("FOUND EXPLODED STATE! " + i);
-                        break;
-                    }
-                }
-            }
-            this.levelModel.setGameHasEnded(true);
-        }
+//        if (!this.levelModel.isGameRunning() && !this.levelModel.isGameHasEnded()) {
+//            System.out.println("teste");
+//            int diamonds = this.levelModel.getGameInformationModel().getRemainingsDiamonds();
+//            if (diamonds == 0) {
+//                System.out.println("GAME HAS ENDED");
+//                int winner = this.levelModel.getGameInformationModel().getRockfordMoreDiamonds();
+//                System.out.println("Winner: " + winner);
+//                this.displayWin(winner);
+//            } else {
+//                for (int i = 0; i < 2; i++) {
+//                    if (this.levelModel.getRockford(i).getHasExplosed()) {
+//                        this.displayLose(i);
+//                        System.out.println("FOUND EXPLODED STATE! " + i);
+//                        break;
+//                    }
+//                }
+//            }
+//            this.levelModel.setGameHasEnded(true);
+//        }
     }
 
     /**
@@ -92,17 +110,29 @@ public abstract class GroundView extends JPanel implements Observer {
      * @param g Map graphical object
      */
     public void paint(Graphics g) {
-        this.drawTerrain(this.levelModel.getSizeWidth(), this.levelModel.getSizeHeight(), g);
+        try {
+            int[] size = this.bdc.getBdsRI().getRoomMapSize(serverID);
+            this.drawTerrain(size[0], size[1], g);
+        } catch (RemoteException ex) {
+            Logger.getLogger(GroundView.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
-
+    
     /**
-     * Updates the view
+     * Loads the target sprite
      *
-     * @param obs Observable item
-     * @param obj Object item
+     * @param spriteName Sprite name
+     * @return Sprite object
      */
-    @Override
-    public void update(Observable obs, Object obj) {
-        repaint();
+    private  BufferedImage loadSprite(String spriteName) {
+        BufferedImage sprite = null;
+
+        try {
+            sprite = ImageIO.read(new File(spriteStorageFolderPath + spriteName + ".gif"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return sprite;
     }
 }

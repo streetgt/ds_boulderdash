@@ -54,7 +54,7 @@ public class LevelLoadHelperServer {
     private int limitsOffsetWidth = 1;
     private int limitsOffsetHeight = 1;
 
-    private ArrayList<RockfordModel> rockfordIntances = new ArrayList<>();
+    private ArrayList<RockfordModel> rockfordIntances = new ArrayList<>(2);
 
     private int diamondsToCatch;
 
@@ -256,12 +256,14 @@ public class LevelLoadHelperServer {
                 break;
 
             case "rockford":
+                System.out.println("CREATED ROCKFORD1 INSTANCE");
                 this.rockfordIntances.add((RockfordModel) element);
                 this.rockfordIntances.get(0).setPositionX(rowIndex);
                 this.rockfordIntances.get(0).setPositionY(lineIndex);
                 break;
 
             case "rockford2":
+                System.out.println("CREATED ROCKFORD2 INSTANCE");
                 this.rockfordIntances.add((RockfordModel) element);
                 this.rockfordIntances.get(1).setPositionX(rowIndex);
                 this.rockfordIntances.get(1).setPositionY(lineIndex);

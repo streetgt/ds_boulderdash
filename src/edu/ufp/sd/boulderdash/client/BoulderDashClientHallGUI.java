@@ -251,7 +251,6 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
             {
                 
             }
-            this.btnNewRoom.setEnabled(false);
 //            SwingUtilities.invokeLater(new Runnable() {
 //                public void run() {
 //                    new GameController(bdc);
@@ -270,14 +269,18 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
             if (index >= 0) {
                 Object o = theList.getModel().getElementAt(index);
                 int svid = Integer.parseInt(o.toString().split("#")[0]);
-                
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        new GameController(bdc,svid);
-                    }
-                });
-                
-                JOptionPane.showMessageDialog(this, "Double-clicked on: " + svid);
+                try {
+                    this.bdc.bdsRI.addToRoom(bdc, svid);
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            new GameController(bdc,svid);
+                        }
+                    });
+                } catch (RemoteException ex) {
+                    Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                newRoomButtonClickable(false);
+                //JOptionPane.showMessageDialog(this, "Double-clicked on: " + svid);
             }
         }
     }//GEN-LAST:event_jlRoomsMouseClicked
@@ -294,6 +297,10 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
 
     public void removeAllRooms() {
         this.roomslist.removeAllElements();
+    }
+    
+    public void newRoomButtonClickable(boolean state) {
+        this.btnNewRoom.setEnabled(state);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,4 +1,4 @@
-package fr.enssat.BoulderDash.models;
+package edu.ufp.sd.boulderdash.server.game;
 
 import java.util.Observable;
 

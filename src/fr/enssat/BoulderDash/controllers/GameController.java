@@ -7,6 +7,9 @@ import fr.enssat.BoulderDash.views.GameView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * GameController
@@ -19,7 +22,6 @@ import java.awt.event.ActionListener;
 public class GameController implements ActionListener {
 
     private BoulderDashClientImpl bdc;
-    private LevelModel levelModel;
     private AudioLoadHelper audioLoadHelper;
     private boolean firstClickOnPause;
     private GameView gameView;
@@ -34,11 +36,10 @@ public class GameController implements ActionListener {
         if (this.bdc == null) {
             System.out.println("GameController bdc = null");
         }
-        
+
         this.firstClickOnPause = true;
         this.audioLoadHelper = new AudioLoadHelper();
-        this.levelModel = new LevelModel("level01", audioLoadHelper);
-        this.gameView = new GameView(this.bdc, this, levelModel, this.serverID);
+        this.gameView = new GameView(this.bdc, this, this.serverID);
 
         // Play new song
         this.getAudioLoadHelper().playSound("new");
@@ -54,43 +55,57 @@ public class GameController implements ActionListener {
      */
     public void actionPerformed(ActionEvent event) {
         switch (event.getActionCommand()) {
-            case "pause":
-                if (this.firstClickOnPause) {
-                    this.levelModel.setGamePaused(true);
-                } else if (!this.firstClickOnPause) {
-                    this.levelModel.setGamePaused(false);
+            case "pause": {
+//                if (this.firstClickOnPause) {
+//                    this.levelModel.setGamePaused(true);
+//                } else if (!this.firstClickOnPause) {
+//                    this.levelModel.setGamePaused(false);
+//                }
+//
+//                this.firstClickOnPause = !this.firstClickOnPause;
+//                this.gameView.getGameFieldView().grabFocus();
+                break;
+            }
+            case "exit": {
+                try {
+                    this.bdc.getBdsRI().clientLeaveRoom(bdc, serverID);
+                    this.bdc.getBdcHallUI().newRoomButtonClickable(true);
+                    this.gameView.dispose();
+                    this.finalize();
+                } catch (RemoteException ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Throwable ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                this.firstClickOnPause = !this.firstClickOnPause;
-                this.gameView.getGameFieldView().grabFocus();
                 break;
+            }
 
-            case "restart":
-                this.resetGame("restart");
-                this.getAudioLoadHelper().playSound("new");
-                this.gameView.getGameFieldView().grabFocus();
-                break;
-
-            case "menu":
-                //this.menuView.setVisible(true);
-                //this.getAudioLoadHelper().startMusic("game");
-                //this.resetGame("menu");
-                break;
+//            case "exit":
+//                this.resetGame("restart");
+//                this.getAudioLoadHelper().playSound("new");
+//                this.gameView.getGameFieldView().grabFocus();
+//                break;
+//
+//            case "menu":
+//                //this.menuView.setVisible(true);
+//                //this.getAudioLoadHelper().startMusic("game");
+//                //this.resetGame("menu");
+//                break;
         }
     }
 
-    /**
-     * Function to reset the game
-     */
-    private void resetGame(String source) {
-        this.gameView.dispose();
-
-        if (source.equals("restart")) {
-            this.levelModel = new LevelModel("level01", audioLoadHelper);
-            this.gameView = new GameView(this.bdc, this, levelModel, serverID);
-            this.gameView.setVisible(true);
-        }
-    }
+//    /**
+//     * Function to reset the game
+//     */
+//    private void resetGame(String source) {
+//        this.gameView.dispose();
+//
+//        if (source.equals("restart")) {
+//            this.levelModel = new LevelModel("level01", audioLoadHelper);
+//            this.gameView = new GameView(this.bdc, this, levelModel, serverID);
+//            this.gameView.setVisible(true);
+//        }
+//    }
 
     /**
      * Gets the audio load helper instance

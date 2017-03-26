@@ -160,7 +160,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     public void setState(Object s) throws RemoteException {
         System.out.println("BoulderDashServerImpl - setState()");
         this.state = s;
-        if(!clients.isEmpty()) {
+        if (!clients.isEmpty()) {
             notifyAllObservers();
         }
     }
@@ -181,25 +181,26 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     public int createGameRoom(BoulderDashClientRI client, String level) throws RemoteException {
         LevelModelServer newServer = new LevelModelServer(level);
         this.servers.add(newServer);
-        String name = servers.size()-1 +"# BoulderDash Room" +
-                      " - Level: " + level + 
-                      " - Players: " + newServer.getClients().size() + "/2";
+        newServer.setRoomID(servers.indexOf(newServer));
+        String name = servers.size() - 1 + "# BoulderDash Room"
+                + " - Level: " + level
+                + " - Players: " + newServer.getClients().size() + "/2";
         newServer.setRoomName(name);
         this.rooms.add(name);
         //newServer.getClients().add(client);
         this.bdsGUI.addRoomToList(name);
         this.setState(new State().new NewRoom(false, name));
-        return servers.size()-1;
+        return servers.size() - 1;
     }
-    
-    public void createGameRoom() throws RemoteException
-    {
+
+    public void createGameRoom() throws RemoteException {
         String level = "level01";
         LevelModelServer newServer = new LevelModelServer(level);
         this.servers.add(newServer);
-        String name = servers.size()-1 +"# BoulderDash Room" + 
-                      " - Level: " + level + 
-                      " - Players: " + newServer.getClients().size() + "/2";
+        newServer.setRoomID(servers.indexOf(newServer));
+        String name = servers.indexOf(newServer) + "# BoulderDash Room"
+                + " - Level: " + level
+                + " - Players: " + newServer.getClients().size() + "/2";
         newServer.setRoomName(name);
         this.rooms.add(name);
         this.bdsGUI.addRoomToList(name);
@@ -241,7 +242,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     public String[] fetchAvaliableRooms() throws RemoteException {
 
         String[] itemsArr = new String[servers.size()];
-        if(!servers.isEmpty()) {
+        if (!servers.isEmpty()) {
             for (int i = 0; i < servers.size(); i++) {
                 itemsArr[i] = servers.get(i).getRoomName();
             }
@@ -251,8 +252,29 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     }
 
     @Override
-    public void sendKeys(BoulderDashClientRI client, int serverID) throws RemoteException {
-        this.servers.get(serverID).moveUp(client);
+    public void sendKeys(BoulderDashClientRI client, int serverID, String direction) throws RemoteException {
+        switch (direction) {
+            case "UP": {
+                this.servers.get(serverID).moveUp(client);
+                break;
+            }
+            case "DOWN": {
+                this.servers.get(serverID).moveDown(client);
+                break;
+            }
+            case "RIGHT": {
+                this.servers.get(serverID).moveRight(client);
+                break;
+            }
+            case "LEFT": {
+                this.servers.get(serverID).moveLeft(client);
+                break;
+            }
+            case "STAYING": {
+                this.servers.get(serverID).startStaying(client);
+                break;
+            }
+        }
     }
 
     private boolean clientAlreadyLoggedin(String username) {
@@ -278,7 +300,6 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         this.servers = servers;
     }
 
-    
     public BoulderDashClientRI clientFromUsername(String username) {
         try {
             for (BoulderDashClientRI client : clients) {
@@ -293,18 +314,139 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         return null;
     }
 
-    public int getRoomIndexByName(String name)
-    {
-        for (LevelModelServer room: servers) {
-            if(room.getRoomName().compareTo(name) == 0) {
+    public int getRoomIndexByName(String name) {
+        for (LevelModelServer room : servers) {
+            if (room.getRoomName().compareTo(name) == 0) {
                 return servers.indexOf(room);
             }
         }
-        
+
         return -1;
     }
+
+    public ArrayList<String> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(ArrayList<String> rooms) {
+        this.rooms = rooms;
+    }
+
     public void shutdown() {
         System.out.println("SHUTDOWN SERVER");
         System.exit(0);
     }
+
+    @Override
+    public boolean addToRoom(BoulderDashClientRI client, int serverID) throws RemoteException {
+        LevelModelServer server = null;
+        try {
+            server = this.servers.get(serverID);
+            if(server.getClients().get(0) == null)  {
+                server.getClients().set(0, client);
+            } else {
+                server.getClients().set(1, client);
+            }
+           
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
+
+        return false;
+    }
+
+    @Override
+    public String getClientNameInRoom(int serverID, int index) throws RemoteException {
+        LevelModelServer server = null;
+        BoulderDashClientRI client = null;
+        try {
+            server = this.servers.get(serverID);
+            client = server.getClients().get(index);
+            if (client != null) {
+                return client.getClientUsername();
+            }
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+
+        return null;
+    }
+
+    @Override
+    public int getClientScoreInRoom(int serverID, int index) throws RemoteException {
+        LevelModelServer server = null;
+        int val = -1;
+        try {
+            server = this.servers.get(serverID);
+            val = server.getGameInformationModel().getScore(index);
+            if (val != -1) {
+                return val;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            return -1;
+        }
+
+        return -1;
+    }
+
+    @Override
+    public int getRoomRemainingDiamonds(int serverID) throws RemoteException {
+        LevelModelServer server = null;
+        int val = -1;
+        try {
+            server = this.servers.get(serverID);
+            val = server.getGameInformationModel().getRemainingsDiamonds();
+            if (val != -1) {
+                return val;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            return -1;
+        }
+
+        return -1;
+    }
+
+    @Override
+    public void clientLeaveRoom(BoulderDashClientRI client, int serverID) throws RemoteException {
+        LevelModelServer server = null;
+        try {
+            server = this.servers.get(serverID);
+            int index = server.getClients().indexOf(client);
+            server.getClients().set(index, null);
+        } catch (IndexOutOfBoundsException ex) {
+            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public int[] getRoomMapSize(int serverID) throws RemoteException {
+        System.out.println("getRoomMapSize(" + serverID + ")");
+        LevelModelServer server = null;
+        int[] size = null;
+        try {
+            server = this.servers.get(serverID);
+            size = new int[2];
+            size[0] = server.getSizeWidth();
+            size[1] = server.getSizeHeight();
+        } catch (IndexOutOfBoundsException ex) {
+            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return size;
+    }
+
+    @Override
+    public String getRoomImageName(int serverID, int x, int y) throws RemoteException {
+        //System.out.println("getRoomImageName(" + serverID + ")");
+        LevelModelServer server = null;
+        try {
+            server = this.servers.get(serverID);
+            return server.getDisplayableElement(x, y).getSpriteName();
+        } catch (IndexOutOfBoundsException ex) {
+            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
 }

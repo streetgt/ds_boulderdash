@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class GameKeyController implements KeyListener {
 
     private BoulderDashClientImpl bdc;
-    private LevelModel levelModel;
     private int serverID;
 
     /**
@@ -30,12 +29,11 @@ public class GameKeyController implements KeyListener {
      *
      * @param levelModel Level model
      */
-    public GameKeyController(BoulderDashClientImpl bdc, LevelModel levelModel, AudioLoadHelper audioLoadHelper, int serverID) {
+    public GameKeyController(BoulderDashClientImpl bdc, AudioLoadHelper audioLoadHelper, int serverID) {
         this.bdc = bdc;
         if (this.bdc == null) {
             System.out.println("FOUND FUCKING NULL!");
         }
-        this.levelModel = levelModel;
         this.serverID = serverID;
     }
 
@@ -52,7 +50,7 @@ public class GameKeyController implements KeyListener {
             // Direction Rockford 1: UP
             case KeyEvent.VK_UP: {
                 try {
-                    this.bdc.getBdsRI().sendKeys(bdc, serverID);
+                    this.bdc.getBdsRI().sendKeys(bdc, serverID, "UP");
                 } catch (RemoteException ex) {
                     Logger.getLogger(GameKeyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -63,7 +61,7 @@ public class GameKeyController implements KeyListener {
             // Direction Rockford 1: DOWN
             case KeyEvent.VK_DOWN: {
                 try {
-                    this.bdc.getBdsRI().sendKeys(bdc, serverID);
+                    this.bdc.getBdsRI().sendKeys(bdc, serverID, "DOWN");
                 } catch (RemoteException ex) {
                     Logger.getLogger(GameKeyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -73,7 +71,7 @@ public class GameKeyController implements KeyListener {
             // Direction Rockford 1: LEFT
             case KeyEvent.VK_LEFT: {
                 try {
-                    this.bdc.getBdsRI().sendKeys(bdc, serverID);
+                    this.bdc.getBdsRI().sendKeys(bdc, serverID, "LEFT");
                 } catch (RemoteException ex) {
                     Logger.getLogger(GameKeyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -83,7 +81,7 @@ public class GameKeyController implements KeyListener {
             // Direction Rockford 1: RIGHT
             case KeyEvent.VK_RIGHT: {
                 try {
-                    this.bdc.getBdsRI().sendKeys(bdc, serverID);
+                    this.bdc.getBdsRI().sendKeys(bdc, serverID, "RIGHT");
                 } catch (RemoteException ex) {
                     Logger.getLogger(GameKeyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -106,14 +104,11 @@ public class GameKeyController implements KeyListener {
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_RIGHT:
             case KeyEvent.VK_LEFT: {
-//                try {
-//                    this.bdc.getBdsRI().sendKeys(bdc, serverID);
-//                } catch (RemoteException ex) {
-//                    Logger.getLogger(GameKeyController.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-                
-                //this.levelModel.getRockford(0).startStaying();
-                //this.levelModel.getRockford(1).startStaying();
+                try {
+                    this.bdc.getBdsRI().sendKeys(bdc, serverID, "STAYING");
+                } catch (RemoteException ex) {
+                    Logger.getLogger(GameKeyController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
             }
         }

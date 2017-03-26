@@ -60,6 +60,10 @@ public class BoulderDashClientUserGUI extends javax.swing.JFrame implements Acti
             }
         });
 
+        jtfUsername.setText("tiago");
+
+        jtfPassword.setText("12345");
+
         jLabel1.setText("Username:");
 
         jLabel2.setText("Password:");

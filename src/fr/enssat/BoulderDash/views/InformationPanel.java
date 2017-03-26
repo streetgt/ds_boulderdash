@@ -1,7 +1,6 @@
 package fr.enssat.BoulderDash.views;
 
-import edu.ufp.sd.boulderdash.client.BoulderDashClient;
-import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
+import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -23,26 +22,24 @@ import java.util.logging.Logger;
  */
 public class InformationPanel extends JPanel implements Observer {
 
-    private BoulderDashClientRI bdc;
-    private LevelModel levelModel;
+    private BoulderDashClientImpl bdc;
+
     private JTextArea text;
     private int serverID;
 
     /**
      * Class constructor
      */
-    public InformationPanel(BoulderDashClientRI bdc, LevelModel levelModel) {
+    public InformationPanel(BoulderDashClientImpl bdc, int serverID) {
         this.bdc = bdc;
-        this.levelModel = levelModel;
         this.text = new JTextArea();
         this.text.setEditable(false);
-        this.levelModel.getGameInformationModel().addObserver(this);
-
+      
         try {
             this.text.setText(
-                    bdc.getClientUsername() + " - Score : " + levelModel.getGameInformationModel().getScore(0) + "\n"
-                    + bdc.getClientUsername() + " - Score : " + levelModel.getGameInformationModel().getScore(1)
-                    + "\nRemaining diamonds : " + levelModel.getGameInformationModel().getRemainingsDiamonds()
+                    bdc.getBdsRI().getClientNameInRoom(serverID, 0) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(serverID, 0) + "\n"
+                    + bdc.getBdsRI().getClientNameInRoom(serverID, 1) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(serverID, 1)
+                    + "\nRemaining diamonds : " + bdc.getBdsRI().getRoomRemainingDiamonds(serverID)
             );
         } catch (RemoteException ex) {
             Logger.getLogger(InformationPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,9 +58,9 @@ public class InformationPanel extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         try {
             this.text.setText(
-                    bdc.getClientUsername() + " - Score : " + levelModel.getGameInformationModel().getScore(0) + "\n"
-                    + bdc.getClientUsername() + " - Score : " + levelModel.getGameInformationModel().getScore(1)
-                    + "\nRemaining diamonds : " + levelModel.getGameInformationModel().getRemainingsDiamonds()
+                    bdc.getBdsRI().getClientNameInRoom(serverID, 0) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(serverID, 0) + "\n"
+                    + bdc.getBdsRI().getClientNameInRoom(serverID, 1) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(serverID, 1)
+                    + "\nRemaining diamonds : " + bdc.getBdsRI().getRoomRemainingDiamonds(serverID)
             );
         } catch (RemoteException ex) {
             Logger.getLogger(InformationPanel.class.getName()).log(Level.SEVERE, null, ex);

@@ -29,7 +29,6 @@ public class GameView extends JFrame implements Observer, WindowListener {
     private JPanel actionPanel;
     private JPanel informationPanel;
     private GameController gameController;
-    private LevelModel levelModel;
     private int serverID;
 
     /**
@@ -38,10 +37,9 @@ public class GameView extends JFrame implements Observer, WindowListener {
      * @param gameController Game controller
      * @param levelModel Level model
      */
-    public GameView(BoulderDashClientImpl bdc, GameController gameController, LevelModel levelModel, int serverID) {
+    public GameView(BoulderDashClientImpl bdc, GameController gameController, int serverID) {
         this.bdc = bdc;
         this.gameController = gameController;
-        this.levelModel = levelModel;
         this.serverID = serverID;
 
         this.initializeView();
@@ -74,19 +72,18 @@ public class GameView extends JFrame implements Observer, WindowListener {
      * Creates the view layout
      */
     private void createLayout() {
-        this.gameGroundView = new GameGroundView(this.bdc, this.gameController, this.levelModel, serverID);
+        this.gameGroundView = new GameGroundView(this.bdc, this.gameController, serverID);
         this.actionPanel = new JPanel();
-        this.informationPanel = new InformationPanel(this.bdc,this.levelModel);
+        this.informationPanel = new InformationPanel(this.bdc,this.serverID);
         this.informationPanel.setBackground(Color.white);
 
         // Add some buttons on the informationPanel
-        this.createButton("restart", "Restart");
         this.createButton("pause", "Pause");
-        this.createButton("menu", "Menu");
+        this.createButton("exit", "Exit");
 
-        this.add(this.actionPanel, BorderLayout.SOUTH);
         this.add(this.informationPanel, BorderLayout.NORTH);
         this.add(this.gameGroundView, BorderLayout.CENTER);
+        this.add(this.actionPanel, BorderLayout.SOUTH);
     }
 
     /**

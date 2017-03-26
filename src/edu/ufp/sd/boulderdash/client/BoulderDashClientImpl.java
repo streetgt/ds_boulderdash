@@ -7,6 +7,7 @@ package edu.ufp.sd.boulderdash.client;
 
 import edu.ufp.sd.boulderdash.server.BoulderDashServerRI;
 import edu.ufp.sd.boulderdash.server.State;
+import fr.enssat.BoulderDash.views.GroundView;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -27,6 +28,8 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     private String password;
     private boolean loggedin;
     private int playerGamingState;
+    
+    private GroundView groundView = null;
 
     public BoulderDashClientImpl(BoulderDashServerRI bdsRI) throws RemoteException {
         exportObjectMethod();
@@ -165,6 +168,37 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
             this.setLoggedin(false);
             bdsRI.logout(username);
         } catch (RemoteException e) {
+        }
+    }
+
+    public BoulderDashClientUserGUI getBdcLoginUI() {
+        return bdcLoginUI;
+    }
+
+    public void setBdcLoginUI(BoulderDashClientUserGUI bdcLoginUI) {
+        this.bdcLoginUI = bdcLoginUI;
+    }
+
+    public BoulderDashClientHallGUI getBdcHallUI() {
+        return bdcHallUI;
+    }
+
+    public void setBdcHallUI(BoulderDashClientHallGUI bdcHallUI) {
+        this.bdcHallUI = bdcHallUI;
+    }
+
+    public GroundView getGroundView() {
+        return groundView;
+    }
+
+    public void setGroundView(GroundView groundView) {
+        this.groundView = groundView;
+    }
+
+    @Override
+    public void updateUI() throws RemoteException {
+        if(this.groundView != null) {
+            this.groundView.repaint();
         }
     }
 }

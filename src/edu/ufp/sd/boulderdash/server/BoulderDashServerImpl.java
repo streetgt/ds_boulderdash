@@ -1,5 +1,6 @@
 package edu.ufp.sd.boulderdash.server;
 
+import edu.ufp.sd.boulderdash.server.game.ThreadPool;
 import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -49,7 +50,6 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     public BoulderDashServerImpl() throws RemoteException {
         // Invokes UnicastRemoteObject constructor which exports remote object
         super();
-        this.threadPool = new ThreadPool(10);
         this.bdsGUI = new BoulderDashServerGUI(this);
     }
 

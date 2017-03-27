@@ -1,4 +1,4 @@
-package edu.ufp.sd.boulderdash.server;
+package edu.ufp.sd.boulderdash.server.game;
 
 import java.util.LinkedList;
 import java.util.logging.Level;

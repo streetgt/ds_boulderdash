@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  */
 public class LevelModelServer implements Runnable {
 
+    private ThreadPool threadPool;
     private ArrayList<BoulderDashClientRI> clients = new ArrayList<>(2);
     private ArrayList<RockfordModel> rockfords = new ArrayList<>(2);
 
@@ -72,12 +73,13 @@ public class LevelModelServer implements Runnable {
         this.createLimits();
 
         this.initRockford();
-        this.initThreadAnimator();
+        //this.initThreadAnimator();
         clients.add(null);
         clients.add(null);
 
         this.updatePosRockford = new RockfordUpdateControllerServer(this);
         new BoulderAndDiamondControllerServer(this);
+        this.threadPool = new ThreadPool(10);
     }
 
     /**
@@ -330,8 +332,7 @@ public class LevelModelServer implements Runnable {
         if (this.clients.get(0) != null || this.clients.get(1) != null) {
             for (BoulderDashClientRI client : clients) {
                 if (client != null) {
-                    Thread t = new Thread(new UpdateSprites(client, this.getLevelSprites()));
-                    t.start();
+                    threadPool.execute(new UpdateSprites(client, this.getLevelSprites()));
                 }
             }
         }

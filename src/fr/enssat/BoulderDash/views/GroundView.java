@@ -31,6 +31,7 @@ public abstract class GroundView extends JPanel {
     private static String spriteStorageFolderPath = "../../res/drawable/field/";
     private BoulderDashClientImpl bdc;
     private int serverID;
+    private String[][] levelSprites = null;
 
     /**
      * Class constructor
@@ -78,12 +79,10 @@ public abstract class GroundView extends JPanel {
      *
      * @param g Map graphical object
      */
+    @Override
     public void paint(Graphics g) {
-        try {
-            String[][] levelSprites = this.bdc.getBdsRI().getRoomLevelSprites(serverID);
-            this.drawTerrain(levelSprites, levelSprites.length, levelSprites.length, g);
-        } catch (RemoteException ex) {
-            Logger.getLogger(GroundView.class.getName()).log(Level.SEVERE, null, ex);
+        if (this.levelSprites != null) {
+            this.drawTerrain(this.levelSprites, this.levelSprites.length, this.levelSprites.length, g);
         }
     }
 
@@ -103,5 +102,14 @@ public abstract class GroundView extends JPanel {
         }
 
         return sprite;
+    }
+
+    public void sendRefresh(String[][] sprites) {
+        System.out.println("sendRefresh");
+        if(sprites == null) {
+            System.out.println("is null");
+        }
+        this.levelSprites = sprites;
+        this.repaint();
     }
 }

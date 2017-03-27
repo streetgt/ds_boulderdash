@@ -118,7 +118,7 @@ public class GameView extends JFrame implements WindowListener {
         try {
             if (this.bdc.isPlaying()) {
                 this.bdc.setPlaying(false);
-                this.bdc.getBdsRI().clientLeaveRoom(bdc, serverID);
+                this.bdc.getBdsRI().removeClientFromRoom(bdc, serverID);
             }
             this.bdc.getBdcHallUI().newRoomButtonClickable(true);
             this.dispose();

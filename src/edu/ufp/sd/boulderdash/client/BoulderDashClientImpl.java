@@ -204,9 +204,9 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     }
 
     @Override
-    public void updateUI() throws RemoteException {
+    public void updateGroundView(String[][] levelSprites) throws RemoteException {
         if(this.groundView != null) {
-            this.groundView.repaint();
+            this.groundView.sendRefresh(levelSprites);
         }
     }
 }

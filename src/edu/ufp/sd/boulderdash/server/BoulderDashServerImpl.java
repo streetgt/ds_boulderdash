@@ -340,21 +340,27 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     }
 
     @Override
-    public boolean addToRoom(BoulderDashClientRI client, int serverID) throws RemoteException {
+    public boolean addClientToRoom(BoulderDashClientRI client, int serverID) throws RemoteException {
         LevelModelServer server = null;
         try {
             server = this.servers.get(serverID);
-            if(server.getClients().get(0) == null)  {
-                server.getClients().set(0, client);
-            } else {
-                server.getClients().set(1, client);
-            }
-           
+            server.addClient(client);
         } catch (IndexOutOfBoundsException e) {
             return false;
         }
 
         return false;
+    }
+    
+     @Override
+    public void removeClientFromRoom(BoulderDashClientRI client, int serverID) throws RemoteException {
+        LevelModelServer server = null;
+        try {
+            server = this.servers.get(serverID);
+            server.removeClient(client);
+        } catch (IndexOutOfBoundsException ex) {
+            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -408,17 +414,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         return -1;
     }
 
-    @Override
-    public void clientLeaveRoom(BoulderDashClientRI client, int serverID) throws RemoteException {
-        LevelModelServer server = null;
-        try {
-            server = this.servers.get(serverID);
-            int index = server.getClients().indexOf(client);
-            server.getClients().set(index, null);
-        } catch (IndexOutOfBoundsException ex) {
-            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+   
 
     @Override
     public int[] getRoomMapSize(int serverID) throws RemoteException {
@@ -437,23 +433,23 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         return size;
     }
 
-    @Override
-    public String[][] getRoomLevelSprites(int serverID) throws RemoteException {
-        //System.out.println("getRoomImageName(" + serverID + ")");
-        LevelModelServer server = null;
-        try {
-            server = this.servers.get(serverID);
-            String[][] levelSprites = new String[server.getSizeWidth()][server.getSizeHeight()];
-            for (int i = 0; i < server.getSizeWidth(); i++) {
-                for (int j = 0; j < server.getSizeHeight(); j++) {
-                    levelSprites[i][j] = server.getDisplayableElement(i, j).getSpriteName();
-                }
-            }
-            return levelSprites;
-        } catch (IndexOutOfBoundsException ex) {
-            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
-    }
+//    @Override
+//    public String[][] getRoomLevelSprites(int serverID) throws RemoteException {
+//        //System.out.println("getRoomImageName(" + serverID + ")");
+//        LevelModelServer server = null;
+//        try {
+//            server = this.servers.get(serverID);
+//            String[][] levelSprites = new String[server.getSizeWidth()][server.getSizeHeight()];
+//            for (int i = 0; i < server.getSizeWidth(); i++) {
+//                for (int j = 0; j < server.getSizeHeight(); j++) {
+//                    levelSprites[i][j] = server.getDisplayableElement(i, j).getSpriteName();
+//                }
+//            }
+//            return levelSprites;
+//        } catch (IndexOutOfBoundsException ex) {
+//            Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        return null;
+//    }
 }

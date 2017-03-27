@@ -270,7 +270,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
                 Object o = theList.getModel().getElementAt(index);
                 int svid = Integer.parseInt(o.toString().split("#")[0]);
                 try {
-                    this.bdc.bdsRI.addToRoom(bdc, svid);
+                    this.bdc.bdsRI.addClientToRoom(bdc, svid);
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
                             new GameController(bdc,svid);

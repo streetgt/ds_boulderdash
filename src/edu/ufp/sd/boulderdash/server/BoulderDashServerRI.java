@@ -44,9 +44,11 @@ public interface BoulderDashServerRI extends Remote {
     public String[] fetchAvaliableRooms() throws RemoteException;
 
     // SERVER:
-    public void sendKeys(BoulderDashClientRI client, int serverID, String direction) throws RemoteException;
+    public boolean addClientToRoom(BoulderDashClientRI client, int serverID) throws RemoteException;
 
-    public boolean addToRoom(BoulderDashClientRI client, int serverID) throws RemoteException;
+    public void removeClientFromRoom(BoulderDashClientRI client, int serverID) throws RemoteException;
+
+    public void sendKeys(BoulderDashClientRI client, int serverID, String direction) throws RemoteException;
 
     public String getClientNameInRoom(int serverID, int index) throws RemoteException;
 
@@ -54,9 +56,5 @@ public interface BoulderDashServerRI extends Remote {
 
     public int getRoomRemainingDiamonds(int serverID) throws RemoteException;
 
-    public void clientLeaveRoom(BoulderDashClientRI client, int serverID) throws RemoteException;
-
     public int[] getRoomMapSize(int serverID) throws RemoteException;
-
-    public String[][] getRoomLevelSprites(int serverID) throws RemoteException;
 }

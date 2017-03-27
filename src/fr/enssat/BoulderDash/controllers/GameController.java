@@ -68,7 +68,7 @@ public class GameController implements ActionListener {
             }
             case "exit": {
                 try {
-                    this.bdc.getBdsRI().clientLeaveRoom(bdc, serverID);
+                    this.bdc.getBdsRI().removeClientFromRoom(bdc, serverID);
                     this.bdc.getBdcHallUI().newRoomButtonClickable(true);
                     this.gameView.dispose();
                     this.finalize();

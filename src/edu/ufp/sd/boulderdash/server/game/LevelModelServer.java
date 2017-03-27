@@ -198,7 +198,7 @@ public class LevelModelServer implements Runnable {
             if (this.gameInformationModel.getRemainingsDiamonds() == 0) {
                 System.out.println("All diamonds found!");
                 this.gameRunning = false;
-                
+
             }
         }
 
@@ -215,7 +215,7 @@ public class LevelModelServer implements Runnable {
 
             this.groundGrid[posX][posY] = this.getRockford(index);
         }
-        
+
         this.localNotifyObservers();
     }
 
@@ -330,11 +330,8 @@ public class LevelModelServer implements Runnable {
         if (this.clients.get(0) != null || this.clients.get(1) != null) {
             for (BoulderDashClientRI client : clients) {
                 if (client != null) {
-                    try {
-                        client.updateUI();
-                    } catch (RemoteException ex) {
-                        Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    Thread t = new Thread(new UpdateSprites(client, this.getLevelSprites()));
+                    t.start();
                 }
             }
         }
@@ -726,4 +723,60 @@ public class LevelModelServer implements Runnable {
 
         this.getRockford(index).isStaying();
     }
+
+    private String[][] getLevelSprites() {
+        String[][] levelSprites = new String[this.getSizeWidth()][this.getSizeHeight()];
+        for (int i = 0; i < this.getSizeWidth(); i++) {
+            for (int j = 0; j < this.getSizeHeight(); j++) {
+                levelSprites[i][j] = this.getDisplayableElement(i, j).getSpriteName();
+            }
+        }
+        return levelSprites;
+    }
+
+    public void addClient(BoulderDashClientRI client) {
+        if (this.clients.get(0) == null) {
+            clients.set(0, client);
+        } else {
+            clients.set(1, client);
+        }
+        try {
+            System.out.println(client.getClientUsername() + "joined server " + this.roomID);
+        } catch (RemoteException ex) {
+             Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void removeClient(BoulderDashClientRI client) {
+        int index = clients.indexOf(client);
+        clients.set(index, null);
+        try {
+            System.out.println(client.getClientUsername() + "left server " + this.roomID);
+        } catch (RemoteException ex) {
+             Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+
+class UpdateSprites implements Runnable {
+    private BoulderDashClientRI client;
+    private String[][] sprites; 
+
+    public UpdateSprites(BoulderDashClientRI client, String[][] sprites) {
+        this.client = client;
+        this.sprites = sprites;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Sending Sprites using ThreadID " + Thread.currentThread().getId());
+        try {
+            client.updateGroundView(sprites);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Sent sprites");
+    }
+    
+    
 }

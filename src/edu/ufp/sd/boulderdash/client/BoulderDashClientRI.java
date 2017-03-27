@@ -20,6 +20,6 @@ public interface BoulderDashClientRI extends Remote {
 
     public void update() throws RemoteException;
     
-    public void updateUI() throws RemoteException;
+    public void updateGroundView(String[][] levelSprites) throws RemoteException;
     
 }

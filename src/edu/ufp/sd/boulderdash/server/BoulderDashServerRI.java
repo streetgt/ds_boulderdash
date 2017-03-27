@@ -58,5 +58,5 @@ public interface BoulderDashServerRI extends Remote {
 
     public int[] getRoomMapSize(int serverID) throws RemoteException;
 
-    public String getRoomImageName(int serverID, int x, int y) throws RemoteException;
+    public String[][] getRoomLevelSprites(int serverID) throws RemoteException;
 }

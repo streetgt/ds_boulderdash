@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * @author Colin Leverger <me@colinleverger.fr>
  * @since 2015-06-19
  */
-public class GameKeyController implements KeyListener, Runnable {
+public class GameKeyController implements KeyListener {
 
     private BoulderDashClientImpl bdc;
     private int serverID;
@@ -126,10 +126,5 @@ public class GameKeyController implements KeyListener, Runnable {
     @Override
     public void keyTyped(KeyEvent e) {
         // Do nothing.
-    }
-
-    @Override
-    public void run() {
-       
     }
 }

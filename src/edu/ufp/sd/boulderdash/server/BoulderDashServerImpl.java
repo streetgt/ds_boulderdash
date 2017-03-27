@@ -436,12 +436,18 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     }
 
     @Override
-    public String getRoomImageName(int serverID, int x, int y) throws RemoteException {
+    public String[][] getRoomLevelSprites(int serverID) throws RemoteException {
         //System.out.println("getRoomImageName(" + serverID + ")");
         LevelModelServer server = null;
         try {
             server = this.servers.get(serverID);
-            return server.getDisplayableElement(x, y).getSpriteName();
+            String[][] levelSprites = new String[server.getSizeWidth()][server.getSizeHeight()];
+            for (int i = 0; i < server.getSizeWidth(); i++) {
+                for (int j = 0; j < server.getSizeHeight(); j++) {
+                    levelSprites[i][j] = server.getDisplayableElement(i, j).getSpriteName();
+                }
+            }
+            return levelSprites;
         } catch (IndexOutOfBoundsException ex) {
             Logger.getLogger(BoulderDashServerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

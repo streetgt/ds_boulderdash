@@ -29,17 +29,18 @@ public class GameGroundView extends GroundView {
      * @param levelModel Level model
      */
     public GameGroundView(BoulderDashClientImpl bdc, GameController gameController, int serverID) {
-        super(bdc,serverID);
+        super(bdc, serverID);
 
         this.bdc = bdc;
 
         this.gameController = gameController;
         this.serverID = serverID;
 
-        Runnable r = new GameKeyController(this.bdc, this.gameController.getAudioLoadHelper(), serverID);
-        new Thread(r).start();
-        this.addKeyListener((KeyListener)r);
+        initCustom();
+    }
 
+    private void initCustom() {
+        this.addKeyListener(new GameKeyController(this.bdc, this.gameController.getAudioLoadHelper(), serverID));
         this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setFocusable(true);
     }

@@ -60,7 +60,7 @@ public class LevelModelServer implements Runnable {
         this.gamePaused = false;
         this.gameRunning = true;
         this.gameHasEnded = false;
-       
+
         this.levelLoadHelperServer = new LevelLoadHelperServer(this.levelName);
 
         this.groundGrid = this.levelLoadHelperServer.getGroundGrid();
@@ -198,7 +198,7 @@ public class LevelModelServer implements Runnable {
             if (this.gameInformationModel.getRemainingsDiamonds() == 0) {
                 System.out.println("All diamonds found!");
                 this.gameRunning = false;
-                this.localNotifyObservers();
+                
             }
         }
 
@@ -215,6 +215,8 @@ public class LevelModelServer implements Runnable {
 
             this.groundGrid[posX][posY] = this.getRockford(index);
         }
+        
+        this.localNotifyObservers();
     }
 
     /**
@@ -325,7 +327,7 @@ public class LevelModelServer implements Runnable {
      * Notify observers about a model change
      */
     private void localNotifyObservers() {
-        if (this.clients.get(0) != null || this.clients.get(1) != null ) {
+        if (this.clients.get(0) != null || this.clients.get(1) != null) {
             for (BoulderDashClientRI client : clients) {
                 if (client != null) {
                     try {
@@ -360,13 +362,13 @@ public class LevelModelServer implements Runnable {
     public void run() {
         System.out.println("LevelModelServer() - ThreadID: " + Thread.currentThread().getId());
         while (gameRunning) {
-            if (!gamePaused) {
-                for (int x = 0; x < this.getSizeWidth(); x++) {
-                    for (int y = 0; y < this.getSizeHeight(); y++) {
-                        this.updateSprites(x, y);
-                    }
-                }
-            }
+//            if (!gamePaused) {
+//                for (int x = 0; x < this.getSizeWidth(); x++) {
+//                    for (int y = 0; y < this.getSizeHeight(); y++) {
+//                        this.updateSprites(x, y);
+//                    }
+//                }
+//            }
 
             try {
                 Thread.sleep(DELAY);
@@ -636,7 +638,7 @@ public class LevelModelServer implements Runnable {
             this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() - 1);
             this.getRockford(index).startRunningUp();
         }
-        this.localNotifyObservers();
+
     }
 
     public void moveDown(BoulderDashClientRI client) {
@@ -659,7 +661,6 @@ public class LevelModelServer implements Runnable {
             this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() + 1);
             this.getRockford(index).startRunningDown();
         }
-        this.localNotifyObservers();
 
     }
 
@@ -683,7 +684,6 @@ public class LevelModelServer implements Runnable {
             this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() - 1, this.getRockford(index).getPositionY());
             this.getRockford(index).startRunningLeft();
         }
-        this.localNotifyObservers();
 
     }
 
@@ -707,7 +707,7 @@ public class LevelModelServer implements Runnable {
             this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() + 1, this.getRockford(index).getPositionY());
             this.getRockford(index).startRunningRight();
         }
-        this.localNotifyObservers();
+
     }
 
     public void startStaying(BoulderDashClientRI client) {

@@ -50,40 +50,13 @@ public abstract class GroundView extends JPanel {
      * @param height Map height
      * @param g Map graphical object
      */
-    public void drawTerrain(int width, int height, Graphics g) {
+    public void drawTerrain(String[][] levelSprites, int width, int height, Graphics g) {
         System.out.println("drawTerrain");
-        // Draw items
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                try {
-                    g.drawImage(this.loadSprite(this.bdc.getBdsRI().getRoomImageName(serverID, x, y)), (x * 16), (y * 16), this);
-                } catch (RemoteException ex) {
-                    Logger.getLogger(GroundView.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-               // g.drawImage(this.levelModel.getImage(x, y), (x * 16), (y * 16), this);
+                g.drawImage(this.loadSprite(levelSprites[x][y]), (x * 16), (y * 16), this);
             }
         }
-
-//        if (!this.levelModel.isGameRunning() && !this.levelModel.isGameHasEnded()) {
-//            System.out.println("teste");
-//            int diamonds = this.levelModel.getGameInformationModel().getRemainingsDiamonds();
-//            if (diamonds == 0) {
-//                System.out.println("GAME HAS ENDED");
-//                int winner = this.levelModel.getGameInformationModel().getRockfordMoreDiamonds();
-//                System.out.println("Winner: " + winner);
-//                this.displayWin(winner);
-//            } else {
-//                for (int i = 0; i < 2; i++) {
-//                    if (this.levelModel.getRockford(i).getHasExplosed()) {
-//                        this.displayLose(i);
-//                        System.out.println("FOUND EXPLODED STATE! " + i);
-//                        break;
-//                    }
-//                }
-//            }
-//            this.levelModel.setGameHasEnded(true);
-//        }
     }
 
     /**
@@ -107,20 +80,20 @@ public abstract class GroundView extends JPanel {
      */
     public void paint(Graphics g) {
         try {
-            int[] size = this.bdc.getBdsRI().getRoomMapSize(serverID);
-            this.drawTerrain(size[0], size[1], g);
+            String[][] levelSprites = this.bdc.getBdsRI().getRoomLevelSprites(serverID);
+            this.drawTerrain(levelSprites, levelSprites.length, levelSprites.length, g);
         } catch (RemoteException ex) {
             Logger.getLogger(GroundView.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }
-    
+
     /**
      * Loads the target sprite
      *
      * @param spriteName Sprite name
      * @return Sprite object
      */
-    private  BufferedImage loadSprite(String spriteName) {
+    private BufferedImage loadSprite(String spriteName) {
         BufferedImage sprite = null;
 
         try {

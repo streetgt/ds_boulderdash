@@ -73,7 +73,7 @@ public class LevelModelServer implements Runnable {
         this.createLimits();
 
         this.initRockford();
-        //this.initThreadAnimator();
+        this.initThreadAnimator();
         clients.add(null);
         clients.add(null);
 
@@ -217,7 +217,7 @@ public class LevelModelServer implements Runnable {
 
             this.groundGrid[posX][posY] = this.getRockford(index);
         }
-
+        
         this.localNotifyObservers();
     }
 

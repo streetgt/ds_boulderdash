@@ -33,7 +33,6 @@ import edu.ufp.sd.boulderdash.server.game.LevelModelServer;
 public class BoulderDashServerImpl extends UnicastRemoteObject implements BoulderDashServerRI {
 
     private Object state;
-    private ThreadPool threadPool;
 
     private BoulderDashServerGUI bdsGUI;
 

@@ -79,7 +79,7 @@ public class LevelModelServer implements Runnable {
 
         this.updatePosRockford = new RockfordUpdateControllerServer(this);
         new BoulderAndDiamondControllerServer(this);
-        this.threadPool = new ThreadPool(10);
+        this.threadPool = new ThreadPool(2);
     }
 
     /**
@@ -778,6 +778,4 @@ class UpdateSprites implements Runnable {
         }
         System.out.println("Sent sprites");
     }
-    
-    
 }

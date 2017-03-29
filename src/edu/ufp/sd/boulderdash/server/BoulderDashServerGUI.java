@@ -289,10 +289,10 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
 
     private void btnKillAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKillAllActionPerformed
         try {
-            for (LevelModelServer room: this.bds.servers) {
+            for (LevelModelServer room: this.bds.rooms) {
                 room.setGameRunning(false);
             }
-            this.bds.servers.clear();
+            this.bds.rooms.clear();
             this.roomsList.removeAllElements();
             this.bds.setState(new State().new NewRoom(true, null));
         } catch (RemoteException ex) {
@@ -311,8 +311,8 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
                 System.out.println(roomName);
                 int roomID = this.bds.getRoomIndexByName(roomName);
                 this.roomsList.removeElement(roomName);
-                this.bds.servers.get(roomID).setGameRunning(false);
-                this.bds.servers.remove(roomID);
+                this.bds.rooms.get(roomID).setGameRunning(false);
+                this.bds.rooms.remove(roomID);
             }
         }
     }//GEN-LAST:event_jlRoomsMouseClicked

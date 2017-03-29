@@ -27,7 +27,7 @@ public class GameView extends JFrame implements WindowListener {
     private JPanel actionPanel;
     private JPanel informationPanel;
     private GameController gameController;
-    private int serverID;
+    private int roomID;
 
     /**
      * Class constructor
@@ -35,10 +35,10 @@ public class GameView extends JFrame implements WindowListener {
      * @param gameController Game controller
      * @param levelModel Level model
      */
-    public GameView(BoulderDashClientImpl bdc, GameController gameController, int serverID) {
+    public GameView(BoulderDashClientImpl bdc, GameController gameController, int roomID) {
         this.bdc = bdc;
         this.gameController = gameController;
-        this.serverID = serverID;
+        this.roomID = roomID;
 
         this.initializeView();
         this.createLayout();
@@ -70,9 +70,9 @@ public class GameView extends JFrame implements WindowListener {
      * Creates the view layout
      */
     private void createLayout() {
-        this.gameGroundView = new GameGroundView(this.bdc, this.gameController, serverID);
+        this.gameGroundView = new GameGroundView(this.bdc, this.gameController, roomID);
         this.actionPanel = new JPanel();
-        this.informationPanel = new InformationPanel(this.bdc, this.serverID);
+        this.informationPanel = new InformationPanel(this.bdc, this.roomID);
         this.informationPanel.setBackground(Color.white);
 
         // Add some buttons on the informationPanel
@@ -118,7 +118,7 @@ public class GameView extends JFrame implements WindowListener {
         try {
             if (this.bdc.isPlaying()) {
                 this.bdc.setPlaying(false);
-                this.bdc.getBdsRI().removeClientFromRoom(bdc, serverID);
+                this.bdc.getBdsRI().removeClientFromRoom(bdc, roomID);
             }
             this.bdc.getBdcHallUI().newRoomButtonClickable(true);
             this.dispose();

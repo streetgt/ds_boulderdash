@@ -246,8 +246,8 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         //n
         try {
             String level = this.jcbLevels.getSelectedItem().toString();
-            int serverID = this.bdc.bdsRI.createGameRoom(bdc, level);
-            if(serverID >= 0)
+            int roomID = this.bdc.bdsRI.createGameRoom(bdc, level);
+            if(roomID >= 0)
             {
                 
             }

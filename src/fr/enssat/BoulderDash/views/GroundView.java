@@ -30,7 +30,7 @@ public abstract class GroundView extends JPanel {
 
     private static String spriteStorageFolderPath = "../../res/drawable/field/";
     private BoulderDashClientImpl bdc;
-    private int serverID;
+    private int roomID;
     private String[][] levelSprites = null;
 
     /**
@@ -38,9 +38,9 @@ public abstract class GroundView extends JPanel {
      *
      * @param levelModel Level model
      */
-    public GroundView(BoulderDashClientImpl bdc, int serverID) {
+    public GroundView(BoulderDashClientImpl bdc, int roomID) {
         this.bdc = bdc;
-        this.serverID = serverID;
+        this.roomID = roomID;
         bdc.setGroundView(this);
     }
 

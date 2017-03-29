@@ -25,21 +25,21 @@ public class GameController implements ActionListener {
     private AudioLoadHelper audioLoadHelper;
     private boolean firstClickOnPause;
     private GameView gameView;
-    private int serverID;
+    private int roomID;
 
     /**
      * Class constructor
      */
-    public GameController(BoulderDashClientImpl bdc, int serverID) {
+    public GameController(BoulderDashClientImpl bdc, int roomID) {
         this.bdc = bdc;
-        this.serverID = serverID;
+        this.roomID = roomID;
         if (this.bdc == null) {
             System.out.println("GameController bdc = null");
         }
         this.bdc.setPlaying(true);
         this.firstClickOnPause = true;
         this.audioLoadHelper = new AudioLoadHelper();
-        this.gameView = new GameView(this.bdc, this, this.serverID);
+        this.gameView = new GameView(this.bdc, this, this.roomID);
 
         // Play new song
         this.getAudioLoadHelper().playSound("new");
@@ -68,7 +68,7 @@ public class GameController implements ActionListener {
             }
             case "exit": {
                 try {
-                    this.bdc.getBdsRI().removeClientFromRoom(bdc, serverID);
+                    this.bdc.getBdsRI().removeClientFromRoom(bdc, roomID);
                     this.bdc.getBdcHallUI().newRoomButtonClickable(true);
                     this.gameView.dispose();
                     this.finalize();
@@ -102,7 +102,7 @@ public class GameController implements ActionListener {
 //
 //        if (source.equals("restart")) {
 //            this.levelModel = new LevelModel("level01", audioLoadHelper);
-//            this.gameView = new GameView(this.bdc, this, levelModel, serverID);
+//            this.gameView = new GameView(this.bdc, this, levelModel, roomID);
 //            this.gameView.setVisible(true);
 //        }
 //    }

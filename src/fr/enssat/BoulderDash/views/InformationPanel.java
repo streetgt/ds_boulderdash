@@ -25,21 +25,21 @@ public class InformationPanel extends JPanel implements Observer {
     private BoulderDashClientImpl bdc;
 
     private JTextArea text;
-    private int serverID;
+    private int roomID;
 
     /**
      * Class constructor
      */
-    public InformationPanel(BoulderDashClientImpl bdc, int serverID) {
+    public InformationPanel(BoulderDashClientImpl bdc, int roomID) {
         this.bdc = bdc;
         this.text = new JTextArea();
         this.text.setEditable(false);
       
         try {
             this.text.setText(
-                    bdc.getBdsRI().getClientNameInRoom(serverID, 0) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(serverID, 0) + "\n"
-                    + bdc.getBdsRI().getClientNameInRoom(serverID, 1) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(serverID, 1)
-                    + "\nRemaining diamonds : " + bdc.getBdsRI().getRoomRemainingDiamonds(serverID)
+                    bdc.getBdsRI().getClientNameInRoom(roomID, 0) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 0) + "\n"
+                    + bdc.getBdsRI().getClientNameInRoom(roomID, 1) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 1)
+                    + "\nRemaining diamonds : " + bdc.getBdsRI().getRoomRemainingDiamonds(roomID)
             );
         } catch (RemoteException ex) {
             Logger.getLogger(InformationPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -58,9 +58,9 @@ public class InformationPanel extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         try {
             this.text.setText(
-                    bdc.getBdsRI().getClientNameInRoom(serverID, 0) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(serverID, 0) + "\n"
-                    + bdc.getBdsRI().getClientNameInRoom(serverID, 1) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(serverID, 1)
-                    + "\nRemaining diamonds : " + bdc.getBdsRI().getRoomRemainingDiamonds(serverID)
+                    bdc.getBdsRI().getClientNameInRoom(roomID, 0) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 0) + "\n"
+                    + bdc.getBdsRI().getClientNameInRoom(roomID, 1) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 1)
+                    + "\nRemaining diamonds : " + bdc.getBdsRI().getRoomRemainingDiamonds(roomID)
             );
         } catch (RemoteException ex) {
             Logger.getLogger(InformationPanel.class.getName()).log(Level.SEVERE, null, ex);

@@ -38,7 +38,6 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     private BoulderDashServerGUI bdsGUI;
     
     protected ArrayList<BoulderDashClientRI> clients = new ArrayList<>();
-    protected ArrayList<String> rooms = new ArrayList<>();
     protected ArrayList<LevelModelServer> servers = new ArrayList<>();
     
     public static String PATH_USERS = "../../data/users/";
@@ -189,7 +188,6 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
                 + " - Level: " + level
                 + " - Players: " + newServer.getClients().size() + "/2";
         newServer.setRoomName(name);
-        this.rooms.add(name);
         //newServer.getClients().add(client);
         this.bdsGUI.addRoomToList(name);
         this.setState(new State().new NewRoom(false, name));
@@ -205,7 +203,6 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
                 + " - Level: " + level
                 + " - Players: " + newServer.getClients().size() + "/2";
         newServer.setRoomName(name);
-        this.rooms.add(name);
         this.bdsGUI.addRoomToList(name);
         this.setState(new State().new NewRoom(false, name));
     }
@@ -304,14 +301,6 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         }
         
         return -1;
-    }
-    
-    public ArrayList<String> getRooms() {
-        return rooms;
-    }
-    
-    public void setRooms(ArrayList<String> rooms) {
-        this.rooms = rooms;
     }
     
     public void shutdown() {

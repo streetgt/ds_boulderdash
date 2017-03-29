@@ -48,7 +48,7 @@ public class LevelModelServer implements Runnable {
     /**
      * Animation speed
      */
-    private final int DELAY = 25;
+    private final int DELAY = 15;
 
     /**
      * Class constructor

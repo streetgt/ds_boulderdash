@@ -217,7 +217,7 @@ public class LevelModelServer implements Runnable {
 
             this.groundGrid[posX][posY] = this.getRockford(index);
         }
-        
+
         this.localNotifyObservers();
     }
 
@@ -616,7 +616,7 @@ public class LevelModelServer implements Runnable {
         this.roomID = roomID;
     }
 
-    public void moveUp(BoulderDashClientRI client) {
+    public void moveRockford(BoulderDashClientRI client, String movement) {
         try {
             System.out.println(client.getClientUsername() + " moved up in room " + roomID);
         } catch (RemoteException ex) {
@@ -630,99 +630,51 @@ public class LevelModelServer implements Runnable {
             index = 1;
         }
 
-        DisplayableElementModel upElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX()][this.getRockford(index).getPositionY() - 1];
+        switch (movement) {
+            case "UP": {
+                DisplayableElementModel upElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX()][this.getRockford(index).getPositionY() - 1];
 
-        if (upElement.getPriority() < this.getRockford(index).getPriority()) {
-            this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() - 1);
-            this.getRockford(index).startRunningUp();
+                if (upElement.getPriority() < this.getRockford(index).getPriority()) {
+                    this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() - 1);
+                    this.getRockford(index).startRunningUp();
+                }
+
+                break;
+            }
+            case "DOWN": {
+                DisplayableElementModel downElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX()][this.getRockford(index).getPositionY() + 1];
+
+                if (downElement.getPriority() < this.getRockford(index).getPriority()) {
+                    this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() + 1);
+                    this.getRockford(index).startRunningDown();
+                }
+                break;
+            }
+            case "RIGHT": {
+                DisplayableElementModel rightElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX() + 1][this.getRockford(index).getPositionY()];
+
+                if (rightElement.getPriority() < this.getRockford(index).getPriority()) {
+                    this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() + 1, this.getRockford(index).getPositionY());
+                    this.getRockford(index).startRunningRight();
+                }
+                break;
+            }
+            case "LEFT": {
+
+                DisplayableElementModel leftElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX() - 1][this.getRockford(index).getPositionY()];
+
+                if (leftElement.getPriority() < this.getRockford(index).getPriority()) {
+                    this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() - 1, this.getRockford(index).getPositionY());
+                    this.getRockford(index).startRunningLeft();
+                }
+                break;
+            }
+            case "STAYING": {
+                this.getRockford(index).isStaying();
+                break;
+            }
         }
 
-    }
-
-    public void moveDown(BoulderDashClientRI client) {
-        try {
-            System.out.println(client.getClientUsername() + " moved down in room " + roomID);
-        } catch (RemoteException ex) {
-            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        int index = 0;
-        if (client.equals(this.clients.get(0))) {
-            index = 0;
-        } else {
-            index = 1;
-        }
-
-        DisplayableElementModel downElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX()][this.getRockford(index).getPositionY() + 1];
-
-        if (downElement.getPriority() < this.getRockford(index).getPriority()) {
-            this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX(), this.getRockford(index).getPositionY() + 1);
-            this.getRockford(index).startRunningDown();
-        }
-
-    }
-
-    public void moveLeft(BoulderDashClientRI client) {
-        try {
-            System.out.println(client.getClientUsername() + " moved left in room " + roomID);
-        } catch (RemoteException ex) {
-            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        int index = 0;
-        if (client.equals(this.clients.get(0))) {
-            index = 0;
-        } else {
-            index = 1;
-        }
-
-        DisplayableElementModel leftElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX() - 1][this.getRockford(index).getPositionY()];
-
-        if (leftElement.getPriority() < this.getRockford(index).getPriority()) {
-            this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() - 1, this.getRockford(index).getPositionY());
-            this.getRockford(index).startRunningLeft();
-        }
-
-    }
-
-    public void moveRight(BoulderDashClientRI client) {
-        try {
-            System.out.println(client.getClientUsername() + " moved right in room " + roomID);
-        } catch (RemoteException ex) {
-            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        int index = 0;
-        if (client.equals(this.clients.get(0))) {
-            index = 0;
-        } else {
-            index = 1;
-        }
-
-        DisplayableElementModel rightElement = this.getGroundLevelModel()[this.getRockford(index).getPositionX() + 1][this.getRockford(index).getPositionY()];
-
-        if (rightElement.getPriority() < this.getRockford(index).getPriority()) {
-            this.updatePosRockford.moveRockford(index, this.getRockford(index).getPositionX() + 1, this.getRockford(index).getPositionY());
-            this.getRockford(index).startRunningRight();
-        }
-
-    }
-
-    public void startStaying(BoulderDashClientRI client) {
-        try {
-            System.out.println(client.getClientUsername() + " startStaying in " + roomID);
-        } catch (RemoteException ex) {
-            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        int index = 0;
-        if (client.equals(this.clients.get(0))) {
-            index = 0;
-        } else {
-            index = 1;
-        }
-
-        this.getRockford(index).isStaying();
     }
 
     private String[][] getLevelSprites() {
@@ -744,7 +696,7 @@ public class LevelModelServer implements Runnable {
         try {
             System.out.println(client.getClientUsername() + "joined server " + this.roomID);
         } catch (RemoteException ex) {
-             Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -754,14 +706,15 @@ public class LevelModelServer implements Runnable {
         try {
             System.out.println(client.getClientUsername() + "left server " + this.roomID);
         } catch (RemoteException ex) {
-             Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
 
 class UpdateSprites implements Runnable {
+
     private BoulderDashClientRI client;
-    private String[][] sprites; 
+    private String[][] sprites;
 
     public UpdateSprites(BoulderDashClientRI client, String[][] sprites) {
         this.client = client;

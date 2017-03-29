@@ -428,28 +428,6 @@ class SendKeysRunnable implements Runnable {
     @Override
     public void run() {
         System.out.println("Sending movement using Thread: " + Thread.currentThread().getId());
-        switch (movement) {
-            case "UP": {
-                this.server.moveUp(client);
-                break;
-            }
-            case "DOWN": {
-                this.server.moveDown(client);
-                break;
-            }
-            case "RIGHT": {
-                this.server.moveRight(client);
-                break;
-            }
-            case "LEFT": {
-                this.server.moveLeft(client);
-                break;
-            }
-            case "STAYING": {
-                this.server.startStaying(client);
-                break;
-            }
-        }
-    }
-    
+        this.server.moveRockford(client,movement);
+    } 
 }

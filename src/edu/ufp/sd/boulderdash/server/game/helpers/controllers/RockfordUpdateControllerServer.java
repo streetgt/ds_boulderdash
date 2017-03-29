@@ -1,6 +1,6 @@
 package edu.ufp.sd.boulderdash.server.game.helpers.controllers;
 
-import edu.ufp.sd.boulderdash.server.game.LevelModelServer;
+import edu.ufp.sd.boulderdash.server.game.LevelModelRoom;
 
 /**
  * ElementPositionUpdateHelper
@@ -14,7 +14,7 @@ import edu.ufp.sd.boulderdash.server.game.LevelModelServer;
  */
 public class RockfordUpdateControllerServer implements Runnable {
 
-    private LevelModelServer levelModelServer;
+    private LevelModelRoom levelModelServer;
     private Thread elementMovingThread;
     private int[] rockfordInstance = new int[2];
     private int[] rockfordPositionX = new int[2];
@@ -26,7 +26,7 @@ public class RockfordUpdateControllerServer implements Runnable {
      *
      * @param levelModelServer Level model
      */
-    public RockfordUpdateControllerServer(LevelModelServer levelModelServer) {
+    public RockfordUpdateControllerServer(LevelModelRoom levelModelServer) {
         this.levelModelServer = levelModelServer;
         this.elementMovingThread = new Thread(this);
         this.elementMovingThread.start();

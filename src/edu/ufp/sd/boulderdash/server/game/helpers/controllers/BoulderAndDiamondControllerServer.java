@@ -2,7 +2,7 @@ package edu.ufp.sd.boulderdash.server.game.helpers.controllers;
 
 import edu.ufp.sd.boulderdash.server.game.DirtModel;
 import edu.ufp.sd.boulderdash.server.game.DisplayableElementModel;
-import edu.ufp.sd.boulderdash.server.game.LevelModelServer;
+import edu.ufp.sd.boulderdash.server.game.LevelModelRoom;
 
 /**
  * ElementPositionUpdateHelper
@@ -16,7 +16,7 @@ import edu.ufp.sd.boulderdash.server.game.LevelModelServer;
  */
 public class BoulderAndDiamondControllerServer implements Runnable {
 
-    private LevelModelServer levelModelServer;
+    private LevelModelRoom levelModelServer;
     private Thread elementMovingThread;
 
     /**
@@ -24,7 +24,7 @@ public class BoulderAndDiamondControllerServer implements Runnable {
      *
      * @param levelModelServer Level model
      */
-    public BoulderAndDiamondControllerServer(LevelModelServer levelModelServer) {
+    public BoulderAndDiamondControllerServer(LevelModelRoom levelModelServer) {
         this.levelModelServer = levelModelServer;
 
         // Start thread

@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * @author Colin Leverger <me@colinleverger.fr>
  * @since 2015-06-19
  */
-public class LevelModelServer implements Runnable {
+public class LevelModelRoom implements Runnable {
 
     private ThreadPool threadPool;
     private ArrayList<BoulderDashClientRI> clients = new ArrayList<>(2);
@@ -55,7 +55,7 @@ public class LevelModelServer implements Runnable {
      *
      * @param levelName Level name
      */
-    public LevelModelServer(String levelName) {
+    public LevelModelRoom(String levelName) {
         System.out.println("LevelModelServer() - constructor()");
         this.levelName = levelName;
         this.gamePaused = false;
@@ -192,7 +192,7 @@ public class LevelModelServer implements Runnable {
             try {
                 System.out.println(clients.get(index).getClientUsername() + " found a diamond!");
             } catch (RemoteException ex) {
-                Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.gameInformationModel.incrementScore(index);
             this.gameInformationModel.decrementRemainingsDiamonds();
@@ -620,7 +620,7 @@ public class LevelModelServer implements Runnable {
         try {
             System.out.println(client.getClientUsername() + " moved up in room " + roomID);
         } catch (RemoteException ex) {
-            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         int index = 0;
@@ -696,7 +696,7 @@ public class LevelModelServer implements Runnable {
         try {
             System.out.println(client.getClientUsername() + "joined server " + this.roomID);
         } catch (RemoteException ex) {
-            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -706,7 +706,7 @@ public class LevelModelServer implements Runnable {
         try {
             System.out.println(client.getClientUsername() + "left server " + this.roomID);
         } catch (RemoteException ex) {
-            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
@@ -727,7 +727,7 @@ class UpdateSprites implements Runnable {
         try {
             client.updateGroundView(sprites);
         } catch (RemoteException ex) {
-            Logger.getLogger(LevelModelServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Sent sprites");
     }

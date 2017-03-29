@@ -5,7 +5,7 @@
  */
 package edu.ufp.sd.boulderdash.server;
 
-import edu.ufp.sd.boulderdash.server.game.LevelModelServer;
+import edu.ufp.sd.boulderdash.server.game.LevelModelRoom;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.rmi.RemoteException;
@@ -289,7 +289,7 @@ public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowLi
 
     private void btnKillAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKillAllActionPerformed
         try {
-            for (LevelModelServer room: this.bds.rooms) {
+            for (LevelModelRoom room: this.bds.rooms) {
                 room.setGameRunning(false);
             }
             this.bds.rooms.clear();

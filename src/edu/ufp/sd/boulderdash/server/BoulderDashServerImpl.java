@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import edu.ufp.sd.boulderdash.server.game.LevelModelServer;
+import edu.ufp.sd.boulderdash.server.game.LevelModelRoom;
 
 /**
  * <p>
@@ -38,7 +38,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     private BoulderDashServerGUI bdsGUI;
     
     protected ArrayList<BoulderDashClientRI> clients = new ArrayList<>();
-    protected ArrayList<LevelModelServer> rooms = new ArrayList<>();
+    protected ArrayList<LevelModelRoom> rooms = new ArrayList<>();
     
     public static String PATH_USERS = "../../data/users/";
     public static String PATH_LEVELS = "../../res/levels/";
@@ -181,7 +181,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     
     @Override
     public int createGameRoom(BoulderDashClientRI client, String level) throws RemoteException {
-        LevelModelServer newServer = new LevelModelServer(level);
+        LevelModelRoom newServer = new LevelModelRoom(level);
         this.rooms.add(newServer);
         newServer.setRoomID(rooms.indexOf(newServer));
         String name = rooms.size() - 1 + "# BoulderDash Room"
@@ -196,7 +196,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     
     public void createGameRoom() throws RemoteException {
         String level = "level01";
-        LevelModelServer newServer = new LevelModelServer(level);
+        LevelModelRoom newServer = new LevelModelRoom(level);
         this.rooms.add(newServer);
         newServer.setRoomID(rooms.indexOf(newServer));
         String name = rooms.indexOf(newServer) + "# BoulderDash Room"
@@ -271,11 +271,11 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         
     }
     
-    public ArrayList<LevelModelServer> getRooms() {
+    public ArrayList<LevelModelRoom> getRooms() {
         return rooms;
     }
     
-    public void setRooms(ArrayList<LevelModelServer> rooms) {
+    public void setRooms(ArrayList<LevelModelRoom> rooms) {
         this.rooms = rooms;
     }
     
@@ -294,7 +294,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     }
     
     public int getRoomIndexByName(String name) {
-        for (LevelModelServer room : rooms) {
+        for (LevelModelRoom room : rooms) {
             if (room.getRoomName().compareTo(name) == 0) {
                 return rooms.indexOf(room);
             }
@@ -310,7 +310,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     
     @Override
     public boolean addClientToRoom(BoulderDashClientRI client, int roomID) throws RemoteException {
-        LevelModelServer server = null;
+        LevelModelRoom server = null;
         try {
             server = this.rooms.get(roomID);
             server.addClient(client);
@@ -323,7 +323,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     
     @Override
     public void removeClientFromRoom(BoulderDashClientRI client, int roomID) throws RemoteException {
-        LevelModelServer server = null;
+        LevelModelRoom server = null;
         try {
             server = this.rooms.get(roomID);
             server.removeClient(client);
@@ -334,7 +334,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     
     @Override
     public String getClientNameInRoom(int roomID, int index) throws RemoteException {
-        LevelModelServer server = null;
+        LevelModelRoom server = null;
         BoulderDashClientRI client = null;
         try {
             server = this.rooms.get(roomID);
@@ -351,7 +351,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     
     @Override
     public int getClientScoreInRoom(int roomID, int index) throws RemoteException {
-        LevelModelServer server = null;
+        LevelModelRoom server = null;
         int val = -1;
         try {
             server = this.rooms.get(roomID);
@@ -368,7 +368,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     
     @Override
     public int getRoomRemainingDiamonds(int roomID) throws RemoteException {
-        LevelModelServer server = null;
+        LevelModelRoom server = null;
         int val = -1;
         try {
             server = this.rooms.get(roomID);
@@ -386,7 +386,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     @Override
     public int[] getRoomMapSize(int roomID) throws RemoteException {
         //System.out.println("getRoomMapSize(" + roomID + ")");
-        LevelModelServer server = null;
+        LevelModelRoom server = null;
         int[] size = null;
         try {
             server = this.rooms.get(roomID);
@@ -405,10 +405,10 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
 class SendKeysRunnable implements Runnable {
 
     private BoulderDashClientRI client;
-    private LevelModelServer server;
+    private LevelModelRoom server;
     private String movement;
     
-    public SendKeysRunnable(BoulderDashClientRI client, LevelModelServer server, String movement) {
+    public SendKeysRunnable(BoulderDashClientRI client, LevelModelRoom server, String movement) {
         this.client = client;
         this.server = server;
         this.movement = movement;

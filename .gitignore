@@ -6,7 +6,7 @@ libs/
 tmp/
 node_modules/
 jaxws/jaxws-client/src/main/
-runscripts/
+src/edu/ufp/sd/boulderdash/runscripts/
  
 # OS Files #
 .DS_Store

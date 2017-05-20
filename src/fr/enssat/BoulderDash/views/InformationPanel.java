@@ -26,6 +26,7 @@ public class InformationPanel extends JPanel implements Observer {
 
     private JTextArea text;
     private int roomID;
+    private String[] players = {"Not Connected", "Not Connected"};
 
     /**
      * Class constructor
@@ -36,9 +37,17 @@ public class InformationPanel extends JPanel implements Observer {
         this.text.setEditable(false);
       
         try {
+
+            for (int i = 0; i < players.length; i++) {
+                String name = bdc.getBdsRI().getClientNameInRoom(roomID, i);
+                if(name != null) {
+                    players[i] = name;
+                }
+            }
+            
             this.text.setText(
-                    bdc.getBdsRI().getClientNameInRoom(roomID, 0) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 0) + "\n"
-                    + bdc.getBdsRI().getClientNameInRoom(roomID, 1) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 1)
+                    players[0] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 0) + "\n"
+                    + players[1] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 1)
                     + "\nRemaining diamonds : " + bdc.getBdsRI().getRoomRemainingDiamonds(roomID)
             );
         } catch (RemoteException ex) {
@@ -58,8 +67,8 @@ public class InformationPanel extends JPanel implements Observer {
     public void update(Observable o, Object arg) {
         try {
             this.text.setText(
-                    bdc.getBdsRI().getClientNameInRoom(roomID, 0) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 0) + "\n"
-                    + bdc.getBdsRI().getClientNameInRoom(roomID, 1) + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 1)
+                    players[0] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 0) + "\n"
+                    + players[1] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 1)
                     + "\nRemaining diamonds : " + bdc.getBdsRI().getRoomRemainingDiamonds(roomID)
             );
         } catch (RemoteException ex) {

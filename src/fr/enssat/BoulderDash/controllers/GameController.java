@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 /**
  * GameController
@@ -26,6 +27,7 @@ public class GameController implements ActionListener {
     private boolean firstClickOnPause;
     private GameView gameView;
     private int roomID;
+    private JLabel centerLabel;
 
     /**
      * Class constructor
@@ -38,14 +40,22 @@ public class GameController implements ActionListener {
         }
         this.bdc.setPlaying(true);
         this.firstClickOnPause = true;
-        this.audioLoadHelper = new AudioLoadHelper();
+        
+        // Gameview
         this.gameView = new GameView(this.bdc, this, this.roomID);
-
-        // Play new song
-        this.getAudioLoadHelper().playSound("new");
-
         this.getGameView().setVisible(true);
         this.getGameView().getGameFieldView().grabFocus();
+
+        this.centerLabel = new JLabel("Waiting for a player to join ...", JLabel.CENTER);
+        //this.centerLabel.setFont(new Font("Arial", 0, 30));
+        this.centerLabel.setVisible(true);
+        this.gameView.add(centerLabel);
+        
+        // Song
+        this.audioLoadHelper = new AudioLoadHelper();
+        this.bdc.setAudioLevelHelper(audioLoadHelper);
+        this.audioLoadHelper.playSound("win");
+        
     }
 
     /**

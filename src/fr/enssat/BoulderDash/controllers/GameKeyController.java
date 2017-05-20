@@ -43,7 +43,7 @@ public class GameKeyController implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
-        System.out.println("[DEBUG]: Pressed keyCode " + keyCode);
+        //System.out.println("[DEBUG]: Pressed keyCode " + keyCode);
         switch (keyCode) {
             // Direction Rockford 1: UP
             case KeyEvent.VK_UP: {

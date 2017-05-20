@@ -8,6 +8,7 @@ package edu.ufp.sd.boulderdash.client;
 import edu.ufp.sd.boulderdash.server.BoulderDashServerRI;
 import edu.ufp.sd.boulderdash.server.State;
 import fr.enssat.BoulderDash.views.GroundView;
+import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -30,6 +31,7 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     private boolean playing = false;
     
     private GroundView groundView = null;
+    private AudioLoadHelper audioLevelHelper = null;
 
     public BoulderDashClientImpl(BoulderDashServerRI bdsRI) throws RemoteException {
         exportObjectMethod();
@@ -203,10 +205,46 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
         this.playing = playing;
     }
 
+    public AudioLoadHelper getAudioLevelHelper() {
+        return audioLevelHelper;
+    }
+
+    public void setAudioLevelHelper(AudioLoadHelper audioLevelHelper) {
+        this.audioLevelHelper = audioLevelHelper;
+    }
+
     @Override
     public void updateGroundView(String[][] levelSprites) throws RemoteException {
         if(this.groundView != null) {
             this.groundView.sendRefresh(levelSprites);
         }
     }
+
+    @Override
+    public void stopAudio() throws RemoteException {
+        System.out.println("BoulderDashClientImpl - stopAudio():");
+        if(audioLevelHelper != null) {
+            audioLevelHelper.stopMusic();
+        }
+        else {
+            System.out.println("BoulderDashClientImpl - stopAudio(): is null");
+        }
+    }
+
+    @Override
+    public void playAudio(boolean song, String name) throws RemoteException {
+        System.out.println("BoulderDashClientImpl - playAudio(" + song + "," + name + "):");
+        if(audioLevelHelper != null) {
+            if(song) {
+                audioLevelHelper.playSound(name);
+            } else {
+                System.out.println("startMusic(name);");
+                audioLevelHelper.startMusic(name);
+            }
+        } else {
+            System.out.println("BoulderDashClientImpl - playAudio(): is null");
+        }
+    }
+    
+    
 }

@@ -186,7 +186,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         newServer.setRoomID(rooms.indexOf(newServer));
         String name = rooms.size() - 1 + "# BoulderDash Room"
                 + " - Level: " + level
-                + " - Players: " + newServer.getClients().size() + "/2";
+                + " - Players: " + newServer.getConnectedClients() + "/2";
         newServer.setRoomName(name);
         //newServer.getClients().add(client);
         this.bdsGUI.addRoomToList(name);
@@ -201,7 +201,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
         newServer.setRoomID(rooms.indexOf(newServer));
         String name = rooms.indexOf(newServer) + "# BoulderDash Room"
                 + " - Level: " + level
-                + " - Players: " + newServer.getClients().size() + "/2";
+                + " - Players: " + newServer.getConnectedClients() + "/2";
         newServer.setRoomName(name);
         this.bdsGUI.addRoomToList(name);
         this.setState(new State().new NewRoom(false, name));
@@ -253,7 +253,9 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     
     @Override
     public void sendKeys(BoulderDashClientRI client, int roomID, String direction) throws RemoteException {
-        threadPool.execute(new SendKeysRunnable(client, this.rooms.get(roomID), direction));
+        if(this.rooms.get(roomID).isGameStarted()) {
+            threadPool.execute(new SendKeysRunnable(client, this.rooms.get(roomID), direction));
+        }
     }
     
     private boolean clientAlreadyLoggedin(String username) {

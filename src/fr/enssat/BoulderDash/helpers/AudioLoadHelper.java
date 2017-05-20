@@ -47,6 +47,7 @@ public class AudioLoadHelper {
      * @param musicId Music identifier
      */
     public void startMusic(String musicId) {
+        System.out.println("startMusic(): " + musicId);
         if (this.musicToPlay != null) {
             this.stopMusic();
         }

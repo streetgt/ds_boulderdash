@@ -126,4 +126,16 @@ public class State implements Serializable {
             return removeAll;
         }
     }
+    
+    public class GenericState implements Serializable {
+        private String type;
+        
+        public GenericState(String type) {
+            this.type = type;
+        }
+        
+        public String getType() {
+            return this.type;
+        }
+    }
 }

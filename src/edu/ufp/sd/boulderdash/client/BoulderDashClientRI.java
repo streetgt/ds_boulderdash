@@ -22,4 +22,7 @@ public interface BoulderDashClientRI extends Remote {
     
     public void updateGroundView(String[][] levelSprites) throws RemoteException;
     
+    public void playAudio(boolean song, String name) throws RemoteException;
+    
+    public void stopAudio() throws RemoteException;
 }

@@ -32,7 +32,7 @@ public abstract class GroundView extends JPanel {
     private BoulderDashClientImpl bdc;
     private int roomID;
     private String[][] levelSprites = null;
-
+  
     /**
      * Class constructor
      *
@@ -40,8 +40,8 @@ public abstract class GroundView extends JPanel {
      */
     public GroundView(BoulderDashClientImpl bdc, int roomID) {
         this.bdc = bdc;
-        this.roomID = roomID;
-        bdc.setGroundView(this);
+        this.roomID = roomID; 
+        bdc.setGroundView(this);   
     }
 
     /**

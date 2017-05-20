@@ -35,6 +35,7 @@ public class LevelModelRoom implements Runnable {
     private int sizeWidth = 0;
     private int sizeHeight = 0;
     private boolean gameRunning;
+    private boolean gameStarted;
     private boolean gamePaused;
     private boolean gameHasEnded;
 
@@ -58,9 +59,10 @@ public class LevelModelRoom implements Runnable {
     public LevelModelRoom(String levelName) {
         System.out.println("LevelModelServer() - constructor()");
         this.levelName = levelName;
-        this.gamePaused = false;
         this.gameRunning = true;
+        this.gameStarted = false;
         this.gameHasEnded = false;
+        this.gamePaused = false;
 
         this.levelLoadHelperServer = new LevelLoadHelperServer(this.levelName);
 
@@ -164,8 +166,13 @@ public class LevelModelRoom implements Runnable {
         }
 
         if (collisionSound != null) {
-            // Play sound to player
-            //this.audioLoadHelper.playSound(collisionSound);
+            try {
+                // Play sound to player
+                this.clients.get(index).playAudio(true, collisionSound);
+                //this.audioLoadHelper.playSound(collisionSound);
+            } catch (RemoteException ex) {
+                Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -437,12 +444,18 @@ public class LevelModelRoom implements Runnable {
         this.groundGrid[x - 1][y - 1] = new EmptyModel();
         this.getRockford(index).setHasExplosed(true);
 
+        try {
+            this.clients.get(index).playAudio(true, "die");
+            this.clients.get(index == 0 ? 0 : 1).playAudio(true, "win");
+        } catch (RemoteException ex) {
+            Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         // Again a sleep to notify the observers properly
         try {
             Thread.sleep(50);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.localNotifyObservers();
     }
@@ -592,6 +605,14 @@ public class LevelModelRoom implements Runnable {
         this.gameHasEnded = gameHasEnded;
     }
 
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
+    }
+
     public String getRoomName() {
         return roomName;
     }
@@ -606,6 +627,17 @@ public class LevelModelRoom implements Runnable {
 
     public void setClients(ArrayList<BoulderDashClientRI> clients) {
         this.clients = clients;
+    }
+
+    public int getConnectedClients() {
+        int sum = 0;
+        for (BoulderDashClientRI client : this.clients) {
+            if (client != null) {
+                sum++;
+            }
+        }
+
+        return sum;
     }
 
     public int getRoomID() {
@@ -677,7 +709,7 @@ public class LevelModelRoom implements Runnable {
 
     }
 
-    private String[][] getLevelSprites() {
+    public String[][] getLevelSprites() {
         String[][] levelSprites = new String[this.getSizeWidth()][this.getSizeHeight()];
         for (int i = 0; i < this.getSizeWidth(); i++) {
             for (int j = 0; j < this.getSizeHeight(); j++) {
@@ -688,13 +720,23 @@ public class LevelModelRoom implements Runnable {
     }
 
     public void addClient(BoulderDashClientRI client) {
-        if (this.clients.get(0) == null) {
-            clients.set(0, client);
-        } else {
-            clients.set(1, client);
-        }
+
         try {
-            System.out.println(client.getClientUsername() + "joined server " + this.roomID);
+            System.out.println(client.getClientUsername() + " joined room " + this.roomID);
+
+            if (this.clients.get(0) == null) {
+                clients.set(0, client);
+            } else {
+                clients.set(1, client);
+            }
+            
+            // All clients connected!
+            if (this.clients.get(0) != null && this.clients.get(1) != null) {
+                System.out.println("Room " + this.roomID + " is now full.");
+                StartGameThread gameStartThread = new StartGameThread(this);
+                gameStartThread.start();
+            }
+
         } catch (RemoteException ex) {
             Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -703,8 +745,9 @@ public class LevelModelRoom implements Runnable {
     public void removeClient(BoulderDashClientRI client) {
         int index = clients.indexOf(client);
         clients.set(index, null);
+        this.gameStarted = false;
         try {
-            System.out.println(client.getClientUsername() + "left server " + this.roomID);
+            System.out.println(client.getClientUsername() + " left server " + this.roomID);
         } catch (RemoteException ex) {
             Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -731,4 +774,41 @@ class UpdateSprites implements Runnable {
         }
         System.out.println("Sent sprites");
     }
+}
+
+class StartGameThread extends Thread {
+
+    private LevelModelRoom room;
+    private int times = 3;
+
+    public StartGameThread(LevelModelRoom room) {
+        this.room = room;
+    }
+
+    @Override
+    public void run() {
+        try {
+            while (times != 0) {
+                System.out.println("StartGameThread() executed in room " + room.getRoomID());
+                
+                switch(times) {
+                    case 1: {
+                        for (BoulderDashClientRI client : room.getClients()) {
+                            client.updateGroundView(room.getLevelSprites());
+                            client.playAudio(true, "new");
+                            
+                        }
+                        room.setGameStarted(true);
+                        break;
+                    }
+                }
+                
+                sleep(1000);
+                times--;
+            }
+        } catch (InterruptedException | RemoteException ex) {
+            Logger.getLogger(StartGameThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

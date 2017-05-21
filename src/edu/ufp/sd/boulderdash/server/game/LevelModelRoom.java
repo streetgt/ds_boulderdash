@@ -1,6 +1,8 @@
 package edu.ufp.sd.boulderdash.server.game;
 
 import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
+import edu.ufp.sd.boulderdash.server.BoulderDashServerImpl;
+import edu.ufp.sd.boulderdash.server.State;
 import edu.ufp.sd.boulderdash.server.game.helpers.LevelLoadHelperServer;
 import edu.ufp.sd.boulderdash.server.game.helpers.controllers.BoulderAndDiamondControllerServer;
 import edu.ufp.sd.boulderdash.server.game.helpers.controllers.RockfordUpdateControllerServer;
@@ -22,6 +24,8 @@ import java.util.logging.Logger;
  */
 public class LevelModelRoom implements Runnable {
 
+    private BoulderDashServerImpl server;
+    
     private ThreadPool threadPool;
     private ArrayList<BoulderDashClientRI> clients = new ArrayList<>(2);
     private ArrayList<RockfordModel> rockfords = new ArrayList<>(2);
@@ -56,8 +60,9 @@ public class LevelModelRoom implements Runnable {
      *
      * @param levelName Level name
      */
-    public LevelModelRoom(String levelName) {
+    public LevelModelRoom(BoulderDashServerImpl server, String levelName) {
         System.out.println("LevelModelServer() - constructor()");
+        this.server = server;
         this.levelName = levelName;
         this.gameRunning = true;
         this.gameStarted = false;
@@ -446,18 +451,18 @@ public class LevelModelRoom implements Runnable {
 
         try {
             this.clients.get(index).playAudio(true, "die");
-            this.clients.get(index == 0 ? 0 : 1).playAudio(true, "win");
+            this.clients.get(index == 0 ? 1 : 0).playAudio(true, "win");
         } catch (RemoteException ex) {
             Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // Again a sleep to notify the observers properly
-        try {
+        /*try {
             Thread.sleep(50);
         } catch (InterruptedException ex) {
             Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.localNotifyObservers();
+        this.localNotifyObservers(); */
     }
 
     /**
@@ -470,6 +475,7 @@ public class LevelModelRoom implements Runnable {
         this.groundGrid[x][y].setFalling(true);
         this.groundGrid[x][y + 1] = this.groundGrid[x][y];
         this.groundGrid[x][y] = new EmptyModel();
+        this.localNotifyObservers();
     }
 
     /**
@@ -720,8 +726,10 @@ public class LevelModelRoom implements Runnable {
     }
 
     public void addClient(BoulderDashClientRI client) {
-
+        updateRoomName();
+        
         try {
+            
             System.out.println(client.getClientUsername() + " joined room " + this.roomID);
 
             if (this.clients.get(0) == null) {
@@ -743,11 +751,25 @@ public class LevelModelRoom implements Runnable {
     }
 
     public void removeClient(BoulderDashClientRI client) {
+        updateRoomName();
+        
         int index = clients.indexOf(client);
         clients.set(index, null);
         this.gameStarted = false;
         try {
             System.out.println(client.getClientUsername() + " left server " + this.roomID);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void updateRoomName() {
+        this.setRoomName(this.roomID + "# BoulderDash Room"
+                    + " - Level: " + this.levelName
+                    + " - Players: " + this.getConnectedClients() + "/2");
+        
+        try {
+            this.server.setState(new State().new GenericState("RoomsUpdate"));
         } catch (RemoteException ex) {
             Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -779,7 +801,7 @@ class UpdateSprites implements Runnable {
 class StartGameThread extends Thread {
 
     private LevelModelRoom room;
-    private int times = 4;
+    private int times = 5;
 
     public StartGameThread(LevelModelRoom room) {
         this.room = room;
@@ -792,6 +814,12 @@ class StartGameThread extends Thread {
                 System.out.println("StartGameThread() executed in room " + room.getRoomID());
                 
                 switch(times) {
+                    case 3: {
+                        for (BoulderDashClientRI client : room.getClients()) {
+                            client.playAudio(true, "new");                            
+                        }
+                        break;
+                    }
                     case 2: {
                         for (BoulderDashClientRI client : room.getClients()) {
                             client.updateGroundView(room.getLevelSprites());
@@ -799,9 +827,6 @@ class StartGameThread extends Thread {
                         break;
                     }
                     case 1: {
-                        for (BoulderDashClientRI client : room.getClients()) {
-                            client.playAudio(true, "new");                            
-                        }
                         room.setGameStarted(true);
                         break;
                     }

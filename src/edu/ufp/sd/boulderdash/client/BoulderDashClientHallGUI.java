@@ -302,6 +302,22 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
     public void newRoomButtonClickable(boolean state) {
         this.btnNewRoom.setEnabled(state);
     }
+    
+    public void updateAllRooms() {
+        this.removeAllRooms();
+        
+        try {
+             String[] rooms = this.bdc.bdsRI.fetchAvaliableRooms();
+            if (rooms.length != 0) {
+            for (int i = 0; i < rooms.length; i++) {
+                this.roomslist.addElement(rooms[i]);
+            }
+        }
+        } catch (RemoteException ex) {
+            Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNewRoom;

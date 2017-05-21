@@ -119,7 +119,17 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
                 bdcHallUI.addNewRoom(nr);
             }
 
-        } else if (lastState instanceof State.Disconnect) {
+        }
+        else if (lastState instanceof State.GenericState) {
+            State.GenericState state = (State.GenericState) lastState;
+            switch(state.getType()) {
+                case "UpdateRooms": {
+                    bdcHallUI.updateAllRooms();
+                    break;
+                }
+            }
+        }
+        else if (lastState instanceof State.Disconnect) {
             System.out.println("BoulderDashClientImpl - update(): State = Disconnect ");
             disconnect();
         }

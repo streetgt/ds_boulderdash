@@ -1,13 +1,10 @@
 package fr.enssat.BoulderDash.views;
 
 import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import fr.enssat.BoulderDash.models.LevelModel;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +17,7 @@ import java.util.logging.Logger;
  * @author Colin Leverger <me@colinleverger.fr>
  * @since 2015-06-20
  */
-public class InformationPanel extends JPanel implements Observer {
+public class InformationPanel extends JPanel {
 
     private BoulderDashClientImpl bdc;
 
@@ -58,14 +55,18 @@ public class InformationPanel extends JPanel implements Observer {
     }
 
     /**
-     * Updates the panel
-     *
-     * @param o Observable item
-     * @param arg Object item
+     * Updates the InformationPanel
      */
-    @Override
-    public void update(Observable o, Object arg) {
+    public void updateInformation() {
         try {
+            
+            for (int i = 0; i < players.length; i++) {
+                String name = bdc.getBdsRI().getClientNameInRoom(roomID, i);
+                if(name != null) {
+                    players[i] = name;
+                }
+            }
+            
             this.text.setText(
                     players[0] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 0) + "\n"
                     + players[1] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 1)

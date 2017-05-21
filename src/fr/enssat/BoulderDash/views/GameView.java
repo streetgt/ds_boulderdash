@@ -25,7 +25,7 @@ public class GameView extends JFrame implements WindowListener {
     private BoulderDashClientImpl bdc;
     private GameGroundView gameGroundView;
     private JPanel actionPanel;
-    private JPanel informationPanel;
+    private InformationPanel informationPanel;
     private GameController gameController;
     private int roomID;
 
@@ -91,6 +91,14 @@ public class GameView extends JFrame implements WindowListener {
      */
     public GameGroundView getGameFieldView() {
         return this.gameGroundView;
+    }
+
+    public InformationPanel getInformationPanel() {
+        return informationPanel;
+    }
+
+    public void setInformationPanel(InformationPanel informationPanel) {
+        this.informationPanel = informationPanel;
     }
 
     /**

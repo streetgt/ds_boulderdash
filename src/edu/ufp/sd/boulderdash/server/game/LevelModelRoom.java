@@ -727,8 +727,6 @@ public class LevelModelRoom implements Runnable {
     }
 
     public void addClient(BoulderDashClientRI client) {
-        updateRoomName();
-        
         try {
             
             System.out.println(client.getClientUsername() + " joined room " + this.roomID);
@@ -745,6 +743,8 @@ public class LevelModelRoom implements Runnable {
                 StartGameThread gameStartThread = new StartGameThread(this);
                 gameStartThread.start();
             }
+            
+            updateRoomName();
 
         } catch (RemoteException ex) {
             Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
@@ -752,8 +752,6 @@ public class LevelModelRoom implements Runnable {
     }
 
     public void removeClient(BoulderDashClientRI client) {
-        updateRoomName();
-        
         int index = clients.indexOf(client);
         clients.set(index, null);
         this.gameStarted = false;
@@ -762,6 +760,8 @@ public class LevelModelRoom implements Runnable {
         } catch (RemoteException ex) {
             Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        updateRoomName();
     }
     
     private void updateRoomName() {
@@ -817,6 +817,7 @@ class StartGameThread extends Thread {
                 switch(times) {
                     case 3: {
                         for (BoulderDashClientRI client : room.getClients()) {
+                            client.updateInformationPanel();
                             client.playAudio(true, "new");                            
                         }
                         break;

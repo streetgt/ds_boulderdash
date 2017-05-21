@@ -53,8 +53,10 @@ public class GameController implements ActionListener {
         
         // Song
         this.audioLoadHelper = new AudioLoadHelper();
-        this.bdc.setAudioLevelHelper(audioLoadHelper);
         //this.audioLoadHelper.startMusic("game");
+        
+        // GameController
+        this.bdc.setGameController(this);
         
     }
 

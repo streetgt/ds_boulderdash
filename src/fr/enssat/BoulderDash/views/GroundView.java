@@ -41,7 +41,6 @@ public abstract class GroundView extends JPanel {
     public GroundView(BoulderDashClientImpl bdc, int roomID) {
         this.bdc = bdc;
         this.roomID = roomID; 
-        bdc.setGroundView(this);   
     }
 
     /**

@@ -160,7 +160,7 @@ public class BoulderDashServerImpl extends UnicastRemoteObject implements Boulde
     
     @Override
     public void setState(Object s) throws RemoteException {
-        System.out.println("BoulderDashServerImpl - setState()");
+        System.out.println("BoulderDashServerImpl - setState(): " + s.getClass().getName());
         this.state = s;
         if (!clients.isEmpty()) {
             notifyAllObservers();

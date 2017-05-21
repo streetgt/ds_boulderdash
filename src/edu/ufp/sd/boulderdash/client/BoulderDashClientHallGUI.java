@@ -304,12 +304,14 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
     }
     
     public void updateAllRooms() {
+        System.out.println("updateAllRooms()");
         this.removeAllRooms();
         
         try {
-             String[] rooms = this.bdc.bdsRI.fetchAvaliableRooms();
+            String[] rooms = this.bdc.bdsRI.fetchAvaliableRooms();
             if (rooms.length != 0) {
             for (int i = 0; i < rooms.length; i++) {
+                System.out.println("Room: " + rooms[i]);
                 this.roomslist.addElement(rooms[i]);
             }
         }

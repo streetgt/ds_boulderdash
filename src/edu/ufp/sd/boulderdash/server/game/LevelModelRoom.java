@@ -642,6 +642,7 @@ public class LevelModelRoom implements Runnable {
                 sum++;
             }
         }
+        System.out.println("Connected clients in Room # " + this.roomID + " - " + sum);
 
         return sum;
     }

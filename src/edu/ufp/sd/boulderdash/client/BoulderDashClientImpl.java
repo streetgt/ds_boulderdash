@@ -120,10 +120,12 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
             }
 
         }
-        else if (lastState instanceof State.GenericState) {
+        else if (lastState instanceof State.GenericState) {            
             State.GenericState state = (State.GenericState) lastState;
-            switch(state.getType()) {
-                case "UpdateRooms": {
+            String type = state.getType();
+            System.out.println("BoulderDashClientImpl - update(): State = GenericState("+ type +")");
+            switch(type) {
+                case "RoomsUpdate": {
                     bdcHallUI.updateAllRooms();
                     break;
                 }

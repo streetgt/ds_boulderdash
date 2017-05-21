@@ -67,6 +67,7 @@ public class SoundJLayerBridge extends PlaybackListener implements Runnable {
     /**
      * Runs the player thread
      */
+    @Override
     public void run() {
         try {
             this.player.play();

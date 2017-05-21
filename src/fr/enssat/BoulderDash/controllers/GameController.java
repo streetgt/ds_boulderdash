@@ -46,15 +46,15 @@ public class GameController implements ActionListener {
         this.getGameView().setVisible(true);
         this.getGameView().getGameFieldView().grabFocus();
 
+        // Waiting text
         this.centerLabel = new JLabel("Waiting for a player to join ...", JLabel.CENTER);
-        //this.centerLabel.setFont(new Font("Arial", 0, 30));
         this.centerLabel.setVisible(true);
         this.gameView.add(centerLabel);
         
         // Song
         this.audioLoadHelper = new AudioLoadHelper();
         this.bdc.setAudioLevelHelper(audioLoadHelper);
-        this.audioLoadHelper.playSound("win");
+        //this.audioLoadHelper.startMusic("game");
         
     }
 

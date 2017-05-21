@@ -779,7 +779,7 @@ class UpdateSprites implements Runnable {
 class StartGameThread extends Thread {
 
     private LevelModelRoom room;
-    private int times = 3;
+    private int times = 4;
 
     public StartGameThread(LevelModelRoom room) {
         this.room = room;
@@ -792,11 +792,15 @@ class StartGameThread extends Thread {
                 System.out.println("StartGameThread() executed in room " + room.getRoomID());
                 
                 switch(times) {
-                    case 1: {
+                    case 2: {
                         for (BoulderDashClientRI client : room.getClients()) {
                             client.updateGroundView(room.getLevelSprites());
-                            client.playAudio(true, "new");
-                            
+                        }
+                        break;
+                    }
+                    case 1: {
+                        for (BoulderDashClientRI client : room.getClients()) {
+                            client.playAudio(true, "new");                            
                         }
                         room.setGameStarted(true);
                         break;

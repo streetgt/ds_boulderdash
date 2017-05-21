@@ -123,7 +123,7 @@ public class LevelModelRoom implements Runnable {
 
     public void resetLevelModel() {
         this.groundGrid = this.levelLoadHelperServer.getGroundGrid();
-        this.gameRunning = true;
+        this.setGameRunning(true);
         this.gameInformationModel.resetInformations();
     }
 
@@ -211,7 +211,15 @@ public class LevelModelRoom implements Runnable {
 
             if (this.gameInformationModel.getRemainingsDiamonds() == 0) {
                 System.out.println("All diamonds found!");
-                this.gameRunning = false;
+                
+                try {
+                    this.clients.get(index).playAudio(true, "win");
+                    this.clients.get(index == 0 ? 1 : 0).playAudio(true, "loose");
+                } catch (RemoteException ex) {
+                    Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                this.setGameRunning(false);
 
             }
         }
@@ -410,15 +418,16 @@ public class LevelModelRoom implements Runnable {
      * @param gameRunning Whether game is running or not
      */
     public void setGameRunning(boolean gameRunning) {
+        if(!gameRunning) {
+            // Game has finished
+            this.server.getRooms().remove(this.roomID);
+            try {
+                this.server.setState(new State().new GenericState("RoomsUpdate"));
+            } catch (RemoteException ex) {
+                Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         this.gameRunning = gameRunning;
-//        // Timer to refresh the view properly...
-//        try {
-//            Thread.sleep(200);
-//        } catch (InterruptedException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        this.localNotifyObservers();
     }
 
     /**

@@ -28,7 +28,7 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     private String password;
     private boolean loggedin;
     private boolean playing = false;
-    
+
     private GameController gameController = null;
 
     public BoulderDashClientImpl(BoulderDashServerRI bdsRI) throws RemoteException {
@@ -117,19 +117,17 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
                 bdcHallUI.addNewRoom(nr);
             }
 
-        }
-        else if (lastState instanceof State.GenericState) {            
+        } else if (lastState instanceof State.GenericState) {
             State.GenericState state = (State.GenericState) lastState;
             String type = state.getType();
-            System.out.println("BoulderDashClientImpl - update(): State = GenericState("+ type +")");
-            switch(type) {
+            System.out.println("BoulderDashClientImpl - update(): State = GenericState(" + type + ")");
+            switch (type) {
                 case "RoomsUpdate": {
                     bdcHallUI.updateAllRooms();
                     break;
                 }
             }
-        }
-        else if (lastState instanceof State.Disconnect) {
+        } else if (lastState instanceof State.Disconnect) {
             System.out.println("BoulderDashClientImpl - update(): State = Disconnect ");
             disconnect();
         }
@@ -198,7 +196,7 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     public void setBdcHallUI(BoulderDashClientHallGUI bdcHallUI) {
         this.bdcHallUI = bdcHallUI;
     }
-    
+
     public boolean isPlaying() {
         return playing;
     }
@@ -214,10 +212,10 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
     }
-    
+
     @Override
     public void updateGroundView(String[][] levelSprites) throws RemoteException {
-        if(this.gameController.getGameView().getGameFieldView() != null) {
+        if (this.gameController.getGameView().getGameFieldView() != null) {
             this.gameController.getGameView().getGameFieldView().sendRefresh(levelSprites);
         }
     }
@@ -225,10 +223,9 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     @Override
     public void stopAudio() throws RemoteException {
         System.out.println("BoulderDashClientImpl - stopAudio():");
-        if(gameController.getAudioLoadHelper() != null) {
+        if (gameController.getAudioLoadHelper() != null) {
             gameController.getAudioLoadHelper().stopMusic();
-        }
-        else {
+        } else {
             System.out.println("BoulderDashClientImpl - stopAudio(): is null");
         }
     }
@@ -236,8 +233,8 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
     @Override
     public void playAudio(boolean song, String name) throws RemoteException {
         System.out.println("BoulderDashClientImpl - playAudio(" + song + "," + name + "):");
-        if(gameController.getAudioLoadHelper() != null) {
-            if(song) {
+        if (gameController.getAudioLoadHelper() != null) {
+            if (song) {
                 gameController.getAudioLoadHelper().playSound(name);
             } else {
                 System.out.println("startMusic(name);");
@@ -250,13 +247,11 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
 
     @Override
     public void updateInformationPanel() throws RemoteException {
-        if(this.gameController != null) {
-            this.gameController.getGameView().getInformationPanel();
-        }
-        else {
+        if (this.gameController != null) {
+            this.gameController.getGameView().getInformationPanel().updateInformation();
+        } else {
             System.out.println("BoulderDashClientImpl - updateInformationPanel(): is null");
         }
     }
-    
-    
+
 }

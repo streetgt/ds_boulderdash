@@ -247,9 +247,8 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
         try {
             String level = this.jcbLevels.getSelectedItem().toString();
             int roomID = this.bdc.bdsRI.createGameRoom(bdc, level);
-            if(roomID >= 0)
-            {
-                
+            if (roomID >= 0) {
+
             }
 //            SwingUtilities.invokeLater(new Runnable() {
 //                public void run() {
@@ -273,7 +272,7 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
                     this.bdc.bdsRI.addClientToRoom(bdc, svid);
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
-                            new GameController(bdc,svid);
+                            new GameController(bdc, svid);
                         }
                     });
                 } catch (RemoteException ex) {
@@ -298,27 +297,27 @@ public class BoulderDashClientHallGUI extends javax.swing.JFrame implements Wind
     public void removeAllRooms() {
         this.roomslist.removeAllElements();
     }
-    
+
     public void newRoomButtonClickable(boolean state) {
         this.btnNewRoom.setEnabled(state);
     }
-    
+
     public void updateAllRooms() {
         System.out.println("updateAllRooms()");
         this.removeAllRooms();
-        
+
         try {
             String[] rooms = this.bdc.bdsRI.fetchAvaliableRooms();
             if (rooms.length != 0) {
-            for (int i = 0; i < rooms.length; i++) {
-                System.out.println("Room: " + rooms[i]);
-                this.roomslist.addElement(rooms[i]);
+                for (int i = 0; i < rooms.length; i++) {
+                    System.out.println("Room: " + rooms[i]);
+                    this.roomslist.addElement(rooms[i]);
+                }
             }
-        }
         } catch (RemoteException ex) {
             Logger.getLogger(BoulderDashClientHallGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

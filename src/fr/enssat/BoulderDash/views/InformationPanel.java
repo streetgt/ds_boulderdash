@@ -32,24 +32,8 @@ public class InformationPanel extends JPanel {
         this.bdc = bdc;
         this.text = new JTextArea();
         this.text.setEditable(false);
-      
-        try {
 
-            for (int i = 0; i < players.length; i++) {
-                String name = bdc.getBdsRI().getClientNameInRoom(roomID, i);
-                if(name != null) {
-                    players[i] = name;
-                }
-            }
-            
-            this.text.setText(
-                    players[0] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 0) + "\n"
-                    + players[1] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 1)
-                    + "\nRemaining diamonds : " + bdc.getBdsRI().getRoomRemainingDiamonds(roomID)
-            );
-        } catch (RemoteException ex) {
-            Logger.getLogger(InformationPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        updateInformation();
 
         this.add(this.text);
     }
@@ -58,15 +42,16 @@ public class InformationPanel extends JPanel {
      * Updates the InformationPanel
      */
     public void updateInformation() {
+        System.out.println("updateInformation() executed");
         try {
-            
+
             for (int i = 0; i < players.length; i++) {
                 String name = bdc.getBdsRI().getClientNameInRoom(roomID, i);
-                if(name != null) {
+                if (name != null) {
                     players[i] = name;
                 }
             }
-            
+
             this.text.setText(
                     players[0] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 0) + "\n"
                     + players[1] + " - Score : " + bdc.getBdsRI().getClientScoreInRoom(roomID, 1)

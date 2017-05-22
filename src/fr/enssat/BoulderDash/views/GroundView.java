@@ -58,21 +58,7 @@ public abstract class GroundView extends JPanel {
             }
         }
     }
-
-    /**
-     * Set the view to inform the user that he won
-     */
-    private void displayWin(int index) {
-        new WinLoseView(index, "win");
-    }
-
-    /**
-     * Set the view to inform the user that he is not good at this game
-     */
-    private void displayLose(int index) {
-        new WinLoseView(index, "loose");
-    }
-
+    
     /**
      * Paints the map
      *

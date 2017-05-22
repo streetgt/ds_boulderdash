@@ -24,7 +24,10 @@ public interface BoulderDashClientRI extends Remote {
     
     public void updateInformationPanel() throws RemoteException;
     
+    public void sendWinner(boolean winner, String name) throws RemoteException;
+    
     public void playAudio(boolean song, String name) throws RemoteException;
     
     public void stopAudio() throws RemoteException;
+    
 }

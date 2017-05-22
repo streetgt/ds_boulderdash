@@ -1,6 +1,9 @@
 package edu.ufp.sd.boulderdash.server.game;
 
-import java.util.Observable;
+import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * GameInformationModel will contain all the data which will go to the
@@ -10,8 +13,9 @@ import java.util.Observable;
  * @since 2015-06-19
  *
  */
-public class GameInformationModel extends Observable {
+public class GameInformationModel {
 
+    private LevelModelRoom levelModelRoom;
     private int[] score;
     private int remainingsDiamonds;
     private int timer;
@@ -21,7 +25,8 @@ public class GameInformationModel extends Observable {
      *
      * @param remainingsDiamonds
      */
-    public GameInformationModel(int remainingsDiamonds) {
+    public GameInformationModel(LevelModelRoom levelModelRoom, int remainingsDiamonds) {
+        this.levelModelRoom = levelModelRoom;
         this.score = new int[2];
         for (int i = 0; i < score.length; i++) {
             this.score[i] = 0;
@@ -99,15 +104,6 @@ public class GameInformationModel extends Observable {
      */
     public void incrementScore(int index) {
         this.score[index] += 1;
-        this.myNotify();
-    }
-
-    /**
-     * Generic function which will notify the observers.
-     */
-    private void myNotify() {
-        this.notifyObservers();
-        this.setChanged();
     }
 
     /**
@@ -116,7 +112,13 @@ public class GameInformationModel extends Observable {
     public void decrementRemainingsDiamonds() {
         if (remainingsDiamonds > 0) {
             this.remainingsDiamonds -= 1;
-            this.myNotify();
+            try {
+                for (BoulderDashClientRI client : this.levelModelRoom.getClients()) {
+                    client.updateInformationPanel();
+                }
+            } catch (RemoteException ex) {
+                Logger.getLogger(GameInformationModel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

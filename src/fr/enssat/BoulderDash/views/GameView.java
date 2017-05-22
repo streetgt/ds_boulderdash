@@ -72,7 +72,7 @@ public class GameView extends JFrame implements WindowListener {
     private void createLayout() {
         this.gameGroundView = new GameGroundView(this.bdc, this.gameController, roomID);
         this.actionPanel = new JPanel();
-        this.informationPanel = new InformationPanel(this.bdc, this.roomID);
+        this.informationPanel = new InformationPanel(this.bdc, this.gameController, this.roomID);
         this.informationPanel.setBackground(Color.white);
 
         // Add some buttons on the informationPanel

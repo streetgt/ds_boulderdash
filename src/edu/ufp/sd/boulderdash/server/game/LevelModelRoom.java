@@ -75,7 +75,7 @@ public class LevelModelRoom implements Runnable {
         this.sizeWidth = this.levelLoadHelperServer.getWidthSizeValue();
         this.sizeHeight = this.levelLoadHelperServer.getHeightSizeValue();
 
-        this.gameInformationModel = new GameInformationModel(this.levelLoadHelperServer.getDiamondsToCatch());
+        this.gameInformationModel = new GameInformationModel(this, this.levelLoadHelperServer.getDiamondsToCatch());
 
         this.createLimits();
 
@@ -201,20 +201,25 @@ public class LevelModelRoom implements Runnable {
         int oldY = this.getRockfordPositionY(index);
 
         if (this.groundGrid[posX][posY].getSpriteName().compareTo("diamond") == 0) {
-            try {
+            /*try {
                 System.out.println(clients.get(index).getClientUsername() + " found a diamond!");
             } catch (RemoteException ex) {
                 Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
             this.gameInformationModel.incrementScore(index);
             this.gameInformationModel.decrementRemainingsDiamonds();
 
             if (this.gameInformationModel.getRemainingsDiamonds() == 0) {
                 System.out.println("All diamonds found!");
-                
                 try {
-                    this.clients.get(index).playAudio(true, "win");
-                    this.clients.get(index == 0 ? 1 : 0).playAudio(true, "loose");
+                    BoulderDashClientRI client = this.clients.get(index);
+                    client.playAudio(true, "win");
+                    client.sendWinner(true, client.getClientUsername());
+                    
+                    BoulderDashClientRI second = this.clients.get(index == 0 ? 1 : 0);
+                    second.playAudio(true, "loose");
+                    second.sendWinner(false, client.getClientUsername());
+                    
                 } catch (RemoteException ex) {
                     Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -459,8 +464,14 @@ public class LevelModelRoom implements Runnable {
         this.getRockford(index).setHasExplosed(true);
 
         try {
-            this.clients.get(index).playAudio(true, "die");
-            this.clients.get(index == 0 ? 1 : 0).playAudio(true, "win");
+            BoulderDashClientRI client = this.clients.get(index);
+            client.playAudio(true, "die");
+            client.sendWinner(false, client.getClientUsername());
+
+            BoulderDashClientRI second = this.clients.get(index == 0 ? 1 : 0);
+            second.playAudio(true, "win");
+            second.sendWinner(true, client.getClientUsername());
+            
         } catch (RemoteException ex) {
             Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }

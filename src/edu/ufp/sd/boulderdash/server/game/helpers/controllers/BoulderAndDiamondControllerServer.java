@@ -136,9 +136,6 @@ public class BoulderAndDiamondControllerServer implements Runnable {
                 this.levelModelServer.exploseGround(1, x, y + 1);
             }
 
-            // TODO: mandar som aos 2 que morreram.
-            //this.audioLoadHelper.playSound("die");
-
             try {
                 Thread.sleep(25);
             } catch (InterruptedException e) {

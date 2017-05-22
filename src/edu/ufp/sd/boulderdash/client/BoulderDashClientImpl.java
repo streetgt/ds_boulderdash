@@ -254,4 +254,21 @@ public class BoulderDashClientImpl implements BoulderDashClientRI {
         }
     }
 
+    @Override
+    public void sendWinner(boolean winner, String name) throws RemoteException {
+        if (this.gameController != null) {
+            this.gameController.setGameEnded(true);
+            if(winner) {
+                this.gameController.displayWin(name);
+            } else {
+                this.gameController.displayLose(name);
+            }
+            
+        } else {
+            System.out.println("BoulderDashClientImpl - updateInformationPanel(): is null");
+        }
+    }
+    
+    
+
 }

@@ -1,6 +1,7 @@
 package fr.enssat.BoulderDash.views;
 
 import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
+import fr.enssat.BoulderDash.controllers.GameController;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -21,6 +22,7 @@ public class InformationPanel extends JPanel {
 
     private BoulderDashClientImpl bdc;
 
+    private GameController gameController;
     private JTextArea text;
     private int roomID;
     private String[] players = {"Not Connected", "Not Connected"};
@@ -28,8 +30,9 @@ public class InformationPanel extends JPanel {
     /**
      * Class constructor
      */
-    public InformationPanel(BoulderDashClientImpl bdc, int roomID) {
+    public InformationPanel(BoulderDashClientImpl bdc, GameController gameController, int roomID) {
         this.bdc = bdc;
+        this.gameController = gameController;
         this.text = new JTextArea();
         this.text.setEditable(false);
 

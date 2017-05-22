@@ -1,7 +1,6 @@
 package fr.enssat.BoulderDash.controllers;
 
 import edu.ufp.sd.boulderdash.client.BoulderDashClientImpl;
-import fr.enssat.BoulderDash.helpers.AudioLoadHelper;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,6 +19,7 @@ import java.util.logging.Logger;
 public class GameKeyController implements KeyListener {
 
     private BoulderDashClientImpl bdc;
+    private GameController gameController;
     private int roomID;
 
     /**
@@ -27,7 +27,8 @@ public class GameKeyController implements KeyListener {
      *
      * @param levelModel Level model
      */
-    public GameKeyController(BoulderDashClientImpl bdc, AudioLoadHelper audioLoadHelper, int roomID) {
+    public GameKeyController(GameController gameController, BoulderDashClientImpl bdc, int roomID) {
+        this.gameController = gameController;
         this.bdc = bdc;
         if (this.bdc == null) {
             System.out.println("FOUND FUCKING NULL!");
@@ -41,6 +42,10 @@ public class GameKeyController implements KeyListener {
      * @param e Key event
      */
     public void keyPressed(KeyEvent e) {
+        if(gameController.isGameEnded()) {
+            return;
+        }
+        
         int keyCode = e.getKeyCode();
 
         //System.out.println("[DEBUG]: Pressed keyCode " + keyCode);

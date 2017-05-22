@@ -40,7 +40,7 @@ public class GameGroundView extends GroundView {
     }
 
     private void initCustom() {
-        this.addKeyListener(new GameKeyController(this.bdc, this.gameController.getAudioLoadHelper(), roomID));
+        this.addKeyListener(new GameKeyController(this.gameController, this.bdc, roomID));
         this.setBorder(BorderFactory.createLineBorder(Color.black));
         this.setFocusable(true); 
     }

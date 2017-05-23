@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.ufp.sd.boulderdash.server;
 
 import edu.ufp.sd.boulderdash.server.game.LevelModelRoom;
@@ -16,8 +11,18 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 
 /**
+ * <p>
+ * Title: Projecto SD - BoulderDash - BoulderDash</p>
+ * <p>
+ * Description: Jogo BoulderDash destribuido</p>
+ * <p>
+ * Copyright: Copyright (c) 2017</p>
+ * <p>
+ * Company: UFP </p>
  *
- * @author tiagocardoso
+ * @author Tiago Cardoso <tiagocardosoweb@gmail.com>
+ * @author Miguel Ferreira <migueelfsf@gmail.com>
+ * @version 1.0
  */
 public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowListener {
 

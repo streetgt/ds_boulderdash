@@ -19,15 +19,16 @@ import edu.ufp.sd.boulderdash.server.game.LevelModelRoom;
 
 /**
  * <p>
- * Title: Projecto SD</p>
+ * Title: Projecto SD - BoulderDash - BoulderDash</p>
  * <p>
- * Description: Projecto apoio aulas SD</p>
+ * Description: Jogo BoulderDash destribuido</p>
  * <p>
- * Copyright: Copyright (c) 2009</p>
+ * Copyright: Copyright (c) 2017</p>
  * <p>
  * Company: UFP </p>
  *
- * @author Rui Moreira
+ * @author Tiago Cardoso <tiagocardosoweb@gmail.com>
+ * @author Miguel Ferreira <migueelfsf@gmail.com>
  * @version 1.0
  */
 public class BoulderDashServerImpl extends UnicastRemoteObject implements BoulderDashServerRI {

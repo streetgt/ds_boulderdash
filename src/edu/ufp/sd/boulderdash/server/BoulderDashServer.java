@@ -4,22 +4,21 @@ import java.net.InetAddress;
 import java.rmi.AccessException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import edu.ufp.sd.boulderdash.client.BoulderDashClientRI;
 
 /**
  * <p>
- * Title: Projecto SD</p>
+ * Title: Projecto SD - BoulderDash - BoulderDash</p>
  * <p>
- * Description: Projecto apoio aulas SD</p>
+ * Description: Jogo BoulderDash destribuido</p>
  * <p>
- * Copyright: Copyright (c) 2009</p>
+ * Copyright: Copyright (c) 2017</p>
  * <p>
  * Company: UFP </p>
  *
- * @author Rui Moreira
+ * @author Tiago Cardoso <tiagocardosoweb@gmail.com>
+ * @author Miguel Ferreira <migueelfsf@gmail.com>
  * @version 1.0
  */
 public class BoulderDashServer {

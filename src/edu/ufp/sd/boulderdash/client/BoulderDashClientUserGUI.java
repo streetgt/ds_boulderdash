@@ -1,22 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.ufp.sd.boulderdash.client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
+ * <p>
+ * Title: Projecto SD - BoulderDash - BoulderDash</p>
+ * <p>
+ * Description: Jogo BoulderDash destribuido</p>
+ * <p>
+ * Copyright: Copyright (c) 2017</p>
+ * <p>
+ * Company: UFP </p>
  *
- * @author tiagocardoso
+ * @author Tiago Cardoso <tiagocardosoweb@gmail.com>
+ * @author Miguel Ferreira <migueelfsf@gmail.com>
+ * @version 1.0
  */
 public class BoulderDashClientUserGUI extends javax.swing.JFrame implements ActionListener, WindowListener {
 

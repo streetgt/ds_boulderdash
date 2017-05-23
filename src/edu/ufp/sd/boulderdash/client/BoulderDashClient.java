@@ -7,19 +7,19 @@ import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import edu.ufp.sd.boulderdash.server.BoulderDashServerRI;
-import java.rmi.AccessException;
 
 /**
  * <p>
- * Title: Projecto SD</p>
+ * Title: Projecto SD - BoulderDash</p>
  * <p>
  * Description: Projecto apoio aulas SD</p>
  * <p>
- * Copyright: Copyright (c) 2009</p>
+ * Copyright: Copyright (c) 2017</p>
  * <p>
  * Company: UFP </p>
  *
- * @author Rui Moreira
+ * @author Tiago Cardoso <tiagocardosoweb@gmail.com>
+ * @author Miguel Ferreira <migueelfsf@gmail.com>
  * @version 1.0
  */
 public class BoulderDashClient {
@@ -72,11 +72,9 @@ public class BoulderDashClient {
 
                 //Get proxy to BoulderDash service
                 BoulderDashServerRI bdsRI = (BoulderDashServerRI) registry.lookup(serviceName);
-                new BoulderDashClientImpl(bdsRI);
+                BoulderDashClientImpl bdImlp = new BoulderDashClientImpl(bdsRI);
 
                 //Call BoulderDashServer remote service
-                //bdsRI.print("Remote Hello World!");
-                //bdsRI.login(((BoulderDashClientImpl)bdcRI), "streetgt", "asd");
                 System.out.println("BoulderDashClient - Constructor(): after calling service " + serviceName + "...");
             }
         } catch (RemoteException ex) {

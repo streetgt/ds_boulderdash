@@ -6,14 +6,17 @@ import java.rmi.RemoteException;
 
 /**
  * <p>
- * Title: Projecto SD - BoulderDash</p>
+ * Title: Projecto SD - BoulderDash - BoulderDash</p>
  * <p>
- * Description: Projecto apoio aulas SD</p>
+ * Description: Jogo BoulderDash destribuido</p>
  * <p>
- * Copyright: Copyright (c) 2016</p>
+ * Copyright: Copyright (c) 2017</p>
  * <p>
  * Company: UFP </p>
  *
+ * @author Tiago Cardoso <tiagocardosoweb@gmail.com>
+ * @author Miguel Ferreira <migueelfsf@gmail.com>
+ * @version 1.0
  */
 public interface BoulderDashServerRI extends Remote {
 

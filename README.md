@@ -11,21 +11,17 @@ Thanks to https://github.com/valeriansaliou/boulder-dash for provide us the sing
 
 # Screenshots
 
-Login UI
+**Login UI**  
 ![Login UI](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Login.png)
 
-Waiting for both players connect
+**Waiting for both players connect**
 ![Waiting for both players connect](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Waiting.png)
 
-Lobby UI
+**Lobby UI**
 ![Lobby UI](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Lobby.png)
 
-Playing
+**Playing**
 ![Playing](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Playing.png)
 
-Server UI
+**Server UI**
 ![Server UI](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Server%20UI.png)
-
-
-
-

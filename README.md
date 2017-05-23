@@ -13,16 +13,16 @@ Thanks to https://github.com/valeriansaliou/boulder-dash for provide us the sing
 # Screenshots
 
 **Login UI**  
-![Login UI](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Login.png)
+<img src="https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Login.png" width="500"/>
 
-**Waiting for both players connect**
-![Waiting for both players connect](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Waiting.png)
+**Waiting for both players to connect**  
+<img src="https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Waiting.png" width="500">
 
-**Lobby UI**
-![Lobby UI](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Lobby.png)
+**Lobby UI**  
+<img src="https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Lobby.png" width="500"/>
 
-**Playing**
-![Playing](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Playing.png)
+**Playing**  
+<img src="https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Playing.png" width="500"/>
 
-**Server UI**
-![Server UI](https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Server%20UI.png)
+**Server UI**  
+<img src="https://github.com/tiagocardosoweb/sd_boulderdash/blob/master/Screenshots/Server%20UI.png" width="500"/>

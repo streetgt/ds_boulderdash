@@ -7,6 +7,7 @@ Multiplayer was made for Distributed Systems class at University Fernando Pessoa
 	 - Miguel Ferreira (<migueelfsf@gmail.com>).
  - **Coordination**
 	 - Rui Silva Moreira (<rmoreira@ufp.edu.pt>)
+	  
 Thanks to https://github.com/valeriansaliou/boulder-dash for provide us the singleplayer game.
 
 # Screenshots

@@ -12,9 +12,9 @@ import javax.swing.JList;
 
 /**
  * <p>
- * Title: Projecto SD - BoulderDash - BoulderDash</p>
+ * Title: Distributed Systems Project - BoulderDash</p>
  * <p>
- * Description: Jogo BoulderDash destribuido</p>
+ * Description: BoulderDash Game Multiplayer - Distributed using RMI</p>
  * <p>
  * Copyright: Copyright (c) 2017</p>
  * <p>
@@ -22,7 +22,7 @@ import javax.swing.JList;
  *
  * @author Tiago Cardoso <tiagocardosoweb@gmail.com>
  * @author Miguel Ferreira <migueelfsf@gmail.com>
- * @version 1.0
+ * @version 0.1
  */
 public class BoulderDashServerGUI extends javax.swing.JFrame implements WindowListener {
 

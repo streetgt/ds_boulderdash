@@ -20,7 +20,7 @@ import edu.ufp.sd.boulderdash.server.BoulderDashServerRI;
  *
  * @author Tiago Cardoso <tiagocardosoweb@gmail.com>
  * @author Miguel Ferreira <migueelfsf@gmail.com>
- * @version 1.0
+ * @version 0.1
  */
 public class BoulderDashClient {
 

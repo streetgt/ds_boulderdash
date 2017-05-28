@@ -10,9 +10,9 @@ import edu.ufp.sd.boulderdash.server.BoulderDashServerRI;
 
 /**
  * <p>
- * Title: Projecto SD - BoulderDash</p>
+ * Title: Distributed Systems Project - BoulderDash</p>
  * <p>
- * Description: Projecto apoio aulas SD</p>
+ * Description: Distributed Systems Project - BoulderDash</p>
  * <p>
  * Copyright: Copyright (c) 2017</p>
  * <p>

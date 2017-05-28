@@ -243,7 +243,7 @@ public class LevelModelRoom implements Runnable {
             this.groundGrid[posX][posY] = this.getRockford(index);
         }
 
-        this.localNotifyObservers();
+        this.notifyClients();
     }
 
     /**
@@ -351,9 +351,9 @@ public class LevelModelRoom implements Runnable {
     }
 
     /**
-     * Notify observers about a model change
+     * Notify the clients and update the sprites array
      */
-    private void localNotifyObservers() {
+    private void notifyClients() {
         if (this.clients.get(0) != null || this.clients.get(1) != null) {
             for (BoulderDashClientRI client : clients) {
                 if (client != null) {
@@ -375,7 +375,7 @@ public class LevelModelRoom implements Runnable {
         }
 
         groundGrid[x][y].update(System.currentTimeMillis());
-        //this.localNotifyObservers();
+        //this.notifyClients();
     }
 
     /**
@@ -482,7 +482,7 @@ public class LevelModelRoom implements Runnable {
         } catch (InterruptedException ex) {
             Logger.getLogger(LevelModelRoom.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.localNotifyObservers(); */
+        this.notifyClients(); */
     }
 
     /**
@@ -495,7 +495,7 @@ public class LevelModelRoom implements Runnable {
         this.groundGrid[x][y].setFalling(true);
         this.groundGrid[x][y + 1] = this.groundGrid[x][y];
         this.groundGrid[x][y] = new EmptyModel();
-        this.localNotifyObservers();
+        this.notifyClients();
     }
 
     /**

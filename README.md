@@ -2,6 +2,8 @@
 
 Multiplayer was made for Distributed Systems class at University Fernando Pessoa in Oporto, Portugal.
 
+The game follows the client-server model and was created based on SinglePlayer. Be aware, there are some bugs related to thread's hung causing lag while playing. This project was developed to not-be a final version but a working version based on some solutions given by our coorinator.
+
  - **Authors**
 	 - Tiago Cardoso (<tiagocardosoweb@gmail.com>).
 	 - Miguel Ferreira (<migueelfsf@gmail.com>).
